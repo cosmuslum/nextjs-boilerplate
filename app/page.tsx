@@ -28,7 +28,6 @@ const levels = [
 export default function Home() {
   return (
     <div style={styles.page}>
-      {/* Top bar */}
       <header style={styles.header}>
         <div style={styles.container}>
           <div style={styles.nav}>
@@ -50,7 +49,6 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero */}
       <main style={styles.main}>
         <section style={styles.hero}>
           <div style={styles.container}>
@@ -91,7 +89,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right card */}
               <div style={styles.heroCard}>
                 <div style={styles.heroCardTop}>
                   <div style={styles.heroCardTitle}>Vandaag</div>
@@ -135,7 +132,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Levels */}
         <section id="niveaus" style={styles.section}>
           <div style={styles.container}>
             <div style={styles.sectionHead}>
@@ -160,7 +156,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* How it works */}
         <section id="hoe-werkt-het" style={styles.sectionAlt}>
           <div style={styles.container}>
             <div style={styles.sectionHead}>
@@ -190,7 +185,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FAQ */}
         <section id="faq" style={styles.section}>
           <div style={styles.container}>
             <div style={styles.sectionHead}>
@@ -220,12 +214,8 @@ export default function Home() {
             </div>
 
             <div style={styles.bottomCta}>
-              <a href="/register" style={styles.primaryButtonLarge}>
-                Start nu
-              </a>
-              <a href="/login" style={styles.secondaryButtonLarge}>
-                Ik heb al een account
-              </a>
+              <a href="/register" style={styles.primaryButtonLarge}>Start nu</a>
+              <a href="/login" style={styles.secondaryButtonLarge}>Ik heb al een account</a>
             </div>
           </div>
         </section>
@@ -253,7 +243,8 @@ export default function Home() {
 const styles: Record<string, React.CSSProperties> = {
   page: {
     minHeight: "100vh",
-    background: "radial-gradient(1200px 600px at 20% 10%, rgba(120, 140, 255, 0.18), transparent 60%), radial-gradient(900px 500px at 90% 20%, rgba(0, 200, 255, 0.14), transparent 55%), #070A12",
+    background:
+      "radial-gradient(1200px 600px at 20% 10%, rgba(120, 140, 255, 0.18), transparent 60%), radial-gradient(900px 500px at 90% 20%, rgba(0, 200, 255, 0.14), transparent 55%), #070A12",
     color: "rgba(255,255,255,0.92)",
   },
   header: {
@@ -408,7 +399,6 @@ const styles: Record<string, React.CSSProperties> = {
     border: "1px solid rgba(255,255,255,0.10)",
     borderRadius: 18,
     padding: 16,
-    transition: "transform 120ms ease, border-color 120ms ease",
   },
   cardTop: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
   levelTag: {
