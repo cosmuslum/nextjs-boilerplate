@@ -1,8 +1,5 @@
-import { getRequestConfig } from "next-intl/server";
+// /i18n.ts
+export const locales = ["tr", "en", "es", "ar", "nl"] as const;
+export const defaultLocale = "tr" as const;
 
-export default getRequestConfig(async ({ locale }) => {
-  return {
-    locale,
-    messages: (await import(`./messages/${locale}.json`)).default
-  };
-});
+export type Locale = (typeof locales)[number];
