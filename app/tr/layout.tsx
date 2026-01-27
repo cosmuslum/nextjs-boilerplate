@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "../globals.css";
 
 export const metadata: Metadata = {
   title: "NederLearn – Hollandaca Öğren",
@@ -7,71 +8,35 @@ export const metadata: Metadata = {
 
 export default function TrLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="nl-shell">
-      {/* HEADER */}
-      <header className="nl-header">
-        <div className="nl-header-inner">
-          <a className="nl-brand" href="/tr" aria-label="NederLearn Ana Sayfa">
-            <span className="nl-logo">N</span>
-            <span className="nl-brand-text">NederLearn</span>
-          </a>
+    <html lang="tr">
+      <body className="nl-body">
+        {/* HEADER */}
+        <header className="nl-header">
+          <div className="nl-header-inner">
+            <div className="nl-logo">🇳🇱 NederLearn</div>
 
-          {/* DESKTOP NAV (mobilde gizli) */}
-          <nav className="nl-nav" aria-label="Üst menü">
-            <a className="nl-link" href="/tr#seviyeler">
-              Seviyeler
-            </a>
-            <a className="nl-link" href="/tr#nasil-calisir">
-              Nasıl çalışır?
-            </a>
-            <a className="nl-link" href="/tr#sss">
-              SSS
-            </a>
+            <nav className="nl-nav desktop-only">
+              <a href="/tr">Ana Sayfa</a>
+              <a href="/tr/a0">A0</a>
+              <a href="/tr/login" className="btn-primary">Giriş</a>
+            </nav>
 
-            <div className="nl-lang">
-              <span className="nl-globe">🌐</span>
-              <span>TR</span>
-              <span className="nl-caret">▾</span>
-            </div>
-
-            <a className="nl-btn" href="/tr/login">
-              Giriş
-            </a>
-          </nav>
-
-          {/* MOBILE ACTIONS (desktop’ta gizli) */}
-          <div className="nl-mobile">
-            <a className="nl-iconbtn" href="/tr/login" aria-label="Giriş">
-              👤
-            </a>
-            <button className="nl-iconbtn" aria-label="Menü">
-              ☰
-            </button>
+            {/* Mobil hamburger */}
+            <div className="mobile-only nl-hamburger">☰</div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      {/* CONTENT */}
-      <main className="nl-main">{children}</main>
+        {/* CONTENT */}
+        <main className="nl-main">{children}</main>
 
-      {/* FOOTER (TEK) */}
-      <footer className="nl-footer">
-        <div className="nl-footer-inner">
-          <div className="nl-footer-top">
-            <div className="nl-footer-brand">NederLearn</div>
-            <div className="nl-footer-links">
-              <a href="/tr#seviyeler">Seviyeler</a>
-              <a href="/tr/a0/alfabe">Alfabe (Sesli)</a>
-              <a href="/tr/login">Giriş</a>
-            </div>
+        {/* FOOTER */}
+        <footer className="nl-footer">
+          <div>© 2026 NederLearn</div>
+          <div className="nl-footer-sub">
+            Hollandaca öğrenmenin en net yolu
           </div>
-
-          <div className="nl-footer-copy">
-            © {new Date().getFullYear()} NederLearn — Hollandaca öğrenmenin en net
-            yolu
-          </div>
-        </div>
-      </footer>
-    </div>
+        </footer>
+      </body>
+    </html>
   );
 }
