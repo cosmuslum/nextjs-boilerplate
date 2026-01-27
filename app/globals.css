@@ -29,97 +29,538 @@ body {
    NederLearn – Mobil & Profesyonel Fixler
    ====================================== */
 
-/* Genel box modeli */
 * {
   box-sizing: border-box;
 }
 
-/* Yatay taşmayı tamamen engelle */
 html,
 body {
   max-width: 100%;
   overflow-x: hidden;
 }
 
-/* Görseller mobilde taşmasın */
 img,
 video {
   max-width: 100%;
   height: auto;
 }
 
-/* Link temizliği */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* -------------------------------
-   Mobil Grid Optimizasyonu
-   ------------------------------- */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+
+/* ====== GLOBAL APP BACKGROUND ====== */
+.nl-body {
+  background: linear-gradient(180deg, #05070f, #0b1020);
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* ====== TR SHELL ====== */
+.nl-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ====== HEADER ====== */
+.nl-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(5, 7, 15, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nl-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nl-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+}
+
+.nl-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(124, 140, 255, 0.95);
+  color: #0b1020;
+  font-weight: 900;
+}
+
+.nl-brand-text {
+  font-size: 16px;
+}
+
+.nl-nav {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.nl-link {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.nl-link:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.nl-lang {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  font-weight: 800;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.nl-btn {
+  background: #7c8cff;
+  color: #0b1020;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 14px;
+}
+
+/* mobile actions hidden by default */
+.nl-mobile {
+  display: none;
+  gap: 10px;
+  align-items: center;
+}
+.nl-iconbtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+}
+
+/* ====== MAIN ====== */
+.nl-main {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* ====== FOOTER ====== */
+.nl-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 28px 16px;
+}
+
+.nl-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.nl-footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.nl-footer-brand {
+  font-weight: 900;
+}
+
+.nl-footer-links {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nl-footer-links a {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.nl-footer-copy {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+/* ====== PAGE STYLES ====== */
+.nl-page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Hero layout */
+.nl-hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.nl-pill {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 14px;
+}
+
+.nl-h1 {
+  font-size: 56px;
+  line-height: 1.02;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.7px;
+}
+
+.nl-accent {
+  color: #7c8cff;
+}
+
+.nl-lead {
+  margin: 0 0 16px 0;
+  opacity: 0.8;
+  line-height: 1.6;
+  max-width: 52ch;
+}
+
+.nl-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.nl-cta-primary {
+  background: #7c8cff;
+  color: #0b1020;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-weight: 900;
+}
+
+.nl-cta-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-weight: 900;
+}
+
+.nl-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nl-badge {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 12px;
+  border-radius: 999px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Right card */
+.nl-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.nl-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.nl-card-title {
+  font-weight: 900;
+  font-size: 16px;
+}
+.nl-card-sub {
+  opacity: 0.7;
+  font-size: 13px;
+}
+
+.nl-chip {
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(0, 200, 255, 0.12);
+  border: 1px solid rgba(0, 200, 255, 0.18);
+  font-weight: 900;
+}
+
+.nl-plan {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.nl-plan-item {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nl-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(124, 140, 255, 0.18);
+  border: 1px solid rgba(124, 140, 255, 0.22);
+  font-weight: 900;
+}
+
+.nl-plan-title {
+  font-weight: 900;
+}
+.nl-plan-sub {
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.nl-card-link {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-weight: 900;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.nl-note {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.65;
+}
+
+.nl-section {
+  padding: 8px 0;
+}
+
+.nl-h2 {
+  font-size: 28px;
+  margin: 0 0 6px 0;
+}
+
+.nl-muted {
+  opacity: 0.7;
+  margin: 0 0 14px 0;
+}
+
+.nl-levels,
+.nl-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.nl-level,
+.nl-step {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 14px;
+}
+
+.nl-level-top {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.nl-tag {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 900;
+  font-size: 12px;
+  opacity: 0.9;
+}
+.nl-tag.active {
+  background: rgba(124, 140, 255, 0.18);
+  border-color: rgba(124, 140, 255, 0.22);
+}
+
+.nl-level-title {
+  font-weight: 900;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.nl-level-desc {
+  opacity: 0.75;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.nl-level-btn {
+  display: inline-block;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-weight: 900;
+  background: rgba(124, 140, 255, 0.95);
+  color: #0b1020;
+}
+.nl-level-btn.ghost {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.nl-disabled {
+  opacity: 0.7;
+}
+
+.nl-step-title {
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+.nl-step-desc {
+  opacity: 0.75;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.nl-faq {
+  display: grid;
+  gap: 10px;
+}
+.nl-qa {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 12px 14px;
+}
+.nl-qa summary {
+  cursor: pointer;
+  font-weight: 900;
+}
+.nl-qa p {
+  opacity: 0.75;
+  line-height: 1.5;
+  margin: 10px 0 0 0;
+}
+
+/* --------- MOBİL OPTİMİZASYON --------- */
 @media (max-width: 900px) {
-  /* Hero alanı */
+  /* desktop nav kapanır, mobile açılır */
+  .nl-nav {
+    display: none;
+  }
+  .nl-mobile {
+    display: flex;
+  }
+
+  .nl-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .nl-h1 {
+    font-size: 34px;
+    line-height: 1.08;
+  }
+
+  .nl-levels,
+  .nl-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .nl-footer-top {
+    justify-content: center;
+  }
+
+  .nl-main {
+    padding: 18px 14px;
+  }
+}
+
+/* Senin önceki “force-*” sınıfların da dursun */
+@media (max-width: 900px) {
   .force-hero {
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 16px !important;
   }
-
-  /* 3 sütunlu alanlar */
   .force-3 {
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 14px !important;
   }
-
-  /* 2 sütunlu alanlar */
   .force-2 {
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 14px !important;
   }
-
-  /* Genel padding düzeltmesi */
   section {
     padding: 14px !important;
   }
-
-  /* Başlıklar mobilde dengeli */
   h1 {
     font-size: 26px !important;
     line-height: 1.2 !important;
   }
-
   h2 {
     font-size: 20px !important;
   }
-}
-
-/* -------------------------------
-   Dokunmatik & UX İyileştirme
-   ------------------------------- */
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
-
-button {
-  cursor: pointer;
-}
-
-/* ======================================
-   NederLearn – Header / Mobil Menü Fix
-   (Hamburger + mobil panel)
-   ====================================== */
-
-/* Mobilde desktop nav'ı gizle (üst menü) */
-@media (max-width: 900px) {
-  header nav[aria-label="Üst Menü"] {
-    display: none !important;
-  }
-}
-
-/* Checkbox ile açılan mobil menü paneli */
-#mnav:checked ~ div {
-  display: block !important;
 }
