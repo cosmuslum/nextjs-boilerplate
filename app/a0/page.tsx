@@ -143,7 +143,7 @@ export default function AlfabePage() {
         </div>
 
         <div style={s.next}>
-          <a href="/tr/a0" style={s.backBtn}>
+          <a href="/tr/" style={s.backBtn}>
             ← A0 Derslerine Dön
           </a>
         </div>
