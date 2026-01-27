@@ -24,3 +24,85 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ======================================
+   NederLearn – Mobil & Profesyonel Fixler
+   ====================================== */
+
+/* Genel box modeli */
+* {
+  box-sizing: border-box;
+}
+
+/* Yatay taşmayı tamamen engelle */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Görseller mobilde taşmasın */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Link temizliği */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* -------------------------------
+   Mobil Grid Optimizasyonu
+   ------------------------------- */
+@media (max-width: 900px) {
+  /* Hero alanı */
+  .force-hero {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* 3 sütunlu alanlar */
+  .force-3 {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  /* 2 sütunlu alanlar */
+  .force-2 {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  /* Genel padding düzeltmesi */
+  section {
+    padding: 14px !important;
+  }
+
+  /* Başlıklar mobilde dengeli */
+  h1 {
+    font-size: 26px !important;
+    line-height: 1.2 !important;
+  }
+
+  h2 {
+    font-size: 20px !important;
+  }
+}
+
+/* -------------------------------
+   Dokunmatik & UX İyileştirme
+   ------------------------------- */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
