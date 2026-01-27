@@ -45,14 +45,13 @@ function speak(text: string) {
     return;
   }
 
-  synth.cancel(); // üst üste binmesin
+  synth.cancel();
 
   const utter = new SpeechSynthesisUtterance(text);
   utter.lang = "nl-NL";
-  utter.rate = 0.9;  // biraz yavaş
+  utter.rate = 0.9;
   utter.pitch = 1;
 
-  // mümkünse Hollandaca ses seç
   const voices = synth.getVoices();
   const nlVoice =
     voices.find(v => /nl/i.test(v.lang) && /Netherlands|Dutch|Nederlands|NL/i.test(v.name)) ||
@@ -66,7 +65,6 @@ function speak(text: string) {
 export default function AlfabePage() {
   const [ready, setReady] = useState(false);
 
-  // Bazı tarayıcılarda ses listesi ilk başta boş gelir; tetikleyelim
   useMemo(() => {
     if (typeof window === "undefined") return;
     const synth = window.speechSynthesis;
@@ -74,7 +72,7 @@ export default function AlfabePage() {
 
     const onVoices = () => setReady(true);
     synth.addEventListener?.("voiceschanged", onVoices as any);
-    // İlk yüklemede de dener
+
     setTimeout(() => {
       synth.getVoices();
       setReady(true);
@@ -118,18 +116,30 @@ export default function AlfabePage() {
                 Türkçe açıklama: <b>{x.tr}</b>
               </div>
               <div style={s.note}>{x.note}</div>
-
-              <div style={s.example}>
-                Örnek (Hollandaca):{" "}
-                <button style={s.exampleBtn} onClick={() => speak("Hallo")}>
-                  “Hallo” 🔊
-                </button>
-                <button style={s.exampleBtn} onClick={() => speak("Goedemorgen")}>
-                  “Goedemorgen” 🔊
-                </button>
-              </div>
             </div>
           ))}
+        </div>
+
+        {/* Genel örnekler: sadece bir yerde */}
+        <div style={s.examplesBox}>
+          <div style={s.examplesTitle}>Genel örnekler (Hollandaca) 🔊</div>
+          <div style={s.examplesRow}>
+            <button style={s.exampleBtn} onClick={() => speak("Hallo")}>
+              Hallo
+            </button>
+            <button style={s.exampleBtn} onClick={() => speak("Goedemorgen")}>
+              Goedemorgen
+            </button>
+            <button style={s.exampleBtn} onClick={() => speak("Dank je wel")}>
+              Dank je wel
+            </button>
+            <button style={s.exampleBtn} onClick={() => speak("Tot ziens")}>
+              Tot ziens
+            </button>
+          </div>
+          <div style={s.examplesHint}>
+            İpucu: Önce örneği dinle, sonra harfleri tek tek dinleyip tekrar et.
+          </div>
         </div>
 
         <div style={s.next}>
@@ -183,7 +193,15 @@ const s: Record<string, React.CSSProperties> = {
   read: { marginTop: 8 },
   note: { fontSize: 13, opacity: 0.7, marginTop: 6, lineHeight: 1.5 },
 
-  example: { marginTop: 12, display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", opacity: 0.95 },
+  examplesBox: {
+    marginTop: 22,
+    background: "rgba(255,255,255,0.04)",
+    border: "1px solid rgba(255,255,255,0.1)",
+    borderRadius: 16,
+    padding: 16,
+  },
+  examplesTitle: { fontWeight: 900, marginBottom: 10 },
+  examplesRow: { display: "flex", gap: 10, flexWrap: "wrap" },
   exampleBtn: {
     cursor: "pointer",
     background: "rgba(0,200,255,0.12)",
@@ -193,6 +211,7 @@ const s: Record<string, React.CSSProperties> = {
     borderRadius: 999,
     fontWeight: 800,
   },
+  examplesHint: { marginTop: 10, fontSize: 12, opacity: 0.65, lineHeight: 1.5 },
 
   next: { marginTop: 28 },
   backBtn: {
