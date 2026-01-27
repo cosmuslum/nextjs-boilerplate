@@ -106,3 +106,20 @@ a {
 button {
   cursor: pointer;
 }
+
+/* ======================================
+   NederLearn – Header / Mobil Menü Fix
+   (Hamburger + mobil panel)
+   ====================================== */
+
+/* Mobilde desktop nav'ı gizle (üst menü) */
+@media (max-width: 900px) {
+  header nav[aria-label="Üst Menü"] {
+    display: none !important;
+  }
+}
+
+/* Checkbox ile açılan mobil menü paneli */
+#mnav:checked ~ div {
+  display: block !important;
+}
