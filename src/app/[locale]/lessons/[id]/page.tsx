@@ -1,113 +1,198 @@
-import { db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
-import LessonContent from "@/components/lesson/LessonContent";
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
-type LocaleKey = "tr" | "nl" | "en" | "ar" | "ku";
+type Locale = "tr" | "en" | "nl" | "ar" | "ku";
 
-type LessonDoc = {
-  title: Record<LocaleKey, string>;
-  description: Record<LocaleKey, string>;
-  content: Record<LocaleKey, string>;
-  level: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
-  updatedAt?: number;
+type Localized = Record<Locale, string>;
+
+type Lesson = {
+  id: string;
+  level: string;
+  orderIndex: number;
+  title: Localized;
+  description: Localized;
+  content: Localized;
 };
 
-// content içinden kelimeleri yakalayan parser
-// Beklenen satır formatları:
-// 1. **been** — bacak
-// 1) been - bacak
-// - been — bacak
-function parseWordsFromContent(markdown: string) {
-  const lines = (markdown || "").split("\n");
-  const out: { nl: string; tr: string }[] = [];
-
-  for (const raw of lines) {
-    const line = raw.trim();
-    if (!line) continue;
-
-    // bold varsa temizle
-    const cleaned = line.replace(/\*\*/g, "");
-
-    // numara / dash prefix temizle
-    const noPrefix = cleaned.replace(/^(\d+[\.\)]\s+|-+\s+)/, "");
-
-    // ayırıcılar: — veya - veya :
-    const parts =
-      noPrefix.split(" — ").length >= 2
-        ? noPrefix.split(" — ")
-        : noPrefix.split(" - ").length >= 2
-        ? noPrefix.split(" - ")
-        : noPrefix.split(": ").length >= 2
-        ? noPrefix.split(": ")
-        : null;
-
-    if (!parts) continue;
-
-    const nl = (parts[0] || "").trim();
-    const tr = (parts[1] || "").trim();
-    if (nl && tr) out.push({ nl, tr });
-  }
-
-  return out;
-}
-
-export default async function LessonDetailPage({
+export default function LessonDetailPage({
   params,
 }: {
-  params: { locale: string; id: string };
+  params: { locale: Locale; id: string };
 }) {
-  const locale = (params.locale || "tr") as LocaleKey;
+  const locale = params.locale ?? "tr";
   const id = params.id;
 
-  const t = await getTranslations({ locale });
+  const [loading, setLoading] = useState(true);
+  const [lesson, setLesson] = useState<Lesson | null>(null);
+  const [err, setErr] = useState<string | null>(null);
 
-  const snap = await getDoc(doc(db, "lessons", id));
-  if (!snap.exists()) {
-    return (
-      <div className="min-h-[60vh] flex items-center justify-center text-white/70">
-        {t("common.notFound")}
-      </div>
-    );
-  }
+  const langLabel = useMemo(() => {
+    const map: Record<Locale, string> = {
+      tr: "Türkçe",
+      en: "English",
+      nl: "Nederlands",
+      ar: "العربية",
+      ku: "Kurdî",
+    };
+    return map[locale] ?? "Türkçe";
+  }, [locale]);
 
-  const lesson = snap.data() as LessonDoc;
+  useEffect(() => {
+    let alive = true;
 
-  const title =
-    lesson.title?.[locale] || lesson.title?.tr || `${t("lessons.defaultLesson")} #${id}`;
-  const desc = lesson.description?.[locale] || lesson.description?.tr || "";
+    async function run() {
+      try {
+        setLoading(true);
+        setErr(null);
 
-  const content = lesson.content?.[locale] || lesson.content?.tr || "";
-  const words = parseWordsFromContent(content);
+        if (!db) {
+          // Firebase env yoksa: sayfa çalışsın ama uyarı versin (build kırılmasın)
+          throw new Error(
+            "Firebase ayarları eksik. Vercel → Settings → Environment Variables içine NEXT_PUBLIC_FIREBASE_* değerlerini eklemelisin."
+          );
+        }
+
+        const ref = doc(db, "lessons", id);
+        const snap = await getDoc(ref);
+
+        if (!alive) return;
+
+        if (!snap.exists()) {
+          setLesson(null);
+          setErr("Ders bulunamadı.");
+          return;
+        }
+
+        const data = snap.data() as Lesson;
+        setLesson({ ...data, id: snap.id });
+      } catch (e: any) {
+        if (!alive) return;
+        setErr(e?.message ?? "Bir hata oluştu.");
+      } finally {
+        if (!alive) return;
+        setLoading(false);
+      }
+    }
+
+    run();
+    return () => {
+      alive = false;
+    };
+  }, [id]);
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-6 py-12 space-y-8">
-      {/* Header */}
-      <div className="rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl p-10 shadow-xl">
-        <div className="flex items-start justify-between gap-4 flex-col md:flex-row">
-          <div>
-            <h1 className="text-4xl font-extrabold text-white mb-2">{title}</h1>
-            <p className="text-white/60">{desc}</p>
-          </div>
-
-          <Link
-            href={`/${locale}/lessons`}
-            className="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-semibold transition"
-          >
-            ← {t("common.back")}
+    <main style={s.page}>
+      <div style={s.wrap}>
+        <div style={s.top}>
+          <Link href={`/${locale}/lessons`} style={s.back}>
+            ← Derslere dön
           </Link>
+          <span style={s.badge}>{langLabel}</span>
+        </div>
+
+        <div style={s.card}>
+          {loading ? (
+            <div style={s.muted}>Yükleniyor…</div>
+          ) : err ? (
+            <div>
+              <div style={s.errTitle}>Hata</div>
+              <div style={s.errText}>{err}</div>
+              <div style={{ marginTop: 14 }}>
+                <Link href={`/${locale}`} style={s.btn}>
+                  Ana sayfa
+                </Link>
+              </div>
+            </div>
+          ) : !lesson ? (
+            <div style={s.muted}>Ders bulunamadı.</div>
+          ) : (
+            <>
+              <div style={s.header}>
+                <h1 style={s.h1}>{lesson.title?.[locale] ?? "Ders"}</h1>
+                <div style={s.sub}>
+                  Seviye: <b>{lesson.level}</b> • Sıra: <b>{lesson.orderIndex}</b>
+                </div>
+              </div>
+
+              <div style={s.section}>
+                <div style={s.label}>Açıklama</div>
+                <div style={s.text}>
+                  {lesson.description?.[locale] ?? ""}
+                </div>
+              </div>
+
+              <div style={s.section}>
+                <div style={s.label}>İçerik</div>
+                <div style={s.text}>
+                  {lesson.content?.[locale] ?? ""}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
-
-      {/* Words Section */}
-      {words.length > 0 ? (
-        <LessonContent words={words} />
-      ) : (
-        <section className="rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl p-8 shadow-xl text-white/70">
-          İçerikte kelime listesi bulunamadı. (content formatını kontrol et)
-        </section>
-      )}
     </main>
   );
 }
+
+const s: Record<string, React.CSSProperties> = {
+  page: {
+    minHeight: "100vh",
+    background: "linear-gradient(135deg,#0b1020 0%, #121a35 35%, #2a1f44 100%)",
+    color: "white",
+    padding: "28px 0",
+  },
+  wrap: { maxWidth: 980, margin: "0 auto", padding: "0 16px" },
+  top: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 12,
+    marginBottom: 14,
+  },
+  back: {
+    color: "rgba(255,255,255,0.85)",
+    textDecoration: "none",
+    fontWeight: 700,
+  },
+  badge: {
+    fontSize: 12,
+    padding: "6px 10px",
+    borderRadius: 999,
+    border: "1px solid rgba(255,255,255,0.14)",
+    background: "rgba(255,255,255,0.06)",
+  },
+  card: {
+    borderRadius: 18,
+    border: "1px solid rgba(255,255,255,0.12)",
+    background: "rgba(0,0,0,0.18)",
+    boxShadow: "0 18px 60px rgba(0,0,0,0.35)",
+    padding: 18,
+  },
+  muted: { opacity: 0.75 },
+  errTitle: { fontSize: 18, fontWeight: 900, marginBottom: 6 },
+  errText: { opacity: 0.85, lineHeight: 1.55 },
+  btn: {
+    display: "inline-block",
+    background: "rgba(124,140,255,0.95)",
+    color: "#0b1020",
+    padding: "10px 12px",
+    borderRadius: 12,
+    fontWeight: 900,
+    textDecoration: "none",
+  },
+  header: { marginBottom: 10 },
+  h1: { fontSize: 26, margin: 0, fontWeight: 950, lineHeight: 1.2 },
+  sub: { marginTop: 8, opacity: 0.8, fontSize: 13 },
+  section: { marginTop: 16 },
+  label: { fontSize: 12, opacity: 0.7, marginBottom: 6, fontWeight: 800 },
+  text: {
+    whiteSpace: "pre-wrap",
+    lineHeight: 1.7,
+    opacity: 0.95,
+  },
+};
