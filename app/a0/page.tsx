@@ -1,257 +1,148 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { speakDutch } from "../../_shared/tts";
 
-type Item = { nl: string; tr: string; tag: string };
+type Word = {
+  nl: string;
+  tr: string;
+  category: string;
+};
 
-const WORDS: Item[] = [
-  { nl: "hallo", tr: "merhaba", tag: "Selam" },
-  { nl: "hoi", tr: "selam", tag: "Selam" },
-  { nl: "goedemorgen", tr: "günaydın", tag: "Selam" },
-  { nl: "goedemiddag", tr: "iyi günler", tag: "Selam" },
-  { nl: "goedenavond", tr: "iyi akşamlar", tag: "Selam" },
-  { nl: "tot ziens", tr: "görüşürüz", tag: "Selam" },
-  { nl: "dank je wel", tr: "teşekkür ederim", tag: "Nezaket" },
-  { nl: "alsjeblieft", tr: "lütfen / buyurun", tag: "Nezaket" },
-  { nl: "sorry", tr: "özür dilerim", tag: "Nezaket" },
+const WORDS: Word[] = [
+  // Selam & Nezaket
+  { nl: "hallo", tr: "merhaba", category: "Selam" },
+  { nl: "hoi", tr: "selam", category: "Selam" },
+  { nl: "goedemorgen", tr: "günaydın", category: "Selam" },
+  { nl: "goedemiddag", tr: "iyi günler", category: "Selam" },
+  { nl: "goedenavond", tr: "iyi akşamlar", category: "Selam" },
+  { nl: "tot ziens", tr: "görüşürüz", category: "Selam" },
+  { nl: "dank je wel", tr: "teşekkür ederim", category: "Nezaket" },
+  { nl: "alsjeblieft", tr: "lütfen / buyurun", category: "Nezaket" },
+  { nl: "sorry", tr: "özür dilerim", category: "Nezaket" },
 
-  { nl: "man", tr: "erkek", tag: "İnsan" },
-  { nl: "vrouw", tr: "kadın", tag: "İnsan" },
-  { nl: "kind", tr: "çocuk", tag: "İnsan" },
-  { nl: "vriend", tr: "arkadaş", tag: "İnsan" },
-  { nl: "familie", tr: "aile", tag: "İnsan" },
+  // İnsan
+  { nl: "man", tr: "erkek", category: "İnsan" },
+  { nl: "vrouw", tr: "kadın", category: "İnsan" },
+  { nl: "kind", tr: "çocuk", category: "İnsan" },
+  { nl: "vriend", tr: "arkadaş", category: "İnsan" },
+  { nl: "familie", tr: "aile", category: "İnsan" },
 
-  { nl: "huis", tr: "ev", tag: "Yer" },
-  { nl: "school", tr: "okul", tag: "Yer" },
-  { nl: "werk", tr: "iş", tag: "Yer" },
-  { nl: "winkel", tr: "mağaza", tag: "Yer" },
-  { nl: "station", tr: "istasyon", tag: "Yer" },
-  { nl: "straat", tr: "sokak", tag: "Yer" },
-  { nl: "toilet", tr: "tuvalet", tag: "Yer" },
-  { nl: "ingang", tr: "giriş", tag: "Yer" },
-  { nl: "uitgang", tr: "çıkış", tag: "Yer" },
+  // Yer
+  { nl: "huis", tr: "ev", category: "Yer" },
+  { nl: "school", tr: "okul", category: "Yer" },
+  { nl: "werk", tr: "iş", category: "Yer" },
+  { nl: "winkel", tr: "mağaza", category: "Yer" },
+  { nl: "station", tr: "istasyon", category: "Yer" },
+  { nl: "straat", tr: "sokak", category: "Yer" },
+  { nl: "toilet", tr: "tuvalet", category: "Yer" },
+  { nl: "ingang", tr: "giriş", category: "Yer" },
+  { nl: "uitgang", tr: "çıkış", category: "Yer" },
 
-  { nl: "vandaag", tr: "bugün", tag: "Zaman" },
-  { nl: "morgen", tr: "yarın", tag: "Zaman" },
-  { nl: "gisteren", tr: "dün", tag: "Zaman" },
-  { nl: "nu", tr: "şimdi", tag: "Zaman" },
-  { nl: "later", tr: "sonra", tag: "Zaman" },
+  // Zaman
+  { nl: "vandaag", tr: "bugün", category: "Zaman" },
+  { nl: "morgen", tr: "yarın", category: "Zaman" },
+  { nl: "gisteren", tr: "dün", category: "Zaman" },
+  { nl: "nu", tr: "şimdi", category: "Zaman" },
+  { nl: "later", tr: "sonra", category: "Zaman" },
 
-  { nl: "water", tr: "su", tag: "Yemek" },
-  { nl: "koffie", tr: "kahve", tag: "Yemek" },
-  { nl: "thee", tr: "çay", tag: "Yemek" },
-  { nl: "brood", tr: "ekmek", tag: "Yemek" },
-  { nl: "melk", tr: "süt", tag: "Yemek" },
-  { nl: "appel", tr: "elma", tag: "Yemek" },
-  { nl: "banaan", tr: "muz", tag: "Yemek" },
+  // Yiyecek & İçecek
+  { nl: "water", tr: "su", category: "Yemek" },
+  { nl: "koffie", tr: "kahve", category: "Yemek" },
+  { nl: "thee", tr: "çay", category: "Yemek" },
+  { nl: "brood", tr: "ekmek", category: "Yemek" },
+  { nl: "melk", tr: "süt", category: "Yemek" },
+  { nl: "appel", tr: "elma", category: "Yemek" },
+  { nl: "banaan", tr: "muz", category: "Yemek" },
 
-  { nl: "rood", tr: "kırmızı", tag: "Renk" },
-  { nl: "blauw", tr: "mavi", tag: "Renk" },
-  { nl: "groen", tr: "yeşil", tag: "Renk" },
-  { nl: "zwart", tr: "siyah", tag: "Renk" },
-  { nl: "wit", tr: "beyaz", tag: "Renk" },
+  // Sıfatlar
+  { nl: "goed", tr: "iyi", category: "Sıfat" },
+  { nl: "slecht", tr: "kötü", category: "Sıfat" },
+  { nl: "groot", tr: "büyük", category: "Sıfat" },
+  { nl: "klein", tr: "küçük", category: "Sıfat" },
+  { nl: "mooi", tr: "güzel", category: "Sıfat" },
+  { nl: "duur", tr: "pahalı", category: "Sıfat" },
+  { nl: "goedkoop", tr: "ucuz", category: "Sıfat" },
 
-  { nl: "goed", tr: "iyi", tag: "Sıfat" },
-  { nl: "slecht", tr: "kötü", tag: "Sıfat" },
-  { nl: "groot", tr: "büyük", tag: "Sıfat" },
-  { nl: "klein", tr: "küçük", tag: "Sıfat" },
-  { nl: "duur", tr: "pahalı", tag: "Sıfat" },
-  { nl: "goedkoop", tr: "ucuz", tag: "Sıfat" },
-  { nl: "mooi", tr: "güzel", tag: "Sıfat" },
-  { nl: "nieuw", tr: "yeni", tag: "Sıfat" },
-  { nl: "oud", tr: "eski", tag: "Sıfat" },
+  // Fiiller
+  { nl: "zijn", tr: "olmak", category: "Fiil" },
+  { nl: "hebben", tr: "sahip olmak", category: "Fiil" },
+  { nl: "gaan", tr: "gitmek", category: "Fiil" },
+  { nl: "komen", tr: "gelmek", category: "Fiil" },
+  { nl: "werken", tr: "çalışmak", category: "Fiil" },
+  { nl: "wonen", tr: "yaşamak", category: "Fiil" },
 
-  { nl: "zijn", tr: "olmak", tag: "Fiil" },
-  { nl: "hebben", tr: "sahip olmak", tag: "Fiil" },
-  { nl: "gaan", tr: "gitmek", tag: "Fiil" },
-  { nl: "komen", tr: "gelmek", tag: "Fiil" },
-  { nl: "werken", tr: "çalışmak", tag: "Fiil" },
-  { nl: "wonen", tr: "yaşamak", tag: "Fiil" },
-  { nl: "eten", tr: "yemek", tag: "Fiil" },
-  { nl: "drinken", tr: "içmek", tag: "Fiil" },
-
-  { nl: "een", tr: "bir", tag: "Sayı" },
-  { nl: "twee", tr: "iki", tag: "Sayı" },
-  { nl: "drie", tr: "üç", tag: "Sayı" },
-  { nl: "vier", tr: "dört", tag: "Sayı" },
-  { nl: "vijf", tr: "beş", tag: "Sayı" },
-  { nl: "zes", tr: "altı", tag: "Sayı" },
-  { nl: "zeven", tr: "yedi", tag: "Sayı" },
-  { nl: "acht", tr: "sekiz", tag: "Sayı" },
-  { nl: "negen", tr: "dokuz", tag: "Sayı" },
-  { nl: "tien", tr: "on", tag: "Sayı" },
-
-  // ekstra (daha fazla)
-  { nl: "links", tr: "sol", tag: "Yön" },
-  { nl: "rechts", tr: "sağ", tag: "Yön" },
-  { nl: "rechtdoor", tr: "dümdüz", tag: "Yön" },
-  { nl: "hier", tr: "burada", tag: "Yer" },
-  { nl: "daar", tr: "orada", tag: "Yer" },
-  { nl: "binnen", tr: "içeri", tag: "Yer" },
-  { nl: "buiten", tr: "dışarı", tag: "Yer" },
-  { nl: "open", tr: "açık", tag: "Sıfat" },
-  { nl: "dicht", tr: "kapalı", tag: "Sıfat" },
-  { nl: "help", tr: "yardım", tag: "Nezaket" },
+  // Sayılar
+  { nl: "een", tr: "bir", category: "Sayı" },
+  { nl: "twee", tr: "iki", category: "Sayı" },
+  { nl: "drie", tr: "üç", category: "Sayı" },
+  { nl: "vier", tr: "dört", category: "Sayı" },
+  { nl: "vijf", tr: "beş", category: "Sayı" },
+  { nl: "zes", tr: "altı", category: "Sayı" },
+  { nl: "zeven", tr: "yedi", category: "Sayı" },
+  { nl: "acht", tr: "sekiz", category: "Sayı" },
+  { nl: "negen", tr: "dokuz", category: "Sayı" },
+  { nl: "tien", tr: "on", category: "Sayı" },
 ];
 
-const TAGS = ["Hepsi", ...Array.from(new Set(WORDS.map(w => w.tag)))];
+export default function KelimelerPage() {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("Hepsi");
 
-export default function Kelimeler() {
-  const [q, setQ] = useState("");
-  const [tag, setTag] = useState("Hepsi");
+  const categories = ["Hepsi", ...Array.from(new Set(WORDS.map(w => w.category)))];
 
-  const list = useMemo(() => {
-    const query = q.trim().toLowerCase();
+  const filtered = useMemo(() => {
     return WORDS.filter(w => {
-      const okTag = tag === "Hepsi" ? true : w.tag === tag;
-      const okQ =
-        !query ||
-        w.nl.toLowerCase().includes(query) ||
-        w.tr.toLowerCase().includes(query);
-      return okTag && okQ;
+      const matchCat = category === "Hepsi" || w.category === category;
+      const q = query.toLowerCase();
+      const matchQ = !q || w.nl.includes(q) || w.tr.includes(q);
+      return matchCat && matchQ;
     });
-  }, [q, tag]);
+  }, [query, category]);
 
   return (
     <main style={s.page}>
       <div style={s.container}>
-        <div style={s.top}>
-          <div>
-            <h1 style={s.h1}>A0 – Kelimeler</h1>
-            <p style={s.sub}>Kartlara tıkla → 🔊 dinle. Arama + kategori var.</p>
-          </div>
-          <a href="/a0" style={s.linkBtn}>← A0</a>
-        </div>
+        <h1>A0 – Kelimeler</h1>
 
         <div style={s.filters}>
           <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Ara: huis / ev / koffie ..."
+            placeholder="Ara: huis / ev"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
             style={s.input}
           />
-          <select value={tag} onChange={(e) => setTag(e.target.value)} style={s.select}>
-            {TAGS.map(t => <option key={t} value={t}>{t}</option>)}
+          <select value={category} onChange={e => setCategory(e.target.value)} style={s.select}>
+            {categories.map(c => <option key={c}>{c}</option>)}
           </select>
-          <button style={s.testBtn} onClick={() => speakDutchTest()}>
-            🔊 Test sesi
-          </button>
         </div>
 
         <div style={s.grid}>
-          {list.map((w) => (
-            <button
-              key={w.nl + w.tr}
-              style={s.card}
-              onClick={() => speakDutch(w.nl)}
-              title="Dinlemek için tıkla"
-            >
-              <div style={s.cardTop}>
-                <span style={s.tag}>{w.tag}</span>
-                <span style={s.icon}>🔊</span>
-              </div>
-              <div style={s.nl}>{w.nl}</div>
+          {filtered.map(w => (
+            <div key={w.nl} style={s.card}>
+              <div style={s.word}>{w.nl}</div>
               <div style={s.tr}>{w.tr}</div>
-            </button>
+              <button onClick={() => speakDutch(w.nl)} style={s.btn}>🔊 Dinle</button>
+            </div>
           ))}
         </div>
 
-        <div style={s.bottom}>
-          <a href="/a0/cumleler" style={s.linkBtn}>Sonraki: Cümleler →</a>
-        </div>
+        <a href="/a0/cumleler" style={s.link}>Sonraki → Cümleler</a>
       </div>
     </main>
   );
 }
 
-function speakDutchTest() {
-  speakDutch("Goedemorgen. We oefenen woorden.", 0.9);
-}
-
-function speakDutch(text: string, rate = 0.9) {
-  speakDutchImported(text, rate);
-}
-
-function speakDutchImported(text: string, rate = 0.9) {
-  // gerçek import
-  speakDutchReal(text, rate);
-}
-
-function speakDutchReal(text: string, rate = 0.9) {
-  speakDutch(text, rate);
-}
-
-const speakDutchImported = (text: string, rate = 0.9) => {
-  speakDutch(text, rate);
-};
-
-const s: Record<string, React.CSSProperties> = {
-  page: { minHeight: "100vh", background: "#070A12", color: "white", padding: "32px 0" },
-  container: { maxWidth: 1100, margin: "0 auto", padding: "0 16px" },
-  top: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, flexWrap: "wrap" },
-  h1: { margin: 0, fontSize: 34 },
-  sub: { opacity: 0.75, marginTop: 8, lineHeight: 1.6 },
-
-  linkBtn: {
-    textDecoration: "none",
-    color: "rgba(255,255,255,0.92)",
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.12)",
-    padding: "10px 12px",
-    borderRadius: 12,
-    fontWeight: 900
-  },
-
-  filters: { marginTop: 16, display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" },
-  input: {
-    flex: "1 1 260px",
-    padding: "12px 12px",
-    borderRadius: 12,
-    border: "1px solid rgba(255,255,255,0.14)",
-    background: "rgba(0,0,0,0.25)",
-    color: "white"
-  },
-  select: {
-    padding: "12px 12px",
-    borderRadius: 12,
-    border: "1px solid rgba(255,255,255,0.14)",
-    background: "rgba(0,0,0,0.25)",
-    color: "white"
-  },
-  testBtn: {
-    cursor: "pointer",
-    border: "none",
-    borderRadius: 12,
-    padding: "12px 12px",
-    background: "rgba(120,140,255,0.95)",
-    color: "#0B1020",
-    fontWeight: 950
-  },
-
-  grid: { marginTop: 16, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 },
-  card: {
-    cursor: "pointer",
-    textAlign: "left",
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid rgba(255,255,255,0.10)",
-    borderRadius: 16,
-    padding: 14,
-    color: "white"
-  },
-  cardTop: { display: "flex", justifyContent: "space-between", alignItems: "center" },
-  tag: {
-    fontSize: 12,
-    fontWeight: 900,
-    padding: "6px 10px",
-    borderRadius: 999,
-    background: "rgba(0,200,255,0.12)",
-    border: "1px solid rgba(0,200,255,0.18)"
-  },
-  icon: { opacity: 0.9 },
-
-  nl: { marginTop: 10, fontSize: 18, fontWeight: 950 },
-  tr: { marginTop: 6, opacity: 0.85 },
-
-  bottom: { marginTop: 20, display: "flex", justifyContent: "flex-end" }
+const s: any = {
+  page: { background: "#070A12", color: "white", minHeight: "100vh", padding: 24 },
+  container: { maxWidth: 1100, margin: "0 auto" },
+  filters: { display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap" },
+  input: { padding: 10, borderRadius: 8, flex: 1 },
+  select: { padding: 10, borderRadius: 8 },
+  grid: { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))", gap: 14 },
+  card: { background: "rgba(255,255,255,.05)", padding: 14, borderRadius: 12 },
+  word: { fontSize: 18, fontWeight: 800 },
+  tr: { opacity: .8, marginBottom: 6 },
+  btn: { padding: "6px 10px", borderRadius: 8, cursor: "pointer" },
+  link: { display: "inline-block", marginTop: 20, color: "#9db4ff" }
 };
