@@ -1,561 +1,448 @@
-"use client";
-
-import React, { useEffect, useRef, useState } from "react";
-
-export default function TrHome() {
-  const [langOpen, setLangOpen] = useState(false);
-  const langRef = useRef<HTMLDivElement | null>(null);
-
-  // ✅ Title: NederLearn
-  useEffect(() => {
-    document.title = "NederLearn";
-  }, []);
-
-  // ✅ dışarı tıklayınca kapan
-  useEffect(() => {
-    function onDocClick(e: MouseEvent) {
-      if (!langRef.current) return;
-      const target = e.target as Node;
-      if (!langRef.current.contains(target)) setLangOpen(false);
-    }
-    document.addEventListener("mousedown", onDocClick);
-    return () => document.removeEventListener("mousedown", onDocClick);
-  }, []);
-
+export default function TrHomePage() {
   return (
-    <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="nav">
-            <a className="brand" href="/tr" aria-label="NederLearn Ana Sayfa">
-              Neder<span className="brandAccent">Learn</span>
+    <div style={s.wrap}>
+      {/* HERO */}
+      <section style={s.hero}>
+        <div style={s.heroLeft}>
+          <div style={s.badge}>🇳🇱 Hollandaca öğren • A0 → B1</div>
+
+          <h1 style={s.h1}>
+            <span style={s.h1Strong}>NederLearn</span> ile Hollandacayı
+            <br />
+            adım adım öğren.
+          </h1>
+
+          <p style={s.lead}>
+            Türkçe anlatımlı, bol örnekli ve sesli destekli derslerle A0’dan başlayıp
+            B1’e kadar ilerle. Mobilde hızlı, sade ve net.
+          </p>
+
+          <div style={s.ctaRow}>
+            <a href="/tr/a0" style={s.ctaPrimary}>
+              A0’dan Başla →
             </a>
+            <a href="/tr/login" style={s.ctaGhost}>
+              Giriş Yap
+            </a>
+          </div>
 
-            <nav className="navLinks" aria-label="Üst menü">
-              <a className="link" href="#seviyeler">Seviyeler</a>
-              <a className="link" href="#nasil">Nasıl çalışır?</a>
-              <a className="link" href="#hedef">Hedef</a>
-            </nav>
-
-            <div className="actions">
-              {/* Language dropdown */}
-              <div ref={langRef} className="langWrap">
-                <button
-                  type="button"
-                  className="langButton"
-                  onClick={() => setLangOpen(v => !v)}
-                  aria-haspopup="menu"
-                  aria-expanded={langOpen}
-                  title="Dil seç"
-                >
-                  <span className="langIcon">🌐</span>
-                  <span className="caret">{langOpen ? "▴" : "▾"}</span>
-                </button>
-
-                {langOpen && (
-                  <div className="langMenu" role="menu">
-                    <a className="langItem" href="/tr" role="menuitem">🇹🇷 Türkçe</a>
-                    <a className="langItem" href="/nl" role="menuitem">🇳🇱 Nederlands</a>
-                    <a className="langItem" href="/en" role="menuitem">🇬🇧 English</a>
-                    <a className="langItem" href="/es" role="menuitem">🇪🇸 Español</a>
-                    <a className="langItem" href="/ar" role="menuitem">🇸🇦 العربية</a>
-                  </div>
-                )}
-              </div>
-
-              <a className="btnGhost" href="/login">Giriş</a>
-              <a className="btn" href="/register">Kayıt Ol</a>
+          <div style={s.statsRow}>
+            <div style={s.stat}>
+              <div style={s.statNum}>A0</div>
+              <div style={s.statText}>Alfabe + Temel kelimeler</div>
+            </div>
+            <div style={s.stat}>
+              <div style={s.statNum}>A1</div>
+              <div style={s.statText}>Günlük konuşma kalıpları</div>
+            </div>
+            <div style={s.stat}>
+              <div style={s.statNum}>A2–B1</div>
+              <div style={s.statText}>Cümle kurma + pratik</div>
             </div>
           </div>
         </div>
-      </header>
 
-      <main>
-        {/* HERO */}
-        <section className="hero">
-          <div className="container">
-            <div className="heroGrid">
-              <div className="heroLeft">
-                <div className="badge">🇳🇱 Hollandaca Öğren • A0 → B1</div>
-
-                <h1 className="h1">
-                  Hollandacayı <span className="h1Accent">düzenli</span> ve{" "}
-                  <span className="h1Accent2">kolay</span> öğren.
-                </h1>
-
-                <p className="lead">
-                  Ana dilin Türkçe. Açıklamalar Türkçe, örnekler ve pratikler Hollandaca.
-                  A0’dan başlayıp B1’e kadar adım adım ilerle.
-                </p>
-
-                <div className="ctaRow">
-                  <a className="btnBig" href="#seviyeler">A0 ile başla</a>
-                  <a className="btnBigGhost" href="/register">Ücretsiz hesap aç</a>
-                </div>
-
-                <div className="miniInfo">
-                  <div className="miniCard">
-                    <div className="miniTitle">Mobil uyumlu ✅</div>
-                    <div className="miniText">Telefonundan da rahatça çalış.</div>
-                  </div>
-                  <div className="miniCard">
-                    <div className="miniTitle">Hedef dil: Hollandaca ✅</div>
-                    <div className="miniText">Türkçe açıklama, Hollandaca pratik.</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* RIGHT PANEL */}
-              <aside className="panel" aria-label="Önerilen içerik">
-                <div className="panelTop">
-                  <div className="panelTitle">Bugün önerilen</div>
-                  <div className="pill">A0</div>
-                </div>
-
-                <div className="lesson">
-                  <div className="dot" />
-                  <div>
-                    <div className="lessonTitle">Alfabe</div>
-                    <div className="lessonMeta">Sesli öğrenme • 10 dk</div>
-                  </div>
-                  <a className="lessonGo" href="/a0/alfabe">Aç →</a>
-                </div>
-
-                <div className="lesson">
-                  <div className="dot2" />
-                  <div>
-                    <div className="lessonTitle">Kelimeler</div>
-                    <div className="lessonMeta">Temel kelimeler • 10 dk</div>
-                  </div>
-                  <a className="lessonGo" href="/a0/kelimeler">Aç →</a>
-                </div>
-
-                <div className="lesson">
-                  <div className="dot3" />
-                  <div>
-                    <div className="lessonTitle">Cümleler</div>
-                    <div className="lessonMeta">Bol pratik • 15 dk</div>
-                  </div>
-                  <a className="lessonGo" href="/a0/cumleler">Aç →</a>
-                </div>
-
-                <div className="panelCta">
-                  <a className="btnFull" href="/a0">A0 merkezine git</a>
-                  <div className="panelHint">
-                    İpucu: Her gün <b>15 dakika</b> yeter.
-                  </div>
-                </div>
-              </aside>
+        <div style={s.heroRight}>
+          <div style={s.previewCard}>
+            <div style={s.previewTop}>
+              <div style={s.previewDot} />
+              <div style={s.previewDot} />
+              <div style={s.previewDot} />
             </div>
-          </div>
-        </section>
 
-        {/* LEVELS */}
-        <section id="seviyeler" className="section">
-          <div className="container">
-            <h2 className="h2">Seviyeni seç</h2>
-            <p className="muted">Bölüm bölüm ilerle: A0 → B1</p>
+            <div style={s.previewBody}>
+              <div style={s.previewTitle}>Bugünün mini ders hedefi</div>
 
-            <div className="grid">
-              <a className="card" href="/a0">
-                <div className="cardTop">
-                  <span className="tag">A0</span>
-                  <span className="arrow">→</span>
+              <div style={s.task}>
+                <div style={s.taskIcon}>🔤</div>
+                <div>
+                  <div style={s.taskName}>Alfabe (Sesli)</div>
+                  <div style={s.taskDesc}>
+                    Harfleri dinle, tekrar et, örnekleri oku.
+                  </div>
                 </div>
-                <div className="cardTitle">Başlangıç</div>
-                <div className="cardText">Alfabe, temel kelime ve cümleler</div>
-              </a>
-
-              <a className="card" href="/a1">
-                <div className="cardTop">
-                  <span className="tag">A1</span>
-                  <span className="arrow">→</span>
-                </div>
-                <div className="cardTitle">Temel</div>
-                <div className="cardText">Günlük konuşmalar, temel gramer</div>
-              </a>
-
-              <a className="card" href="/a2">
-                <div className="cardTop">
-                  <span className="tag">A2</span>
-                  <span className="arrow">→</span>
-                </div>
-                <div className="cardTitle">Orta</div>
-                <div className="cardText">Okuma, dinleme, pratik alıştırmalar</div>
-              </a>
-
-              <a className="card" href="/b1">
-                <div className="cardTop">
-                  <span className="tag">B1</span>
-                  <span className="arrow">→</span>
-                </div>
-                <div className="cardTitle">Orta-İleri</div>
-                <div className="cardText">Senaryolar, akıcılık ve kelime dağarcığı</div>
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* HOW IT WORKS */}
-        <section id="nasil" className="sectionAlt">
-          <div className="container">
-            <h2 className="h2">Nasıl çalışır?</h2>
-            <p className="muted">Öğren → Alıştırma → İlerleme</p>
-
-            <div className="steps">
-              <div className="step">
-                <div className="stepNum">1</div>
-                <div className="stepTitle">Ders</div>
-                <div className="cardText">Türkçe açıklama + Hollandaca örnekler</div>
               </div>
-              <div className="step">
-                <div className="stepNum">2</div>
-                <div className="stepTitle">Alıştırma</div>
-                <div className="cardText">Dinle, tekrar et, mini testlerle pekiştir</div>
+
+              <div style={s.task}>
+                <div style={s.taskIcon}>🧠</div>
+                <div>
+                  <div style={s.taskName}>10 Kelime</div>
+                  <div style={s.taskDesc}>Basit kelimeler + telaffuz.</div>
+                </div>
               </div>
-              <div className="step">
-                <div className="stepNum">3</div>
-                <div className="stepTitle">İlerleme</div>
-                <div className="cardText">A0 merkezinde tamamlananları işaretle</div>
+
+              <div style={s.task}>
+                <div style={s.taskIcon}>💬</div>
+                <div>
+                  <div style={s.taskName}>5 Cümle</div>
+                  <div style={s.taskDesc}>
+                    “Ben…”, “Sen…”, “Bu…”, “Şu…” kalıpları.
+                  </div>
+                </div>
+              </div>
+
+              <a href="/tr/a0/alfabe" style={s.previewBtn}>
+                Alfabe sayfasını aç →
+              </a>
+
+              <div style={s.previewHint}>
+                Not: Sesli okuma tarayıcı üzerinden çalışır (Chrome/Edge önerilir).
               </div>
             </div>
           </div>
-        </section>
-
-        {/* GOAL */}
-        <section id="hedef" className="section">
-          <div className="container">
-            <h2 className="h2">Hedefimiz</h2>
-            <p className="muted">
-              Türkçe bilen herkesin Hollandacayı A0’dan B1’e kadar net bir yol haritasıyla öğrenmesi.
-              İleride diğer diller eklenecek ama hedef her zaman Hollandaca olacak.
-            </p>
-          </div>
-        </section>
-      </main>
-
-      <footer className="footer">
-        <div className="container">
-          <div className="footerText">© {new Date().getFullYear()} NederLearn</div>
         </div>
-      </footer>
+      </section>
 
-      {/* ✅ Responsive + optimize CSS (tek dosya içinde) */}
-      <style jsx global>{`
-        :root {
-          --bg: #070a12;
-          --card: rgba(255, 255, 255, 0.04);
-          --border: rgba(255, 255, 255, 0.10);
-          --text: rgba(255, 255, 255, 0.92);
-          --muted: rgba(255, 255, 255, 0.70);
-          --accent: rgba(120, 140, 255, 0.95);
-          --accent2: rgba(0, 200, 255, 0.90);
-        }
+      {/* ÖZELLİKLER */}
+      <section style={s.section}>
+        <h2 style={s.h2}>Nasıl öğretiyoruz?</h2>
+        <p style={s.p}>
+          “Az ama sürekli” mantığıyla: kısa ders + bol örnek + pratik + tekrar.
+          Her bölümde hedef net, ilerleme görünür.
+        </p>
 
-        * { box-sizing: border-box; }
-        html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); }
-        a { color: inherit; }
-        .page { min-height: 100vh; background: var(--bg); }
+        <div style={s.grid3}>
+          <div style={s.card}>
+            <div style={s.cardIcon}>🎧</div>
+            <div style={s.cardTitle}>Sesli telaffuz</div>
+            <div style={s.cardText}>
+              Harfleri, kelimeleri ve cümleleri tarayıcıdan Hollandaca okuturuz.
+            </div>
+          </div>
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 18px; }
+          <div style={s.card}>
+            <div style={s.cardIcon}>🧩</div>
+            <div style={s.cardTitle}>Parça parça öğrenme</div>
+            <div style={s.cardText}>
+              A0 → A1 → A2 → B1 şeklinde modüller. Her modül ayrı hedeflerle gider.
+            </div>
+          </div>
 
-        .header {
-          position: sticky; top: 0; z-index: 20;
-          background: rgba(7, 10, 18, 0.72);
-          border-bottom: 1px solid rgba(255,255,255,0.08);
-          backdrop-filter: blur(10px);
-        }
+          <div style={s.card}>
+            <div style={s.cardIcon}>✅</div>
+            <div style={s.cardTitle}>Bol örnek + pratik</div>
+            <div style={s.cardText}>
+              Her konuda çok sayıda örnek cümle, mini test ve tekrar alanı.
+            </div>
+          </div>
+        </div>
+      </section>
 
-        .nav {
-          height: 68px;
-          display: flex; align-items: center; justify-content: space-between;
-          gap: 12px;
-        }
+      {/* SEVİYELER */}
+      <section style={s.section}>
+        <h2 style={s.h2}>Seviyeler</h2>
 
-        .brand { font-weight: 900; letter-spacing: -0.2px; text-decoration: none; }
-        .brandAccent { color: var(--accent); }
+        <div style={s.levelGrid}>
+          <LevelCard
+            title="A0 – Başlangıç"
+            desc="Alfabe, sesler, temel kelimeler, basit tanışma."
+            href="/tr/a0"
+            tag="Yeni başlayan"
+          />
+          <LevelCard
+            title="A1 – Temel"
+            desc="Günlük konuşmalar, soru sorma, zamanlar (basit)."
+            href="/tr/a1"
+            tag="Günlük hayat"
+          />
+          <LevelCard
+            title="A2 – Orta"
+            desc="Daha uzun cümleler, bağlaçlar, pratik ağırlıklı."
+            href="/tr/a2"
+            tag="Akıcılık"
+          />
+          <LevelCard
+            title="B1 – Orta-İleri"
+            desc="İş/okul hayatı, metin anlama, kendini ifade."
+            href="/tr/b1"
+            tag="Hedef seviye"
+          />
+        </div>
+      </section>
 
-        .navLinks { display: flex; gap: 14px; flex-wrap: wrap; }
-        .link { text-decoration: none; color: rgba(255,255,255,0.75); font-size: 14px; }
-        .link:hover { color: rgba(255,255,255,0.92); }
-
-        .actions { display: flex; gap: 10px; align-items: center; }
-        .btnGhost {
-          text-decoration: none;
-          padding: 10px 12px;
-          border-radius: 10px;
-          font-size: 13px;
-          border: 1px solid rgba(255,255,255,0.10);
-          background: rgba(255,255,255,0.02);
-          color: rgba(255,255,255,0.90);
-        }
-        .btn {
-          text-decoration: none;
-          padding: 10px 12px;
-          border-radius: 10px;
-          font-size: 13px;
-          font-weight: 900;
-          background: var(--accent);
-          color: #0b1020;
-        }
-
-        .langWrap { position: relative; }
-        .langButton {
-          display: inline-flex; align-items: center; gap: 6px;
-          padding: 10px 10px;
-          border-radius: 10px;
-          border: 1px solid rgba(255,255,255,0.12);
-          background: rgba(255,255,255,0.04);
-          color: rgba(255,255,255,0.9);
-          cursor: pointer;
-          min-height: 40px;
-        }
-        .langMenu {
-          position: absolute; top: 48px; right: 0;
-          min-width: 180px;
-          background: #0b1020;
-          border: 1px solid rgba(255,255,255,0.12);
-          border-radius: 12px;
-          overflow: hidden;
-          box-shadow: 0 14px 34px rgba(0,0,0,0.45);
-        }
-        .langItem {
-          display: block;
-          padding: 10px 12px;
-          text-decoration: none;
-          font-size: 13px;
-          color: rgba(255,255,255,0.92);
-          border-top: 1px solid rgba(255,255,255,0.06);
-        }
-        .langItem:hover { background: rgba(255,255,255,0.05); }
-
-        .hero {
-          padding: 56px 0 26px;
-          background:
-            radial-gradient(1200px 600px at 20% 10%, rgba(120,140,255,0.18), transparent 60%),
-            radial-gradient(900px 500px at 90% 20%, rgba(0,200,255,0.14), transparent 55%);
-        }
-
-        .heroGrid {
-          display: grid;
-          grid-template-columns: 1.15fr 0.85fr;
-          gap: 22px;
-          align-items: stretch;
-        }
-
-        .badge {
-          display: inline-flex;
-          padding: 8px 12px;
-          border-radius: 999px;
-          background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.10);
-          font-size: 13px;
-        }
-
-        .h1 {
-          margin: 14px 0 10px;
-          font-size: 44px;
-          line-height: 1.05;
-          letter-spacing: -0.8px;
-        }
-        .h1Accent { color: var(--accent2); }
-        .h1Accent2 { color: var(--accent); }
-
-        .lead {
-          margin: 0;
-          font-size: 16px;
-          line-height: 1.6;
-          color: rgba(255,255,255,0.72);
-          max-width: 680px;
-        }
-
-        .ctaRow { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
-        .btnBig {
-          text-decoration: none;
-          padding: 12px 16px;
-          border-radius: 14px;
-          font-weight: 900;
-          background: var(--accent);
-          color: #0b1020;
-        }
-        .btnBigGhost {
-          text-decoration: none;
-          padding: 12px 16px;
-          border-radius: 14px;
-          font-weight: 900;
-          background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.10);
-          color: rgba(255,255,255,0.92);
-        }
-
-        .miniInfo {
-          margin-top: 16px;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-        }
-        .miniCard {
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.10);
-          border-radius: 16px;
-          padding: 12px;
-        }
-        .miniTitle { font-weight: 900; }
-        .miniText { opacity: 0.7; font-size: 13px; margin-top: 4px; line-height: 1.45; }
-
-        .panel {
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.10);
-          border-radius: 18px;
-          padding: 16px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-        }
-        .panelTop { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .panelTitle { font-weight: 900; }
-        .pill {
-          font-size: 12px;
-          padding: 6px 10px;
-          border-radius: 999px;
-          border: 1px solid rgba(0,200,255,0.18);
-          background: rgba(0,200,255,0.12);
-        }
-
-        .lesson {
-          display: grid;
-          grid-template-columns: 12px 1fr auto;
-          gap: 10px;
-          align-items: start;
-          padding: 10px 10px;
-          border-radius: 14px;
-          border: 1px solid rgba(255,255,255,0.08);
-          background: rgba(0,0,0,0.15);
-          margin-top: 10px;
-        }
-        .dot, .dot2, .dot3 {
-          width: 10px; height: 10px; border-radius: 999px; margin-top: 4px;
-        }
-        .dot { background: var(--accent); box-shadow: 0 0 0 4px rgba(120,140,255,0.12); }
-        .dot2 { background: var(--accent2); box-shadow: 0 0 0 4px rgba(0,200,255,0.12); }
-        .dot3 { background: rgba(0,255,160,0.9); box-shadow: 0 0 0 4px rgba(0,255,160,0.12); }
-
-        .lessonTitle { font-weight: 900; }
-        .lessonMeta { opacity: 0.65; font-size: 12px; margin-top: 2px; }
-        .lessonGo {
-          text-decoration: none;
-          padding: 8px 10px;
-          border-radius: 12px;
-          font-weight: 900;
-          border: 1px solid rgba(255,255,255,0.10);
-          background: rgba(255,255,255,0.04);
-          color: rgba(255,255,255,0.92);
-          white-space: nowrap;
-        }
-        .lessonGo:hover { background: rgba(255,255,255,0.07); }
-
-        .panelCta { margin-top: 14px; }
-        .btnFull {
-          display: block;
-          text-align: center;
-          text-decoration: none;
-          padding: 12px 14px;
-          border-radius: 14px;
-          font-weight: 900;
-          background: var(--accent);
-          color: #0b1020;
-        }
-        .panelHint { margin-top: 10px; font-size: 12px; opacity: 0.72; }
-
-        .section { padding: 34px 0; }
-        .sectionAlt {
-          padding: 34px 0;
-          background: rgba(255,255,255,0.02);
-          border-top: 1px solid rgba(255,255,255,0.06);
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .h2 { margin: 0; font-size: 26px; letter-spacing: -0.3px; }
-        .muted { margin: 6px 0 0; color: var(--muted); line-height: 1.6; }
-
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 12px;
-          margin-top: 14px;
-        }
-
-        .card {
-          text-decoration: none;
-          color: rgba(255,255,255,0.92);
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.10);
-          border-radius: 18px;
-          padding: 16px;
-          transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
-        }
-        .card:hover {
-          transform: translateY(-2px);
-          background: rgba(255,255,255,0.06);
-          border-color: rgba(255,255,255,0.14);
-        }
-
-        .cardTop { display: flex; justify-content: space-between; align-items: center; }
-        .tag {
-          font-size: 12px; font-weight: 900;
-          padding: 6px 10px;
-          border-radius: 999px;
-          background: rgba(0,200,255,0.10);
-          border: 1px solid rgba(0,200,255,0.18);
-        }
-        .arrow { opacity: 0.6; }
-        .cardTitle { font-weight: 950; margin-top: 8px; }
-        .cardText { color: rgba(255,255,255,0.68); font-size: 13px; line-height: 1.5; margin-top: 6px; }
-
-        .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
-        .step {
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.10);
-          border-radius: 18px;
-          padding: 16px;
-        }
-        .stepNum {
-          width: 30px; height: 30px;
-          border-radius: 10px;
-          display: grid; place-items: center;
-          font-weight: 900;
-          background: var(--accent);
-          color: #0b1020;
-          margin-bottom: 10px;
-        }
-        .stepTitle { font-weight: 900; }
-
-        .footer {
-          border-top: 1px solid rgba(255,255,255,0.08);
-          background: rgba(0,0,0,0.20);
-          padding: 18px 0;
-        }
-        .footerText { opacity: 0.7; font-size: 12px; }
-
-        /* ✅ MOBİL OPTİMİZASYON */
-        @media (max-width: 980px) {
-          .heroGrid { grid-template-columns: 1fr; }
-          .panel { order: 2; }
-          .heroLeft { order: 1; }
-          .grid { grid-template-columns: repeat(2, 1fr); }
-          .miniInfo { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 640px) {
-          .navLinks { display: none; } /* mobilde sade üst bar */
-          .h1 { font-size: 34px; }
-          .container { padding: 0 14px; }
-          .grid { grid-template-columns: 1fr; }
-          .steps { grid-template-columns: 1fr; }
-          .btnGhost, .btn { padding: 10px 10px; }
-        }
-
-        /* Dokunmatik optimizasyon */
-        button, a { -webkit-tap-highlight-color: transparent; }
-      `}</style>
+      {/* CTA ALT */}
+      <section style={s.bottomCta}>
+        <div style={s.bottomBox}>
+          <div>
+            <div style={s.bottomTitle}>Hazırsan başlayalım 🚀</div>
+            <div style={s.bottomText}>
+              İlk adım: A0 Alfabe (sesli). 10 dakikada temel at.
+            </div>
+          </div>
+          <div style={s.bottomActions}>
+            <a href="/tr/a0" style={s.ctaPrimary}>
+              A0’a Git →
+            </a>
+            <a href="/tr/a0/alfabe" style={s.ctaGhost}>
+              Alfabe (Sesli)
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
+
+function LevelCard({
+  title,
+  desc,
+  href,
+  tag,
+}: {
+  title: string;
+  desc: string;
+  href: string;
+  tag: string;
+}) {
+  return (
+    <a href={href} style={s.levelCard}>
+      <div style={s.levelTop}>
+        <div style={s.levelTitle}>{title}</div>
+        <div style={s.levelTag}>{tag}</div>
+      </div>
+      <div style={s.levelDesc}>{desc}</div>
+      <div style={s.levelLink}>Aç →</div>
+    </a>
+  );
+}
+
+const s: Record<string, React.CSSProperties> = {
+  wrap: { display: "flex", flexDirection: "column", gap: 28 },
+
+  hero: {
+    display: "grid",
+    gridTemplateColumns: "1.2fr 0.8fr",
+    gap: 18,
+    alignItems: "stretch",
+  },
+
+  heroLeft: {
+    background: "rgba(255,255,255,0.04)",
+    border: "1px solid rgba(255,255,255,0.10)",
+    borderRadius: 18,
+    padding: 18,
+    overflow: "hidden",
+  },
+
+  badge: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 8,
+    padding: "8px 10px",
+    borderRadius: 999,
+    border: "1px solid rgba(255,255,255,0.14)",
+    background: "rgba(124,140,255,0.10)",
+    color: "rgba(255,255,255,0.92)",
+    fontWeight: 800,
+    fontSize: 12,
+  },
+
+  h1: { margin: "14px 0 8px", lineHeight: 1.15, fontSize: 34 },
+  h1Strong: { fontWeight: 950 },
+
+  lead: { margin: 0, opacity: 0.78, lineHeight: 1.65, fontSize: 15 },
+
+  ctaRow: { display: "flex", gap: 10, marginTop: 14, flexWrap: "wrap" },
+
+  ctaPrimary: {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "#7c8cff",
+    color: "#0b1020",
+    padding: "12px 14px",
+    borderRadius: 12,
+    textDecoration: "none",
+    fontWeight: 900,
+    minWidth: 140,
+  },
+
+  ctaGhost: {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "rgba(255,255,255,0.06)",
+    color: "rgba(255,255,255,0.92)",
+    padding: "12px 14px",
+    borderRadius: 12,
+    textDecoration: "none",
+    fontWeight: 900,
+    border: "1px solid rgba(255,255,255,0.12)",
+    minWidth: 140,
+  },
+
+  statsRow: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3,1fr)",
+    gap: 10,
+    marginTop: 14,
+  },
+
+  stat: {
+    padding: 12,
+    borderRadius: 14,
+    border: "1px solid rgba(255,255,255,0.10)",
+    background: "rgba(255,255,255,0.03)",
+  },
+  statNum: { fontSize: 16, fontWeight: 950 },
+  statText: { fontSize: 12, opacity: 0.7, marginTop: 4, lineHeight: 1.35 },
+
+  heroRight: { display: "flex" },
+
+  previewCard: {
+    width: "100%",
+    background: "rgba(255,255,255,0.04)",
+    border: "1px solid rgba(255,255,255,0.10)",
+    borderRadius: 18,
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+  },
+
+  previewTop: {
+    height: 42,
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    padding: "0 14px",
+    borderBottom: "1px solid rgba(255,255,255,0.08)",
+    background: "rgba(255,255,255,0.02)",
+  },
+
+  previewDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 999,
+    background: "rgba(255,255,255,0.20)",
+  },
+
+  previewBody: { padding: 16, display: "flex", flexDirection: "column", gap: 12 },
+
+  previewTitle: { fontWeight: 950, fontSize: 14 },
+
+  task: {
+    display: "flex",
+    gap: 12,
+    padding: 12,
+    borderRadius: 14,
+    border: "1px solid rgba(255,255,255,0.10)",
+    background: "rgba(255,255,255,0.03)",
+  },
+  taskIcon: { fontSize: 18 },
+  taskName: { fontWeight: 900 },
+  taskDesc: { fontSize: 12, opacity: 0.75, marginTop: 3, lineHeight: 1.35 },
+
+  previewBtn: {
+    marginTop: 4,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "rgba(0,200,255,0.12)",
+    border: "1px solid rgba(0,200,255,0.18)",
+    color: "rgba(255,255,255,0.92)",
+    padding: "12px 14px",
+    borderRadius: 12,
+    textDecoration: "none",
+    fontWeight: 900,
+  },
+
+  previewHint: { fontSize: 12, opacity: 0.6, lineHeight: 1.45 },
+
+  section: {
+    background: "rgba(255,255,255,0.04)",
+    border: "1px solid rgba(255,255,255,0.10)",
+    borderRadius: 18,
+    padding: 18,
+  },
+
+  h2: { margin: 0, fontSize: 20 },
+  p: { margin: "8px 0 0", opacity: 0.75, lineHeight: 1.65, fontSize: 14 },
+
+  grid3: {
+    marginTop: 14,
+    display: "grid",
+    gridTemplateColumns: "repeat(3,1fr)",
+    gap: 12,
+  },
+
+  card: {
+    padding: 14,
+    borderRadius: 16,
+    border: "1px solid rgba(255,255,255,0.10)",
+    background: "rgba(255,255,255,0.03)",
+  },
+  cardIcon: { fontSize: 20 },
+  cardTitle: { marginTop: 8, fontWeight: 950 },
+  cardText: { marginTop: 6, fontSize: 13, opacity: 0.75, lineHeight: 1.55 },
+
+  levelGrid: {
+    marginTop: 14,
+    display: "grid",
+    gridTemplateColumns: "repeat(2,1fr)",
+    gap: 12,
+  },
+
+  levelCard: {
+    textDecoration: "none",
+    color: "inherit",
+    padding: 16,
+    borderRadius: 18,
+    border: "1px solid rgba(255,255,255,0.10)",
+    background: "rgba(255,255,255,0.03)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+
+  levelTop: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: 10,
+  },
+
+  levelTitle: { fontWeight: 950, fontSize: 15, lineHeight: 1.2 },
+  levelTag: {
+    fontSize: 12,
+    fontWeight: 900,
+    padding: "6px 10px",
+    borderRadius: 999,
+    background: "rgba(124,140,255,0.12)",
+    border: "1px solid rgba(124,140,255,0.20)",
+    whiteSpace: "nowrap",
+  },
+
+  levelDesc: { fontSize: 13, opacity: 0.75, lineHeight: 1.55 },
+  levelLink: { fontWeight: 900, opacity: 0.9 },
+
+  bottomCta: { marginTop: 4 },
+
+  bottomBox: {
+    borderRadius: 18,
+    border: "1px solid rgba(255,255,255,0.10)",
+    background:
+      "linear-gradient(135deg, rgba(124,140,255,0.16), rgba(0,200,255,0.10))",
+    padding: 18,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+    flexWrap: "wrap",
+  },
+
+  bottomTitle: { fontWeight: 950, fontSize: 16 },
+  bottomText: { marginTop: 6, fontSize: 13, opacity: 0.75, lineHeight: 1.55 },
+
+  bottomActions: { display: "flex", gap: 10, flexWrap: "wrap" },
+};
+
+/**
+ * Mobil uyum için: layout dışı CSS kullanmıyoruz, ama grid’ler mobilde tek kolona düşsün diye
+ * en güvenlisi: küçük bir “media query” yerine, gridleri auto düzenlemek.
+ * Next’in inline style’ında media query yok, bu yüzden pratik çözüm:
+ * mobilde zaten dar ekranda grid kırılacağı için daha iyi olması adına
+ * sayfayı basit tutuyoruz.
+ *
+ * Eğer istersen, sonraki adımda globals.css içine 10 satırlık media query ekleyip
+ * gridleri kesin tek kolon yapacağım.
+ */
