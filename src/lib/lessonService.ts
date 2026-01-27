@@ -14,7 +14,12 @@ import { db } from "@/lib/firebase";
    TYPES
 ===================== */
 
-export type LessonLevel = "A0" | "A1" | "A2" | "B1";
+/**
+ * Admin panel şu seviyeleri kullanıyor:
+ * BEGINNER / INTERMEDIATE / ADVANCED
+ * (Build hatan buradan geliyordu.)
+ */
+export type LessonLevel = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
 
 export type Lesson = {
   id: string;
@@ -37,21 +42,16 @@ export async function getAllLessons(): Promise<Lesson[]> {
       id: d.id,
       title: data.title ?? "",
       description: data.description ?? "",
-      level: data.level ?? "A0",
+      level: (data.level ?? "BEGINNER") as LessonLevel,
       order: data.order ?? 0,
     };
   });
 
-  return lessons.sort((a, b) => a.order - b.order);
+  return lessons.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
-export async function getLessonsByLevel(
-  level: LessonLevel
-): Promise<Lesson[]> {
-  const q = query(
-    collection(db, "lessons"),
-    where("level", "==", level)
-  );
+export async function getLessonsByLevel(level: LessonLevel): Promise<Lesson[]> {
+  const q = query(collection(db, "lessons"), where("level", "==", level));
   const snap = await getDocs(q);
 
   const lessons = snap.docs.map((d) => {
@@ -65,19 +65,20 @@ export async function getLessonsByLevel(
     };
   });
 
-  return lessons.sort((a, b) => a.order - b.order);
+  return lessons.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
-/* ⛑️ Backward compatibility */
+/**
+ * Pakette bazı yerler getLessons diye çağırıyor olabilir.
+ * Kırılmasın diye alias bıraktım.
+ */
 export const getLessons = getAllLessons;
 
 /* =====================
    CREATE
 ===================== */
 
-export async function addLesson(
-  lesson: Omit<Lesson, "id">
-): Promise<void> {
+export async function addLesson(lesson: Omit<Lesson, "id">): Promise<void> {
   await addDoc(collection(db, "lessons"), lesson);
 }
 
