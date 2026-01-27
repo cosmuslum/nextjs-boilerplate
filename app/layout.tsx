@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import "./globals.css";
 
 export const metadata: Metadata = {
   title: "NederLearn – Hollandaca Öğren",
@@ -14,23 +13,38 @@ export default function TrLayout({
   return (
     <html lang="tr">
       <body style={s.body}>
+        {/* HEADER */}
         <header style={s.header}>
           <div style={s.headerInner}>
             <div style={s.logo}>NederLearn</div>
-            <nav style={s.nav}>
+
+            {/* DESKTOP NAV */}
+            <nav style={s.navDesktop}>
               <a href="/tr" style={s.navLink}>Ana Sayfa</a>
               <a href="/tr/a0" style={s.navLink}>A0</a>
               <a href="/tr/login" style={s.navBtn}>Giriş</a>
             </nav>
+
+            {/* MOBILE ICON (sadece görsel, JS yok) */}
+            <div style={s.mobileIcon}>☰</div>
           </div>
         </header>
 
+        {/* CONTENT */}
         <main style={s.main}>{children}</main>
 
+        {/* FOOTER */}
         <footer style={s.footer}>
-          <div>© {new Date().getFullYear()} NederLearn</div>
-          <div style={s.footerSmall}>
-            Hollandaca öğrenmenin en net yolu
+          <div style={s.footerInner}>
+            <div style={s.footerBrand}>NederLearn</div>
+            <div style={s.footerLinks}>
+              <a href="/tr">Ana Sayfa</a>
+              <a href="/tr/a0/alfabe">Alfabe (Sesli)</a>
+              <a href="/tr/login">Giriş</a>
+            </div>
+            <div style={s.footerCopy}>
+              © {new Date().getFullYear()} NederLearn — Hollandaca öğrenmenin en net yolu
+            </div>
           </div>
         </footer>
       </body>
@@ -38,15 +52,20 @@ export default function TrLayout({
   );
 }
 
+/* ================= STYLES ================= */
+
 const s: Record<string, React.CSSProperties> = {
   body: {
     margin: 0,
+    minHeight: "100vh",
     fontFamily: "system-ui, -apple-system, BlinkMacSystemFont",
     background: "linear-gradient(180deg,#05070f,#0b1020)",
     color: "#fff",
-    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
   },
 
+  /* HEADER */
   header: {
     position: "sticky",
     top: 0,
@@ -71,7 +90,7 @@ const s: Record<string, React.CSSProperties> = {
     letterSpacing: 0.4,
   },
 
-  nav: {
+  navDesktop: {
     display: "flex",
     gap: 14,
     alignItems: "center",
@@ -94,24 +113,49 @@ const s: Record<string, React.CSSProperties> = {
     fontSize: 14,
   },
 
+  mobileIcon: {
+    display: "none",
+    fontSize: 22,
+    cursor: "pointer",
+  },
+
+  /* MAIN */
   main: {
+    flex: 1,
     maxWidth: 1200,
     margin: "0 auto",
     padding: "24px 16px",
+    width: "100%",
   },
 
+  /* FOOTER */
   footer: {
-    marginTop: 48,
-    padding: "32px 16px",
     borderTop: "1px solid rgba(255,255,255,0.08)",
-    textAlign: "center",
-    opacity: 0.8,
-    fontSize: 14,
+    padding: "32px 16px",
+    opacity: 0.85,
   },
 
-  footerSmall: {
+  footerInner: {
+    maxWidth: 1200,
+    margin: "0 auto",
+    textAlign: "center",
+  },
+
+  footerBrand: {
+    fontWeight: 900,
+    marginBottom: 8,
+  },
+
+  footerLinks: {
+    display: "flex",
+    justifyContent: "center",
+    gap: 16,
+    flexWrap: "wrap",
+    marginBottom: 10,
+  },
+
+  footerCopy: {
     fontSize: 12,
-    marginTop: 6,
     opacity: 0.6,
   },
 };
