@@ -12,16 +12,15 @@ export function getDutchVoices(): VoiceOption[] {
   if (typeof window === "undefined") return [];
   const voices = window.speechSynthesis?.getVoices?.() || [];
   return voices
-    .filter(v => normalize(v.lang).startsWith("nl"))
+    .filter((v) => normalize(v.lang).startsWith("nl"))
     .sort((a, b) => {
-      // kalite puanı: nl-NL + dutch/nederlands/premium/enhanced geçenler üste
       const score = (v: VoiceOption) => {
         const name = normalize(v.name);
         const lang = normalize(v.lang);
         let s = 0;
-        if (lang === "nl-nl") s += 5;
+        if (lang === "nl-nl") s += 6;
         if (name.includes("dutch") || name.includes("nederlands") || name.includes("nl")) s += 3;
-        if (name.includes("premium") || name.includes("enhanced") || name.includes("natural")) s += 3;
+        if (name.includes("premium") || name.includes("enhanced") || name.includes("natural")) s += 4;
         return s;
       };
       return score(b) - score(a);
@@ -44,11 +43,10 @@ export function pickBestDutchVoice(): VoiceOption | null {
 
   const saved = getSavedVoiceName();
   if (saved) {
-    const exact = voices.find(v => v.name === saved);
+    const exact = voices.find((v) => v.name === saved);
     if (exact) return exact;
   }
-
-  return voices[0]; // en iyi skorlanan
+  return voices[0];
 }
 
 export function speakDutch(text: string, opts?: { rate?: number; pitch?: number }) {
