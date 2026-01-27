@@ -1,0 +1,286 @@
+{
+  "topbar": {
+    "admin": "Admin",
+    "profile": "Profil",
+    "lessons": "Ders",
+    "logout": "Derkeve",
+    "login": "Têkeve"
+  },
+  "common": {
+    "loading": "Tê barkirin...",
+    "save": "Tomar bike",
+    "delete": "Jê bibe",
+    "cancel": "Betal bike",
+    "confirm": "Piştrast bike",
+    "back": "Vegere",
+    "notFound": "Nehate dîtin"
+  },
+  "home": {
+    "badge": "🇳🇱 Fêr bibe Holendî — bi piştgirîya TR / KU / AR",
+    "title": "Rêya herî hêsan ji bo fêr bûna Holendî.",
+    "subtitle": "Dersan bişopîne, quizan bike, pêşketina xwe bibîne. Bi piştgirîya Tirkî / Kurdî / Erebî, deneyma fêrbûnê ya hêsan û modern ji bo her kes.",
+    "features": {
+      "easyTitle": "Dersên Hêsan",
+      "easyText": "Ji destpêkê heta astên bilind, bi gav-gav ders.",
+      "quizTitle": "Pergala Quiz",
+      "quizText": "Di dawîya her dersê de quizê çêbike û fêrbûna xwe bihêz bike.",
+      "langTitle": "Piştgiriya Pirzimanî",
+      "langText": "Bi piştgirîya Tirkî / Kurdî / Erebî ji bo her kes berdest e."
+    }
+  },
+  "footer": {
+    "rights": "Hemû maf parastî ne.",
+    "subtitle": "Platforma fêrbûnê ya ji bo kesên li Holandayê, bi piştgirîya Tirkî / Kurdî / Erebî.",
+    "privacy": "Nepenî",
+    "support": "Piştgirî",
+    "contact": "Têkilî"
+  },
+  "lessons": {
+    "title": "Ders",
+    "subtitle": "Ders li gorî astên A0→B1.",
+    "empty": "Hêj ders nehatiye zêdekirin.",
+    "defaultLesson": "Ders",
+    "level": {
+      "beginner": "A0 → A1 (Destpêk)",
+      "intermediate": "A1 → A2 (Navîn)",
+      "advanced": "A2 → B1 (Pêşketî)"
+    }
+  },
+  "lessonsUi": {
+    "totalLabel": "Hemû",
+    "countLabel": "{count} ders",
+    "levelSubtitle": {
+      "beginner": "Peyvên bingehîn, çêkirina hevokên hêsan, gotinên rojane.",
+      "intermediate": "Dem (tenses), axaftinên dirêjtir û pratîk.",
+      "advanced": "Axaftina herî xweşter, têgihiştina xwendinê û bikaranîna rojane."
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "email": "E-peyam",
+    "role": "Rol",
+    "resetPassword": "Şîfreyê biguherîne",
+    "logout": "Derkeve"
+  },
+  "admin": {
+    "title": "Panelê Admin",
+    "lessons": "Rêveberiya Dersan",
+    "quizzes": "Rêveberiya Quizan",
+    "sidebar": {
+      "roleLabel": "Rol",
+      "hint": "Tişt: Ji çepê hilbijêre → naverokê li rastê diguhere.",
+      "dashboard": "Panelê Admin",
+      "lessons": "Rêveberiya Dersan",
+      "quizzes": "Rêveberiya Quizan",
+      "seed": "Seed",
+      "privacy": "Nepenî",
+      "site": "Mîhengên Malperê"
+    },
+    "dashboard": {
+      "title": "Panelê Admin",
+      "subtitle": "Hemû naveroka malperê ji vir ve rêve bike.",
+      "cards": {
+        "lessonsTitle": "Ders",
+        "lessonsDesc": "Ders zêde bike / biguherîne / jê bibe",
+        "quizzesTitle": "Quiz",
+        "quizzesDesc": "Quiz zêde bike / biguherîne / jê bibe",
+        "seedTitle": "Seed",
+        "seedDesc": "Naveroka astan bi xweber çêke",
+        "privacyTitle": "Nepenî",
+        "privacyDesc": "Naveroka rûpela nepeniyê biguherîne",
+        "siteTitle": "Malper",
+        "siteDesc": "Footer / Topbar / mîhengên nivîsê"
+      }
+    }
+  },
+  "adminQuiz": {
+    "title": "📝 Rêveberiya Quizan",
+    "subtitle": "Quiz zêde / jê bibe (bi lessonId)",
+    "addTitle": "Quizê Nû Zêde Bike",
+    "lessonIdPlaceholder": "lessonId (mînak: 1)",
+    "questionTR": "Pirs TR",
+    "questionNL": "Pirs NL",
+    "questionEN": "Pirs EN",
+    "questionAR": "Pirs AR",
+    "questionKU": "Pirs KU",
+    "opt1": "Vebijêrk 1",
+    "opt2": "Vebijêrk 2",
+    "opt3": "Vebijêrk 3",
+    "opt4": "Vebijêrk 4",
+    "correct": "Vebijêrka rast:",
+    "addButton": "✅ Quiz Zêde Bike",
+    "listTitle": "Quizên Heyî",
+    "filterLessonId": "lessonId={id}",
+    "none": "Quiz tune.",
+    "lessonIdLabel": "lessonId",
+    "deleteButton": "Jê bibe",
+    "alertRequired": "lessonId û pirsê TR pêwîst in.",
+    "confirmDelete": "Quiz were jêbirin? ({id})"
+  },
+  "profilePage": {
+    "title": "Profil",
+    "subtitle": "Pêşketina xwe û rozetan li vir bişopîne.",
+    "goLessons": "Biçe Dersan",
+    "toast": {
+      "title": "Rozetek Nû Vekirî 🎉",
+      "subtitle": "Rozet",
+      "cta": "Biçe Rozetan",
+      "ok": "Temam"
+    },
+    "level": {
+      "beginner": "Destpêk",
+      "intermediate": "Navîn",
+      "advanced": "Pêşketî"
+    },
+    "stats": {
+      "completedLessons": "Dersên qedandî",
+      "avgScore": "Skora navîn",
+      "nextLevel": "Asta paşîn"
+    },
+    "progress": {
+      "title": "Pêşketin",
+      "hint": "Gava 7 ders qedand, dibe Pêşketî."
+    },
+    "badges": {
+      "title": "🏅 Rozet",
+      "opened": "rozet vebûn",
+      "bestScore": "Skora herî baş",
+      "maxSameDay": "Herî zêde quiz di heman rojê de",
+      "unlocked": "Vekirî ✅",
+      "locked": "Girtî 🔒",
+      "first-quiz": { "title": "Gava Yekem", "desc": "Te quizê xwe ya yekem kir!" },
+      "first-pass": { "title": "Serkeftina Yekem", "desc": "Te dersê yekem bi serkeftin qedand." },
+      "pass-3": { "title": "Armanca 3", "desc": "Te 3 ders bi serkeftin qedand." },
+      "quiz-master": { "title": "Mîrê Quiz", "desc": "Te 5 quiz kir." },
+      "hard-worker": { "title": "Xwendekarê Hevîdar", "desc": "Te 7 ders bi serkeftin qedand." },
+      "excellence": { "title": "Xweşbûn", "desc": "Te di quizekê de 90+ skor stand." },
+      "streak": { "title": "Rêz", "desc": "Te di heman rojê de 3 quiz kir." }
+    },
+    "cards": {
+      "accountTitle": "👤 Hesab",
+      "email": "Email",
+      "quizzesTitle": "🧠 Quiz",
+      "solved": "Quizên kirî",
+      "successRate": "Rêjeya serkeftinê",
+      "lastQuizTitle": "⏱ Quizê Dawîn",
+      "lastSolved": "Dawîn çêkirin",
+      "noQuiz": "Hêj quiz neke."
+    },
+    "reset": {
+      "title": "🔐 Karên Şîfreyê",
+      "subtitle": "Ji bo şandina e-peyama vegerandina şîfreyê, li bişkokê bitikîne.",
+      "button": "Şîfreyê Vegerîne",
+      "sending": "Tê şandin...",
+      "success": "✅ E-peyama vegerandina şîfreyê hate şandin! (Spam jî kontrol bike)",
+      "errNoEmail": "Email nehat dîtin. Ji nû ve têkeve.",
+      "errGeneric": "E-peyam nehat şandin."
+    }
+  },
+  "privacy": {
+    "badge": "Nepenî • Ewlehî • Rûniştî",
+    "title": "Politîkaya Nepeniyê",
+    "subtitle": "Dema ku tu DutchLearn bikar tînî, em bi awayekî zelal û fêmbar dibêjin em daneyên te çawa kom dikin, çawa bikar tînin, kî re parve dikin û çawa diparêzin.",
+    "lastUpdatedLabel": "Rojanekirinê dawîn",
+    "lastUpdatedValue": "2026-01-01",
+    "backHome": "Malper",
+    "contactCta": "Bi me re têkilî daynin",
+    "footerNote": "Ev nivîs ji bo agahî ye. Li gorî guherînên xizmetê, dikare carna were nûkirin.",
+    "sections": {
+      "intro": {
+        "title": "Kurte",
+        "text": "Em daneyên te nafiroşin. Tenê ji bo pêşkêşkirina xizmetê, ewlehî û baştir kirina deneyma te, qasê pêwîst daneyê dişixulin."
+      },
+      "data": {
+        "title": "Daneyên ku em kom dikin",
+        "text": "Ji bo xebitandina û pêşxistina xizmetê, ev cure daneyan dikare were şixuland:",
+        "items": {
+          "1": "Agahiyên hesabê: mîna email û agahiyên bingehîn.",
+          "2": "Daneyên fêrbûnê: dersên qedandî, encamên quiz û qeydên pêşketinê.",
+          "3": "Daneyên teknîkî: agahiyên cîhaz/gerok, qeydên çewtiyê û logên ewlehiyê.",
+          "4": "Tercîh: ziman û mîhengên arayûzê.",
+          "5": "Peyamên piştgiriyê: daxwaz û peyamên ku tu dişînî.",
+          "6": "Qeydên yasayî: heke qanûn pêdivî bike."
+        }
+      },
+      "usage": {
+        "title": "Em daneyan çawa bikar tînin?",
+        "text": "Em daneyan tenê ji bo van armancan bikar tînin:",
+        "items": {
+          "1": "Piştrastkirina nasnameyê, rêveberiya hesabê û ewlehîya oturumê.",
+          "2": "Nîşandana pêşketina ders/quiz û kişandina deneyma şexsî.",
+          "3": "Dîtina çewtiyan, başkirina performansê û zêdekirina kalîteyê.",
+          "4": "Tesbîtkirina xapandin/istismar û tedbîrên ewlehiyê.",
+          "5": "Bersivdayîn û rêveberiya têkiliyê ya piştgiriyê.",
+          "6": "Pabendiya berpirsiyariyên yasayî."
+        }
+      },
+      "sharing": {
+        "title": "Parvekirina daneyan",
+        "text": "Em daneyên te nafiroşin. Lê ji bo pêşkêşkirina xizmetê, parvekirina bi sînor pêwîst dibe:",
+        "items": {
+          "1": "Pêşkêşkerên altyapê/hosting: ji bo xebitandina sepanê.",
+          "2": "Xizmetên nasnameyê û ewlehiyê: ji bo parastina hesabê.",
+          "3": "Zorunîya yasayî: daxwazên derbasdar ên desthilatdaran.",
+          "4": "Her dem: bi prensîba 'daneya herî kêm', tenê qasê pêwîst."
+        }
+      },
+      "cookies": {
+        "title": "Çerez (Cookies)",
+        "text": "Ji bo oturum, ewlehî û bibîranîna tercîhan dikare çerez were bikaranîn:",
+        "items": {
+          "1": "Çerezên zorunî: têketin û ewlehî.",
+          "2": "Çerezên tercîh: ziman û mîhengên arayûzê.",
+          "3": "Analîtîk: tenê gava pêwîst be û heke gengaz be anonîm."
+        }
+      },
+      "retention": {
+        "title": "Demê parastinê",
+        "text": "Em daneyan tenê heya ku pêwîst bin diparêzin:",
+        "items": {
+          "1": "Daneyên hesabê: heya ku hesab çalak be.",
+          "2": "Log: ji bo ewlehî û debug, bi demekî sînordar.",
+          "3": "Zorunîyên yasayî: heke pêwîst be, dirêjtir."
+        }
+      },
+      "rights": {
+        "title": "Mafên te",
+        "text": "Li gorî mevzuatê, tu dikarî van mafan hebî:",
+        "items": {
+          "1": "Daxwaza gihîştina daneyên xwe.",
+          "2": "Daxwaza rastkirina daneyên şaş.",
+          "3": "Daxwaza jêbirinê (ji bilî şertên yasayî).",
+          "4": "Li dijî şixulandina daneyan îtiraz kirin an sînorkirin.",
+          "5": "Guhertina/veguhastina daneyan (heke li wir derbasdar be).",
+          "6": "Mafê şikayetê li desthilata peywendîdar."
+        }
+      },
+      "security": {
+        "title": "Ewlehî",
+        "text": "Ji bo parastina daneyên te, em tedbîrên teknîkî û rêxistî digirin:",
+        "items": {
+          "1": "Destûrdayîn û gihîştina li gorî rol.",
+          "2": "Girêdana ewle (HTTPS) û rêbazên şîfrekirinê yên guncan.",
+          "3": "Pêşîgirtina istismarê, şopandin û rêveberiya bûyeran.",
+          "4": "Nûkirinên mayînde û başkirinên ewlehiyê."
+        }
+      },
+      "changes": {
+        "title": "Guherînên politîkayê",
+        "text": "Em dikarin ev nivîs nû bikin. Di guherînên girîng de em bi awayekî guncan agahî didin.",
+        "items": {
+          "1": "Dîroka nûkirinê li vê rûpelê tê nûkirin.",
+          "2": "Di guherînên mezin de dibe ku agahdariya zêde were kirin."
+        }
+      },
+      "contact": {
+        "title": "Têkilî",
+        "text": "Ji bo pirs an daxwazên nepeniyê, tu dikarî bi me re têkilî dayn:",
+        "items": {
+          "1": "E-peyam: support@dutchlearn.app",
+          "2": "Mijar: Daxwaza Nepeniyê",
+          "3": "Demê bersivê: herî zû"
+        }
+      }
+    }
+  }
+}

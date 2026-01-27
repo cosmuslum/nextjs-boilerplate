@@ -1,0 +1,22 @@
+{
+  "topbar": {
+    "admin": "Admin",
+    "profile": "Profiel",
+    "lessons": "Lessen",
+    "logout": "Uitloggen",
+    "login": "Inloggen"
+  },
+  "home": {
+    "badge": "Nieuw: DutchLearn is live",
+    "title": "Leer Nederlands",
+    "subtitle": "Leer sneller met lessen, quizzen en meertalige ondersteuning.",
+    "features": {
+      "easyTitle": "Makkelijk",
+      "easyText": "Leer stap voor stap met begeleide lessen.",
+      "quizTitle": "Quiz",
+      "quizText": "Test jezelf en volg je score.",
+      "langTitle": "Meertalig",
+      "langText": "TR/EN/NL en meer."
+    }
+  }
+}
