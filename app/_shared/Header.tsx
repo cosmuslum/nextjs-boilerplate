@@ -1,274 +1,246 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
-type Lang = "tr" | "en" | "es" | "ar" | "nl";
+type NavItem = { label: string; href: string };
 
-const LANGS: { code: Lang; label: string; flag: string; href: string }[] = [
-  { code: "tr", label: "Türkçe", flag: "🇹🇷", href: "/tr" },
-  { code: "en", label: "English", flag: "🇬🇧", href: "/en" },
-  { code: "es", label: "Español", flag: "🇪🇸", href: "/es" },
-  { code: "ar", label: "العربية", flag: "🇸🇦", href: "/ar" },
-  { code: "nl", label: "Nederlands", flag: "🇳🇱", href: "/nl" },
+const NAV: NavItem[] = [
+  { label: "Seviyeler", href: "#seviyeler" },
+  { label: "Nasıl çalışır?", href: "#nasil" },
+  { label: "SSS", href: "#sss" },
 ];
 
-export default function Header({ current = "tr" }: { current?: Lang }) {
-  const [langOpen, setLangOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+export default function HeaderTR() {
+  const [open, setOpen] = useState(false);
 
-  const currentLang = useMemo(
-    () => LANGS.find((l) => l.code === current) || LANGS[0],
-    [current]
-  );
+  // Sayfa büyüyünce menüyü kapat (mobil->desktop geçişinde)
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 900) setOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
-    <header style={s.header}>
-      <div style={s.wrap}>
-        <a href="/tr" style={s.brand}>
-          <span style={s.logo}>N</span>
-          <span>
-            <b style={s.brandText}>NederLearn</b>
-            <span style={s.brandSub}>Hollandaca öğren</span>
-          </span>
-        </a>
+    <>
+      <header className="nl-header">
+        <div className="nl-header__inner">
+          {/* Sol: Logo */}
+          <a className="nl-brand" href="/tr">
+            <span className="nl-brand__logo">N</span>
+            <span className="nl-brand__name">NederLearn</span>
+          </a>
 
-        {/* Desktop Nav */}
-        <nav style={s.navDesktop}>
-          <a href="/tr#a0" style={s.navLink}>A0</a>
-          <a href="/tr#a1" style={s.navLink}>A1</a>
-          <a href="/tr#a2" style={s.navLink}>A2</a>
-          <a href="/tr#b1" style={s.navLink}>B1</a>
-        </nav>
+          {/* Orta: Desktop Menü */}
+          <nav className="nl-nav">
+            {NAV.map((x) => (
+              <a key={x.href} className="nl-nav__link" href={x.href}>
+                {x.label}
+              </a>
+            ))}
+          </nav>
 
-        <div style={s.right}>
-          {/* Dil dropdown (Giriş yanında değil, sağ üstte) */}
-          <div style={s.dropdownWrap}>
-            <button
-              style={s.langBtn}
-              onClick={() => setLangOpen((v) => !v)}
-              aria-label="Dil seç"
-            >
-              <span style={{ fontSize: 18 }}>{currentLang.flag}</span>
-              <span style={s.langText}>{currentLang.label}</span>
-              <span style={s.chev}>▾</span>
+          {/* Sağ: Dil + Giriş */}
+          <div className="nl-actions">
+            <button className="nl-lang" type="button" aria-label="Dil">
+              🌐 <span>TR</span> <span className="nl-caret">▾</span>
             </button>
 
-            {langOpen && (
-              <div style={s.dropdown}>
-                {LANGS.map((l) => (
-                  <a
-                    key={l.code}
-                    href={l.href}
-                    style={{
-                      ...s.ddItem,
-                      ...(l.code === current ? s.ddActive : {}),
-                    }}
-                    onClick={() => setLangOpen(false)}
-                  >
-                    <span style={{ width: 26 }}>{l.flag}</span>
-                    <span>{l.label}</span>
-                  </a>
-                ))}
-              </div>
-            )}
+            <a className="nl-login" href="/tr/login">
+              Giriş
+            </a>
+
+            {/* Mobil hamburger (SADECE mobil) */}
+            <button
+              className="nl-burger"
+              type="button"
+              aria-label="Menü"
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
           </div>
-
-          {/* Giriş / Kayıt */}
-          <a href="/tr/login" style={s.loginBtn}>Giriş</a>
-
-          {/* Mobile hamburger */}
-          <button
-            style={s.burger}
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label="Menü"
-          >
-            ☰
-          </button>
         </div>
-      </div>
 
-      {/* Mobile menu panel */}
-      {menuOpen && (
-        <div style={s.mobilePanel}>
-          <div style={s.mobileLinks}>
-            <a href="/tr#a0" style={s.mobileLink} onClick={() => setMenuOpen(false)}>A0</a>
-            <a href="/tr#a1" style={s.mobileLink} onClick={() => setMenuOpen(false)}>A1</a>
-            <a href="/tr#a2" style={s.mobileLink} onClick={() => setMenuOpen(false)}>A2</a>
-            <a href="/tr#b1" style={s.mobileLink} onClick={() => setMenuOpen(false)}>B1</a>
-          </div>
-
-          <div style={s.mobileActions}>
-            <a href="/tr/login" style={s.mobileCta} onClick={() => setMenuOpen(false)}>
+        {/* Mobil menü panel */}
+        <div className={`nl-mobile ${open ? "is-open" : ""}`}>
+          <div className="nl-mobile__panel">
+            {NAV.map((x) => (
+              <a
+                key={x.href}
+                className="nl-mobile__link"
+                href={x.href}
+                onClick={() => setOpen(false)}
+              >
+                {x.label}
+              </a>
+            ))}
+            <a className="nl-mobile__link" href="/tr/a0" onClick={() => setOpen(false)}>
+              A0
+            </a>
+            <a className="nl-mobile__cta" href="/tr/login" onClick={() => setOpen(false)}>
               Giriş
             </a>
           </div>
         </div>
-      )}
-    </header>
+      </header>
+
+      {/* Header CSS (global) */}
+      <style jsx global>{`
+        .nl-header {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          background: rgba(7, 10, 18, 0.78);
+          backdrop-filter: blur(14px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .nl-header__inner {
+          max-width: 1120px;
+          margin: 0 auto;
+          padding: 14px 16px;
+          display: grid;
+          grid-template-columns: auto 1fr auto;
+          gap: 14px;
+          align-items: center;
+        }
+
+        .nl-brand {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+        }
+        .nl-brand__logo {
+          width: 36px;
+          height: 36px;
+          border-radius: 12px;
+          display: grid;
+          place-items: center;
+          font-weight: 900;
+          background: rgba(120, 140, 255, 0.95);
+          color: #0b1020;
+        }
+        .nl-brand__name {
+          font-weight: 900;
+          letter-spacing: 0.2px;
+        }
+
+        .nl-nav {
+          display: flex;
+          justify-content: center;
+          gap: 18px;
+        }
+        .nl-nav__link {
+          font-weight: 800;
+          opacity: 0.85;
+          padding: 8px 10px;
+          border-radius: 12px;
+          border: 1px solid transparent;
+        }
+        .nl-nav__link:hover {
+          opacity: 1;
+          border-color: rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.04);
+        }
+
+        .nl-actions {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .nl-lang {
+          display: inline-flex;
+          gap: 8px;
+          align-items: center;
+          padding: 10px 12px;
+          border-radius: 14px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.04);
+          color: rgba(255, 255, 255, 0.92);
+          font-weight: 900;
+        }
+        .nl-caret {
+          opacity: 0.7;
+        }
+        .nl-login {
+          padding: 10px 14px;
+          border-radius: 14px;
+          background: rgba(120, 140, 255, 0.95);
+          color: #0b1020;
+          font-weight: 900;
+          border: 1px solid rgba(120, 140, 255, 0.4);
+        }
+
+        /* Burger sadece mobilde görünsün */
+        .nl-burger {
+          display: none;
+          width: 44px;
+          height: 44px;
+          border-radius: 14px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.04);
+          padding: 10px;
+          gap: 6px;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        .nl-burger span {
+          display: block;
+          width: 18px;
+          height: 2px;
+          background: rgba(255, 255, 255, 0.9);
+          border-radius: 2px;
+        }
+
+        .nl-mobile {
+          display: none;
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .nl-mobile__panel {
+          max-width: 1120px;
+          margin: 0 auto;
+          padding: 12px 16px 16px;
+          display: grid;
+          gap: 10px;
+        }
+        .nl-mobile__link {
+          padding: 12px 12px;
+          border-radius: 14px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.04);
+          font-weight: 900;
+          color: rgba(255, 255, 255, 0.92);
+        }
+        .nl-mobile__cta {
+          padding: 12px 12px;
+          border-radius: 14px;
+          background: rgba(120, 140, 255, 0.95);
+          color: #0b1020;
+          font-weight: 900;
+          border: 1px solid rgba(120, 140, 255, 0.4);
+          text-align: center;
+        }
+
+        @media (max-width: 900px) {
+          .nl-header__inner {
+            grid-template-columns: auto 1fr auto;
+          }
+          .nl-nav {
+            display: none; /* mobilde menü sakla */
+          }
+          .nl-burger {
+            display: inline-flex; /* sadece mobilde göster */
+          }
+          .nl-mobile.is-open {
+            display: block;
+          }
+        }
+      `}</style>
+    </>
   );
-}
-
-const s: Record<string, React.CSSProperties> = {
-  header: {
-    position: "sticky",
-    top: 0,
-    zIndex: 50,
-    background: "rgba(10,10,10,0.75)",
-    backdropFilter: "blur(14px)",
-    borderBottom: "1px solid rgba(255,255,255,0.08)",
-  },
-  wrap: {
-    maxWidth: 1100,
-    margin: "0 auto",
-    padding: "12px 16px",
-    display: "flex",
-    alignItems: "center",
-    gap: 14,
-    justifyContent: "space-between",
-  },
-  brand: {
-    display: "flex",
-    alignItems: "center",
-    gap: 10,
-    textDecoration: "none",
-    color: "white",
-    minWidth: 160,
-  },
-  logo: {
-    width: 34,
-    height: 34,
-    borderRadius: 12,
-    display: "grid",
-    placeItems: "center",
-    fontWeight: 900,
-    background: "linear-gradient(135deg, rgba(79,108,255,1), rgba(0,200,255,0.75))",
-    color: "#061018",
-    flexShrink: 0,
-  },
-  brandText: { display: "block", fontSize: 15, lineHeight: 1.1 },
-  brandSub: { display: "block", fontSize: 12, opacity: 0.7 },
-
-  navDesktop: {
-    display: "flex",
-    gap: 14,
-    alignItems: "center",
-  },
-  navLink: {
-    color: "rgba(255,255,255,0.9)",
-    textDecoration: "none",
-    fontWeight: 800,
-    fontSize: 13,
-    padding: "8px 10px",
-    borderRadius: 12,
-    border: "1px solid rgba(255,255,255,0.10)",
-    background: "rgba(255,255,255,0.04)",
-  },
-
-  right: { display: "flex", alignItems: "center", gap: 10 },
-
-  dropdownWrap: { position: "relative" },
-  langBtn: {
-    display: "flex",
-    alignItems: "center",
-    gap: 8,
-    borderRadius: 12,
-    border: "1px solid rgba(255,255,255,0.10)",
-    background: "rgba(255,255,255,0.04)",
-    color: "white",
-    padding: "8px 10px",
-    cursor: "pointer",
-    fontWeight: 900,
-    fontSize: 13,
-  },
-  langText: { opacity: 0.9 },
-  chev: { opacity: 0.7, fontSize: 12 },
-
-  dropdown: {
-    position: "absolute",
-    right: 0,
-    top: "calc(100% + 8px)",
-    background: "rgba(10,10,10,0.95)",
-    border: "1px solid rgba(255,255,255,0.10)",
-    borderRadius: 14,
-    minWidth: 190,
-    overflow: "hidden",
-    boxShadow: "0 20px 40px rgba(0,0,0,0.45)",
-  },
-  ddItem: {
-    display: "flex",
-    gap: 8,
-    alignItems: "center",
-    padding: "10px 12px",
-    color: "rgba(255,255,255,0.92)",
-    textDecoration: "none",
-    fontWeight: 800,
-    fontSize: 13,
-    borderBottom: "1px solid rgba(255,255,255,0.06)",
-  },
-  ddActive: {
-    background: "rgba(79,108,255,0.18)",
-  },
-
-  loginBtn: {
-    textDecoration: "none",
-    color: "#061018",
-    background: "linear-gradient(135deg, rgba(79,108,255,1), rgba(0,200,255,0.75))",
-    padding: "9px 12px",
-    borderRadius: 12,
-    fontWeight: 900,
-    fontSize: 13,
-    border: "none",
-  },
-
-  burger: {
-    display: "none",
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid rgba(255,255,255,0.12)",
-    color: "rgba(255,255,255,0.92)",
-    padding: "9px 12px",
-    borderRadius: 12,
-    fontWeight: 900,
-    cursor: "pointer",
-  },
-
-  mobilePanel: {
-    display: "none",
-    borderTop: "1px solid rgba(255,255,255,0.08)",
-    padding: "10px 16px 16px",
-    maxWidth: 1100,
-    margin: "0 auto",
-  },
-  mobileLinks: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 },
-  mobileLink: {
-    textDecoration: "none",
-    color: "rgba(255,255,255,0.92)",
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid rgba(255,255,255,0.10)",
-    borderRadius: 12,
-    padding: "12px",
-    fontWeight: 900,
-    textAlign: "center",
-  },
-  mobileActions: { marginTop: 10 },
-  mobileCta: {
-    display: "block",
-    textDecoration: "none",
-    color: "#061018",
-    background: "linear-gradient(135deg, rgba(79,108,255,1), rgba(0,200,255,0.75))",
-    padding: "12px",
-    borderRadius: 12,
-    fontWeight: 900,
-    textAlign: "center",
-  },
-};
-
-/* Basit responsive: küçük ekranda desktop menüyü kapat, hamburger aç */
-if (typeof window !== "undefined") {
-  const apply = () => {
-    const isMobile = window.matchMedia("(max-width: 860px)").matches;
-    const style = document.documentElement.style;
-    style.setProperty("--isMobile", isMobile ? "1" : "0");
-  };
-  window.addEventListener("resize", apply);
-  apply();
 }
