@@ -1,48 +1,32 @@
-type LocalizedText = {
-  tr: string;
-  en?: string;
-  nl?: string;
-  ar?: string;
-};
+import { Lesson } from "@/lib/lessonService";
 
-type Question = {
-  q: LocalizedText;
-  options: LocalizedText[];
-  answerIndex: number;
-};
-
-type Lesson = {
-  lessonId: number;
-  questions: Question[];
-};
-
-export const a0a1Lessons: Lesson[] = [
+export const lessons: Lesson[] = [
   {
-    lessonId: 2,
-    questions: [
-      {
-        q: {
-          tr: "Ben Murat. Hollandaca?",
-          nl: "Ik ben Murat. ?",
-          en: "I am Murat. ?",
-          ar: "أنا مراد. ؟",
-        },
-        options: [
-          {
-            tr: "Ik ben Murat.",
-            nl: "Ik ben Murat.",
-            en: "I am Murat.",
-            ar: "أنا مراد.",
-          },
-          {
-            tr: "Jij bent Murat.",
-            nl: "Jij bent Murat.",
-            en: "You are Murat.",
-            ar: "أنت مراد.",
-          },
-        ],
-        answerIndex: 0,
-      },
-    ],
+    id: "a0-1",
+    level: "BEGINNER",
+    orderIndex: 1,
+    title: {
+      tr: "Tanışma",
+      en: "Introduction",
+      nl: "Introductie",
+      ar: "التعارف",
+      ku: "Nasname",
+    },
+    description: {
+      tr: "Basit tanışma cümleleri",
+      en: "Basic introduction sentences",
+      nl: "Eenvoudige introductiezinnen",
+      ar: "جمل تعريف بسيطة",
+      ku: "Hevpeyvîna bingehîn",
+    },
+    content: {
+      tr: "Merhaba, ben Murat.",
+      en: "Hello, I am Murat.",
+      nl: "Hallo, ik ben Murat.",
+      ar: "مرحباً، أنا مراد.",
+      ku: "Silav, ez Murat im.",
+    },
   },
 ];
+
+export const quizzes = [];
