@@ -14,19 +14,19 @@ import { db } from "@/lib/firebase";
    TYPES
 ===================== */
 
-/**
- * Admin panel şu seviyeleri kullanıyor:
- * BEGINNER / INTERMEDIATE / ADVANCED
- * (Build hatan buradan geliyordu.)
- */
+export type Locale = "tr" | "en" | "ar" | "nl" | "ku";
+
+export type LocalizedText = Record<Locale, string>;
+
 export type LessonLevel = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
 
 export type Lesson = {
   id: string;
-  title: string;
-  description?: string;
+  title: LocalizedText;
+  description?: LocalizedText;
+  content?: LocalizedText;
   level: LessonLevel;
-  order: number;
+  orderIndex: number;
 };
 
 /* =====================
@@ -36,49 +36,50 @@ export type Lesson = {
 export async function getAllLessons(): Promise<Lesson[]> {
   const snap = await getDocs(collection(db, "lessons"));
 
-  const lessons = snap.docs.map((d) => {
+  return snap.docs.map((d) => {
     const data = d.data() as any;
+
     return {
       id: d.id,
-      title: data.title ?? "",
-      description: data.description ?? "",
-      level: (data.level ?? "BEGINNER") as LessonLevel,
-      order: data.order ?? 0,
+      title: data.title,
+      description: data.description,
+      content: data.content,
+      level: data.level as LessonLevel,
+      orderIndex: data.orderIndex ?? 0,
     };
   });
-
-  return lessons.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
-export async function getLessonsByLevel(level: LessonLevel): Promise<Lesson[]> {
+export async function getLessonsByLevel(
+  level: LessonLevel
+): Promise<Lesson[]> {
   const q = query(collection(db, "lessons"), where("level", "==", level));
   const snap = await getDocs(q);
 
-  const lessons = snap.docs.map((d) => {
+  return snap.docs.map((d) => {
     const data = d.data() as any;
+
     return {
       id: d.id,
-      title: data.title ?? "",
-      description: data.description ?? "",
+      title: data.title,
+      description: data.description,
+      content: data.content,
       level,
-      order: data.order ?? 0,
+      orderIndex: data.orderIndex ?? 0,
     };
   });
-
-  return lessons.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
-/**
- * Pakette bazı yerler getLessons diye çağırıyor olabilir.
- * Kırılmasın diye alias bıraktım.
- */
+/* Alias – eski çağrılar kırılmasın */
 export const getLessons = getAllLessons;
 
 /* =====================
    CREATE
 ===================== */
 
-export async function addLesson(lesson: Omit<Lesson, "id">): Promise<void> {
+export async function addLesson(
+  lesson: Omit<Lesson, "id">
+): Promise<void> {
   await addDoc(collection(db, "lessons"), lesson);
 }
 
