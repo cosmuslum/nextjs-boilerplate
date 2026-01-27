@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "NederLearn",
-  description: "Hollandacayı sıfırdan, sesli ve adım adım öğren.",
+  description: "Hollandacayı sıfırdan, sesli ve adım adım öğren",
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr">
-      <body className="nl-body">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
