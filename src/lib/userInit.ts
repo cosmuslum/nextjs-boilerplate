@@ -17,6 +17,6 @@ export async function initUser(uid: string, email: string) {
     createdAt: serverTimestamp(),
     completedLessons: 0,
     totalLessons,
-    completedLessonIds: [], // ✅ yeni eklendi
+    completedLessonIds: [],
   });
 }
