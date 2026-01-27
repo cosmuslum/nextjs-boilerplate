@@ -1,0 +1,286 @@
+{
+  "topbar": {
+    "admin": "Admin",
+    "profile": "Profile",
+    "lessons": "Lessons",
+    "logout": "Logout",
+    "login": "Login"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "notFound": "Not found"
+  },
+  "home": {
+    "badge": "🇳🇱 Learn Dutch — with TR / KU / AR support",
+    "title": "The easiest way to learn Dutch.",
+    "subtitle": "Follow lessons, take quizzes, and track your progress. A modern learning experience with Turkish, Kurdish, and Arabic support.",
+    "features": {
+      "easyTitle": "Easy lessons",
+      "easyText": "Step-by-step lessons from beginner to advanced.",
+      "quizTitle": "Quiz system",
+      "quizText": "Reinforce your learning with a quiz after each lesson.",
+      "langTitle": "Multi-language support",
+      "langText": "Accessible to everyone with TR / KU / AR support."
+    }
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "subtitle": "A learning platform for people in the Netherlands with TR / KU / AR support.",
+    "privacy": "Privacy",
+    "support": "Support",
+    "contact": "Contact"
+  },
+  "lessons": {
+    "title": "Lessons",
+    "subtitle": "Lessons by level from A0→B1.",
+    "empty": "No lessons added yet.",
+    "defaultLesson": "Lesson",
+    "level": {
+      "beginner": "A0 → A1 (Beginner)",
+      "intermediate": "A1 → A2 (Intermediate)",
+      "advanced": "A2 → B1 (Advanced)"
+    }
+  },
+  "lessonsUi": {
+    "totalLabel": "Total",
+    "countLabel": "{count} lessons",
+    "levelSubtitle": {
+      "beginner": "Basic words, simple sentences, and everyday phrases.",
+      "intermediate": "Tenses, longer conversations, and practice.",
+      "advanced": "More fluent speaking, reading comprehension, and daily usage."
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "email": "Email",
+    "role": "Role",
+    "resetPassword": "Change password",
+    "logout": "Logout"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "lessons": "Lesson Management",
+    "quizzes": "Quiz Management",
+    "sidebar": {
+      "roleLabel": "Role",
+      "hint": "Tip: Select from the left → content updates on the right.",
+      "dashboard": "Dashboard",
+      "lessons": "Lessons",
+      "quizzes": "Quizzes",
+      "seed": "Seed",
+      "privacy": "Privacy",
+      "site": "Site Settings"
+    },
+    "dashboard": {
+      "title": "Admin Panel",
+      "subtitle": "Manage the entire site content from one place.",
+      "cards": {
+        "lessonsTitle": "Lessons",
+        "lessonsDesc": "Add / edit / delete lessons",
+        "quizzesTitle": "Quizzes",
+        "quizzesDesc": "Add / edit / delete quizzes",
+        "seedTitle": "Seed",
+        "seedDesc": "Auto-fill levels with content",
+        "privacyTitle": "Privacy",
+        "privacyDesc": "Edit privacy page content",
+        "siteTitle": "Site",
+        "siteDesc": "Footer / Topbar / text settings"
+      }
+    }
+  },
+  "adminQuiz": {
+    "title": "📝 Quiz Management",
+    "subtitle": "Add / delete quiz (by lessonId)",
+    "addTitle": "Add New Quiz",
+    "lessonIdPlaceholder": "lessonId (e.g: 1)",
+    "questionTR": "Question TR",
+    "questionNL": "Question NL",
+    "questionEN": "Question EN",
+    "questionAR": "Question AR",
+    "questionKU": "Question KU",
+    "opt1": "Option 1",
+    "opt2": "Option 2",
+    "opt3": "Option 3",
+    "opt4": "Option 4",
+    "correct": "Correct option:",
+    "addButton": "✅ Add Quiz",
+    "listTitle": "Existing Quizzes",
+    "filterLessonId": "lessonId={id}",
+    "none": "No quiz.",
+    "lessonIdLabel": "lessonId",
+    "deleteButton": "Delete",
+    "alertRequired": "lessonId and TR question are required.",
+    "confirmDelete": "Delete this quiz? ({id})"
+  },
+  "profilePage": {
+    "title": "Profile",
+    "subtitle": "Track your progress and badges here.",
+    "goLessons": "Go to lessons",
+    "toast": {
+      "title": "New Badge Unlocked 🎉",
+      "subtitle": "Badge",
+      "cta": "Go to badges",
+      "ok": "OK"
+    },
+    "level": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "stats": {
+      "completedLessons": "Completed lessons",
+      "avgScore": "Average score",
+      "nextLevel": "Next level"
+    },
+    "progress": {
+      "title": "Progress",
+      "hint": "Complete 7 lessons to reach Advanced."
+    },
+    "badges": {
+      "title": "🏅 Badges",
+      "opened": "badges unlocked",
+      "bestScore": "Best score",
+      "maxSameDay": "Max quizzes in one day",
+      "unlocked": "Unlocked ✅",
+      "locked": "Locked 🔒",
+      "first-quiz": { "title": "First Step", "desc": "You completed your first quiz!" },
+      "first-pass": { "title": "First Success", "desc": "You passed a lesson successfully." },
+      "pass-3": { "title": "Goal 3", "desc": "You completed 3 lessons successfully." },
+      "quiz-master": { "title": "Quiz Master", "desc": "You completed 5 quizzes." },
+      "hard-worker": { "title": "Hard Worker", "desc": "You completed 7 lessons successfully." },
+      "excellence": { "title": "Excellence", "desc": "You scored 90+ in a quiz." },
+      "streak": { "title": "Streak", "desc": "You completed 3 quizzes in the same day." }
+    },
+    "cards": {
+      "accountTitle": "👤 Account",
+      "email": "Email",
+      "quizzesTitle": "🧠 Quizzes",
+      "solved": "Solved quizzes",
+      "successRate": "Success rate",
+      "lastQuizTitle": "⏱ Last Quiz",
+      "lastSolved": "Last solved",
+      "noQuiz": "You haven't solved any quizzes yet."
+    },
+    "reset": {
+      "title": "🔐 Password",
+      "subtitle": "Click the button to send a password reset email.",
+      "button": "Reset Password",
+      "sending": "Sending...",
+      "success": "✅ Password reset email sent! (Check your spam folder too)",
+      "errNoEmail": "Email not found. Please log in again.",
+      "errGeneric": "Could not send password reset email."
+    }
+  },
+  "privacy": {
+    "badge": "Privacy • Security • Transparency",
+    "title": "Privacy Policy",
+    "subtitle": "This page explains clearly how we collect, use, share, and protect your data when you use DutchLearn.",
+    "lastUpdatedLabel": "Last updated",
+    "lastUpdatedValue": "2026-01-01",
+    "backHome": "Home",
+    "contactCta": "Contact us",
+    "footerNote": "This text is for informational purposes and may be updated from time to time as the service evolves.",
+    "sections": {
+      "intro": {
+        "title": "Summary",
+        "text": "We do not sell your data. We only process the minimum data required to provide the service, keep it secure, and improve your experience."
+      },
+      "data": {
+        "title": "What data do we collect?",
+        "text": "To run and improve the service, we may process the following categories of data:",
+        "items": {
+          "1": "Account data: basic identifiers such as email.",
+          "2": "Learning data: completed lessons, quiz results, and progress records.",
+          "3": "Technical data: device/browser info, error logs, and security logs.",
+          "4": "Preferences: language and interface settings.",
+          "5": "Support messages: requests and messages you send us.",
+          "6": "Legal records: when required by law."
+        }
+      },
+      "usage": {
+        "title": "How do we use data?",
+        "text": "We use data only for the following purposes:",
+        "items": {
+          "1": "Authentication, account management, and session security.",
+          "2": "Showing progress and personalizing the learning experience.",
+          "3": "Debugging, performance improvements, and quality upgrades.",
+          "4": "Fraud/abuse detection and security measures.",
+          "5": "Responding to support requests and managing user communication.",
+          "6": "Compliance with legal obligations."
+        }
+      },
+      "sharing": {
+        "title": "Data sharing",
+        "text": "We do not sell your data. Limited sharing may be necessary to provide the service:",
+        "items": {
+          "1": "Hosting/infrastructure providers: to operate the application.",
+          "2": "Authentication and security services: to protect your account.",
+          "3": "Legal obligation: valid requests from authorities.",
+          "4": "Always: minimal-data principle, only what is necessary."
+        }
+      },
+      "cookies": {
+        "title": "Cookies",
+        "text": "Cookies may be used for session, security, and remembering preferences:",
+        "items": {
+          "1": "Essential cookies: login and security.",
+          "2": "Preference cookies: language and UI settings.",
+          "3": "Analytics: only when necessary and anonymized where possible."
+        }
+      },
+      "retention": {
+        "title": "Retention period",
+        "text": "We keep data only as long as needed:",
+        "items": {
+          "1": "Account data: while your account is active.",
+          "2": "Logs: limited time for security and debugging.",
+          "3": "Legal obligations: longer if required."
+        }
+      },
+      "rights": {
+        "title": "Your rights",
+        "text": "Depending on local law, you may have the following rights:",
+        "items": {
+          "1": "Request access to your data.",
+          "2": "Request correction of inaccurate data.",
+          "3": "Request deletion (subject to legal exceptions).",
+          "4": "Object to or restrict processing.",
+          "5": "Data portability (where applicable).",
+          "6": "File a complaint with the competent authority."
+        }
+      },
+      "security": {
+        "title": "Security",
+        "text": "We apply technical and organizational measures to protect your data:",
+        "items": {
+          "1": "Role-based access and authorization.",
+          "2": "Secure connections (HTTPS) and appropriate encryption.",
+          "3": "Abuse prevention, monitoring, and incident management.",
+          "4": "Regular updates and security improvements."
+        }
+      },
+      "changes": {
+        "title": "Policy changes",
+        "text": "We may update this text. For significant changes, we will inform you appropriately.",
+        "items": {
+          "1": "The updated date will be refreshed on this page.",
+          "2": "Major changes may include additional notices."
+        }
+      },
+      "contact": {
+        "title": "Contact",
+        "text": "For privacy-related questions or requests, you can reach us at:",
+        "items": {
+          "1": "Email: support@dutchlearn.app",
+          "2": "Subject: Privacy Request",
+          "3": "Response time: as soon as possible"
+        }
+      }
+    }
+  }
+}
