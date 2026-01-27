@@ -1,181 +1,188 @@
-export default function TrHomePage() {
+export default function TrHome() {
   return (
-    <div className="dl-wrap">
+    <div className="wrap dl-wrap">
       {/* HERO */}
-      <section className="dl-hero glass">
-        <div className="dl-hero-left">
-          <div className="dl-tag">Yeni: DutchLearn yayında</div>
+      <section className="glass hero">
+        <div className="hero-grid">
+          {/* LEFT */}
+          <div>
+            <div className="kicker">Yeni: NederLearn yayında</div>
 
-          <h1 className="dl-title">Hollandaca Öğren</h1>
-          <p className="dl-subtitle">
-            Dersler, quizler ve çok dilli destek ile hızlı öğren.
-          </p>
+            <h1 className="h1">Hollandaca Öğren</h1>
 
-          <div className="dl-cta">
-            <a className="btn-white" href="/tr/a0">Hemen Başla</a>
-            <a className="btn-ghost" href="/tr/demo">Demo izle</a>
-          </div>
+            <p className="p">
+              Dersler, quizler ve (yakında) çok dilli destek ile hızlı öğren.
+            </p>
 
-          <div className="dl-mini">
-            Ücretsiz başla · İstediğin zaman bırak
-          </div>
-
-          <div className="dl-note glass2">
-            <b>Öğrenmeyi ciddiye alanlar için</b>
-            <span>Kısa dersler, akıllı tekrar ve ölçülebilir ilerleme.</span>
-          </div>
-
-          <div className="dl-stats">
-            <div className="stat glass2">
-              <div className="stat-num">120+</div>
-              <div className="stat-lbl">Ders</div>
+            <div className="ctaRow">
+              <a className="btnWhite" href="/tr/a0">Hemen Başla</a>
+              <a className="btnGhost" href="/tr/a0/alfabe">Demo izle</a>
             </div>
-            <div className="stat glass2">
-              <div className="stat-num">300+</div>
-              <div className="stat-lbl">Quiz</div>
-            </div>
-            <div className="stat glass2">
-              <div className="stat-num">5</div>
-              <div className="stat-lbl">Dil</div>
-            </div>
-          </div>
-        </div>
 
-        <div className="dl-hero-right glass2">
-          <div className="panel-head">
-            <b>DutchLearn</b>
-            <span className="dots">•••</span>
-          </div>
+            <div className="subnote">Ücretsiz başla • İstediğin zaman bırak</div>
 
-          <div className="panel-grid">
-            <div className="panel-box glass3">
-              <small>Günlük hedef</small>
-              <b>10 dk</b>
+            <div className="glass-soft" style={{ padding: 14, marginTop: 14 }}>
+              <div style={{ fontWeight: 950, marginBottom: 6 }}>
+                Öğrenmeyi ciddiye alanlar için
+              </div>
+              <div style={{ color: "rgba(255,255,255,.72)", lineHeight: 1.55 }}>
+                Kısa dersler, akıllı tekrar ve ölçülebilir ilerleme.
+              </div>
             </div>
-            <div className="panel-box glass3">
-              <small>Seri</small>
-              <b>3 gün</b>
-            </div>
-            <div className="panel-box glass3">
-              <small>Ortalama skor</small>
-              <b>84%</b>
-            </div>
-            <div className="panel-box glass3">
-              <small>Son ders</small>
-              <b>A1 · 05</b>
+
+            <div className="statsRow">
+              <div className="glass-soft statBox">
+                <div className="statNum">120+</div>
+                <div className="statLbl">Ders</div>
+              </div>
+              <div className="glass-soft statBox">
+                <div className="statNum">300+</div>
+                <div className="statLbl">Quiz</div>
+              </div>
+              <div className="glass-soft statBox">
+                <div className="statNum">5</div>
+                <div className="statLbl">Dil</div>
+              </div>
             </div>
           </div>
 
-          <div className="panel-big glass3">
-            <small>Bugünün önerisi</small>
-            <b>“Selamlaşma & günlük ifadeler”</b>
-            <div className="bar">
-              <i style={{ width: "66%" }} />
-            </div>
-            <div className="bar-sub">İlerleme: %66</div>
+          {/* RIGHT */}
+          <div className="glass-soft dash">
+            <div className="dashTitle">NederLearn</div>
 
-            <div className="chips">
-              <span>Akıllı tekrar</span>
-              <span>Quiz</span>
-              <span>İlerleme</span>
-              <span>Çok dil</span>
+            <div className="dashGrid">
+              <div className="glass-soft dashCard">
+                <div className="smallLbl">Günlük hedef</div>
+                <div className="bigVal">10 dk</div>
+              </div>
+              <div className="glass-soft dashCard">
+                <div className="smallLbl">Seri</div>
+                <div className="bigVal">3 gün</div>
+              </div>
+              <div className="glass-soft dashCard">
+                <div className="smallLbl">Ortalama skor</div>
+                <div className="bigVal">84%</div>
+              </div>
+              <div className="glass-soft dashCard">
+                <div className="smallLbl">Son ders</div>
+                <div className="bigVal">A1 • 05</div>
+              </div>
+            </div>
+
+            <div className="glass-soft reco">
+              <div className="smallLbl">Bugünün önerisi</div>
+              <div style={{ marginTop: 6, fontWeight: 950 }}>
+                “Selamlaşma & günlük ifadeler”
+              </div>
+              <div style={{ marginTop: 8, color: "rgba(255,255,255,.72)", fontWeight: 800 }}>
+                İlerleme: %66
+              </div>
+
+              <div className="progress">
+                <div />
+              </div>
+
+              <div style={{ marginTop: 10, display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <span className="pill" style={{ padding: "7px 10px" }}>Akıllı tekrar</span>
+                <span className="pill" style={{ padding: "7px 10px" }}>Quiz</span>
+                <span className="pill" style={{ padding: "7px 10px" }}>İlerleme</span>
+                <span className="pill" style={{ padding: "7px 10px" }}>Çok dil</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* NEDEN */}
-      <section className="dl-section">
-        <h2>Neden DutchLearn?</h2>
+      <section className="section">
+        <h2 className="h2">Neden NederLearn?</h2>
 
-        <div className="dl-grid-3">
-          <div className="card glass2">
-            <b>⏱️ Net bir yol haritası</b>
-            <p>Seviyene göre plan, her gün küçük ama düzenli adımlar.</p>
+        <div className="grid3">
+          <div className="glass-soft card">
+            <div className="cardTitle">⏱️ Net bir yol haritası</div>
+            <div className="cardText">Seviyene göre plan, her gün küçük ama düzenli adımlar.</div>
           </div>
-          <div className="card glass2">
-            <b>📈 Ölçülebilir ilerleme</b>
-            <p>Quiz skorları, seri takibi ve tamamlanan dersler.</p>
+          <div className="glass-soft card">
+            <div className="cardTitle">📈 Ölçülebilir ilerleme</div>
+            <div className="cardText">Quiz skorları, seri takibi ve tamamlanan dersler.</div>
           </div>
-          <div className="card glass2">
-            <b>🌍 Çok dilli deneyim</b>
-            <p>TR/EN/NL ve daha fazlası ile rahat öğren.</p>
+          <div className="glass-soft card">
+            <div className="cardTitle">🌍 Çok dilli deneyim</div>
+            <div className="cardText">TR/EN/NL ve daha fazlası (yakında).</div>
           </div>
-          <div className="card glass2">
-            <b>📚 Kolay</b>
-            <p>Adım adım derslerle öğren.</p>
+
+          <div className="glass-soft card">
+            <div className="cardTitle">📚 Kolay</div>
+            <div className="cardText">Adım adım derslerle öğren.</div>
           </div>
-          <div className="card glass2">
-            <b>🧠 Quiz</b>
-            <p>Kendini test et, puanını gör.</p>
+          <div className="glass-soft card">
+            <div className="cardTitle">🧠 Quiz</div>
+            <div className="cardText">Kendini test et, puanını gör.</div>
           </div>
-          <div className="card glass2">
-            <b>🗂️ Çok Dil</b>
-            <p>TR/EN/NL ve daha fazlası.</p>
+          <div className="glass-soft card">
+            <div className="cardTitle">🗣️ Sesli pratik</div>
+            <div className="cardText">Tarayıcı üzerinden Hollandaca telaffuz dinle.</div>
           </div>
         </div>
       </section>
 
       {/* NASIL */}
-      <section className="dl-section">
-        <div className="dl-section-head">
-          <h2>Nasıl çalışır?</h2>
-          <a className="muted" href="/tr/ilerleme">İlerlemeni takip et</a>
-        </div>
+      <section className="section">
+        <h2 className="h2">Nasıl çalışır?</h2>
 
-        <div className="dl-grid-3">
-          <div className="step glass2">
-            <small>STEP 01</small>
-            <b>Seviyeni seç</b>
-            <p>Başlangıçtan ileri seviyeye kadar hedefini belirle.</p>
+        <div className="steps">
+          <div className="glass-soft step">
+            <div className="stepTag">STEP 01</div>
+            <div className="stepTitle">Seviyeni seç</div>
+            <div className="stepText">Başlangıçtan ileri seviyeye kadar hedefini belirle.</div>
           </div>
-          <div className="step glass2">
-            <small>STEP 02</small>
-            <b>Dersleri tamamla</b>
-            <p>Kısa ve net içeriklerle her gün ilerle.</p>
+          <div className="glass-soft step">
+            <div className="stepTag">STEP 02</div>
+            <div className="stepTitle">Dersleri tamamla</div>
+            <div className="stepText">Kısa ve net içeriklerle her gün ilerle.</div>
           </div>
-          <div className="step glass2">
-            <small>STEP 03</small>
-            <b>Quizlerle pekiştir</b>
-            <p>Hatalarını gör, puanını yükselt.</p>
+          <div className="glass-soft step">
+            <div className="stepTag">STEP 03</div>
+            <div className="stepTitle">Quizlerle pekiştir</div>
+            <div className="stepText">Hatalarını gör, puanını yükselt.</div>
           </div>
         </div>
       </section>
 
-      {/* YORUMLAR */}
-      <section className="dl-section">
-        <h2>Kullanıcılar ne diyor?</h2>
+      {/* REVIEWS */}
+      <section className="section">
+        <h2 className="h2">Kullanıcılar ne diyor?</h2>
 
-        <div className="dl-grid-3">
-          <div className="review glass2">
-            <p>“Dersler kısa ve net. Quizler gerçekten hatalarımı gösteriyor.”</p>
-            <div className="who">
+        <div className="reviews">
+          <div className="glass-soft review">
+            <div className="quote">“Dersler kısa ve net. Quizler gerçekten hatalarımı gösteriyor.”</div>
+            <div className="userRow">
               <div className="avatar" />
               <div>
-                <b>Murat</b>
-                <small>Yeni başlayan</small>
+                <div className="userName">Murat</div>
+                <div className="userRole">Yeni başlayan</div>
               </div>
             </div>
           </div>
 
-          <div className="review glass2">
-            <p>“İlerleme ekranı motivasyon veriyor. Her gün biraz daha iyi.”</p>
-            <div className="who">
+          <div className="glass-soft review">
+            <div className="quote">“İlerleme ekranı motivasyon veriyor. Her gün biraz daha iyi.”</div>
+            <div className="userRow">
               <div className="avatar" />
               <div>
-                <b>Ayşe</b>
-                <small>Orta seviye</small>
+                <div className="userName">Ayşe</div>
+                <div className="userRole">Orta seviye</div>
               </div>
             </div>
           </div>
 
-          <div className="review glass2">
-            <p>“5–10 dakikada ilerleyebilmek harika. Düzenli kalabiliyorum.”</p>
-            <div className="who">
+          <div className="glass-soft review">
+            <div className="quote">“5–10 dakikada ilerleyebilmek harika. Düzenli kalabiliyorum.”</div>
+            <div className="userRow">
               <div className="avatar" />
               <div>
-                <b>Emre</b>
-                <small>Yoğun çalışan</small>
+                <div className="userName">Emre</div>
+                <div className="userRole">Yoğun çalışan</div>
               </div>
             </div>
           </div>
