@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import { lessons } from "@/lib/lessons";
+import { lessons } from "../../lib/lessons";
 
 export default function Dersler() {
   return (
