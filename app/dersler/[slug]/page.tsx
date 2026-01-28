@@ -1,5 +1,5 @@
 
-import { lessons } from "@/lib/lessons";
+import { lessons } from "../../../lib/lessons";
 import { notFound } from "next/navigation";
 
 export default function Lesson({ params }: { params: { slug: string } }) {
