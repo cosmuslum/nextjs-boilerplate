@@ -27,12 +27,12 @@ function Pill({ children, active }) {
   return (
     <a
       href="/"
-      className={[
-        "rounded-full px-4 py-2 text-sm font-semibold transition",
-        active
+      className={
+        "rounded-full px-4 py-2 text-sm font-semibold transition " +
+        (active
           ? "bg-white text-black"
-          : "border border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
-      ].join(" ")}
+          : "border border-white/10 bg-white/5 text-white/80 hover:bg-white/10")
+      }
     >
       {children}
     </a>
