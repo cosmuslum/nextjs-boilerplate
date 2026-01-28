@@ -3,7 +3,7 @@ export default function Navbar() {
     <header className="relative">
       <div className="mx-auto max-w-6xl px-4 pt-5">
         <div className="flex items-center justify-between rounded-full border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-xl">
-          <div className="flex items-center gap-2 font-semibold">
+          <div className="flex items-center gap-2 font-semibold text-white">
             <span className="text-white/80">🇳🇱</span>
             NederLearn
           </div>
@@ -23,7 +23,7 @@ export default function Navbar() {
   );
 }
 
-function Pill({ children, active }: { children: React.ReactNode; active?: boolean }) {
+function Pill({ children, active }) {
   return (
     <a
       href="/"
