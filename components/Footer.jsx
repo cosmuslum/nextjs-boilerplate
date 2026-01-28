@@ -1,39 +1,41 @@
 export default function Footer() {
   return (
-    <footer className="relative border-t border-white/10 bg-white/5 backdrop-blur-xl">
+    <footer className="mt-16 border-t border-white/10">
       <div className="mx-auto max-w-6xl px-4 py-10">
-        <div className="grid gap-8 md:grid-cols-3 md:items-start">
-          <div>
-            <div className="text-sm font-semibold">🇳🇱 NederLearn</div>
-            <p className="mt-2 text-sm text-white/60">
-              Hollandaca öğrenmenin en net yolu. Kısa dersler, pratik ve takip.
+        <div className="grid gap-8 md:grid-cols-2 md:items-start">
+          {/* Left: About (solda, tek blok) */}
+          <div className="space-y-2">
+            <div className="text-base font-semibold text-white">Hakkımızda</div>
+            <p className="text-sm leading-6 text-white/60 max-w-md">
+              NederLearn, Hollandaca’yı kısa dersler ve pratik tekrarlarla
+              düzenli öğrenmen için tasarlandı. Amaç: sade, hızlı ve
+              sürdürülebilir ilerleme.
             </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 text-sm text-white/70 md:justify-self-center">
-            <a className="hover:text-white" href="/">Ana Sayfa</a>
-            <a className="hover:text-white" href="/dersler">Dersler</a>
-            <a className="hover:text-white" href="#">Hakkımızda</a>
-            <a className="hover:text-white" href="#">İletişim</a>
-            <a className="hover:text-white" href="#">Gizlilik</a>
-            <a className="hover:text-white" href="#">KVKK</a>
-          </div>
-
-          <div className="md:justify-self-end">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-              <div className="text-sm font-semibold">Günlük hedef</div>
-              <p className="mt-1 text-sm text-white/60">
-                Bugün 10 dakika ayır, seri yap.
-              </p>
+            <div className="pt-2 text-xs text-white/40">
+              © {new Date().getFullYear()} NederLearn
             </div>
           </div>
-        </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/55 md:flex-row md:items-center md:justify-between">
-          <div>© {new Date().getFullYear()} NederLearn</div>
-          <div>Made with ❤️ for learners in the Netherlands</div>
+          {/* Right: Links (yan yana / düzenli) */}
+          <div className="flex flex-wrap items-center justify-start gap-3 md:justify-end">
+            <FooterLink href="/">Ana Sayfa</FooterLink>
+            <FooterLink href="/dersler">Dersler</FooterLink>
+            <FooterLink href="/alfabe">Alfabe (Sesli)</FooterLink>
+            <FooterLink href="/giris">Giriş</FooterLink>
+          </div>
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterLink({ href, children }) {
+  return (
+    <a
+      href={href}
+      className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/75 hover:bg-white/10 transition"
+    >
+      {children}
+    </a>
   );
 }
