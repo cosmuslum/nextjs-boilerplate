@@ -2,28 +2,28 @@ const items = [
   {
     name: "Merve A.",
     place: "Rotterdam",
-    text: "Günlük 10 dakikayla düzenli ilerledim. Kısa ve net dersler çok iyi."
+    text: "Günlük 10 dakikayla düzenli ilerledim. Kısa ve net dersler çok iyi.",
   },
   {
     name: "Emre K.",
     place: "Utrecht",
-    text: "Telaffuz kısmı güzel. A1’den sonra konuşmalar daha rahat akıyor."
+    text: "Telaffuz kısmı güzel. A1’den sonra konuşmalar daha rahat akıyor.",
   },
   {
     name: "Zeynep S.",
     place: "Amsterdam",
-    text: "Quiz + tekrar sistemi motive ediyor. Tasarım premium duruyor."
-  }
+    text: "Quiz + tekrar sistemi motive ediyor. Tasarım premium duruyor.",
+  },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="space-y-4">
-      <div>
+    <section className="space-y-6">
+      <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-xl font-semibold md:text-2xl text-white">
           Memnuniyet yazıları
         </h2>
-        <p className="mt-1 text-white/60">
+        <p className="mt-2 text-white/60">
           Gerçek kullanıcıların deneyimlerinden kısa notlar.
         </p>
       </div>
