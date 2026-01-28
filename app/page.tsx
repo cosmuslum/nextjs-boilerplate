@@ -1,8 +1,8 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Testimonials from "@/components/Testimonials";
-import WhoFor from "@/components/WhoFor";
-import FeatureShowcase from "@/components/FeatureShowcase";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Testimonials from "../components/Testimonials";
+import WhoFor from "../components/WhoFor";
+import FeatureShowcase from "../components/FeatureShowcase";
 
 export default function Home() {
   return (
@@ -13,12 +13,13 @@ export default function Home() {
 
       <main className="relative mx-auto max-w-6xl px-4 pb-20 pt-10 md:pt-14">
         <Hero />
-        <div className="mt-10 md:mt-14" />
 
-        {/* Yeni eklemeler (tasarım bozulmadan) */}
+        <div className="mt-10 md:mt-14" />
         <Testimonials />
+
         <div className="mt-10 md:mt-14" />
         <WhoFor />
+
         <div className="mt-10 md:mt-14" />
         <FeatureShowcase />
       </main>
@@ -31,15 +32,10 @@ export default function Home() {
 function BackgroundFX() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      {/* base */}
       <div className="absolute inset-0 bg-[#05060a]" />
-
-      {/* soft gradients */}
       <div className="absolute -left-32 top-[-120px] h-[480px] w-[480px] rounded-full bg-blue-600/25 blur-[90px]" />
       <div className="absolute right-[-160px] top-[40px] h-[520px] w-[520px] rounded-full bg-violet-600/25 blur-[100px]" />
       <div className="absolute left-[30%] top-[55%] h-[520px] w-[520px] rounded-full bg-cyan-500/10 blur-[120px]" />
-
-      {/* vignette */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
     </div>
   );
@@ -50,7 +46,6 @@ function Hero() {
     <section className="relative">
       <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl md:p-10">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
-          {/* left */}
           <div className="max-w-2xl space-y-4">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">
               <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
@@ -87,7 +82,6 @@ function Hero() {
             </div>
           </div>
 
-          {/* right mini dashboard */}
           <div className="w-full md:max-w-md">
             <div className="rounded-[22px] border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
               <div className="flex items-center justify-between">
