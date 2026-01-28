@@ -1,148 +1,127 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useSession, signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const LANGS = [
-  { code: "TR", label: "Türkçe" },
-  { code: "EN", label: "English" },
-  { code: "AR", label: "العربية" },
-  { code: "NL", label: "Nederlands" },
-  { code: "ES", label: "Español" },
+  { code: "tr", label: "Türkçe" },
+  { code: "en", label: "English" },
+  { code: "ar", label: "العربية" },
+  { code: "nl", label: "Nederlands" },
+  { code: "es", label: "Español" }
 ];
 
 export default function Navbar() {
-  const { data: session } = useSession();
-  const loggedIn = !!session?.user;
-  const role = session?.user?.role || "user";
+  const { data: session, status } = useSession();
+  const role = session?.user?.role;
+  const isAuthed = status === "authenticated";
 
-  const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState("TR");
+  const [langOpen, setLangOpen] = useState(false);
+  const [lang, setLang] = useState(LANGS[0]);
 
-  const btnRef = useRef(null);
   const menuRef = useRef(null);
-  const [pos, setPos] = useState({ top: 0, right: 0 });
-
-  function updatePosition() {
-    const el = btnRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    setPos({
-      top: Math.round(r.bottom + 8),
-      right: Math.round(window.innerWidth - r.right),
-    });
-  }
 
   useEffect(() => {
-    function onResizeOrScroll() {
-      if (open) updatePosition();
+    function onDoc(e) {
+      if (!menuRef.current) return;
+      if (!menuRef.current.contains(e.target)) setLangOpen(false);
     }
-    window.addEventListener("resize", onResizeOrScroll);
-    window.addEventListener("scroll", onResizeOrScroll, true);
-    return () => {
-      window.removeEventListener("resize", onResizeOrScroll);
-      window.removeEventListener("scroll", onResizeOrScroll, true);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    function onDocClick(e) {
-      if (menuRef.current && menuRef.current.contains(e.target)) return;
-      if (btnRef.current && btnRef.current.contains(e.target)) return;
-      setOpen(false);
-    }
-    document.addEventListener("mousedown", onDocClick);
-    return () => document.removeEventListener("mousedown", onDocClick);
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
   return (
-    <header className="relative">
-      <div className="mx-auto max-w-6xl px-4 pt-5">
-        <div className="flex items-center justify-between rounded-full border border-white/10 bg-white/5 px-4 py-3 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur-xl">
-          <div className="flex items-center gap-2 font-semibold text-white">
-            <span className="text-white/80">🇳🇱</span>
-            NederLearn
-          </div>
+    <div className="mx-auto max-w-6xl px-4 pt-6">
+      <div className="rounded-full border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
+        <div className="flex items-center justify-between px-5 py-3">
+          <a href="/" className="flex items-center gap-2">
+            <span className="text-lg">🇳🇱</span>
+            <span className="font-semibold tracking-wide">NederLearn</span>
+          </a>
 
-          <nav className="hidden items-center gap-2 md:flex">
-            {/* Dil dropdown */}
-            <button
-              ref={btnRef}
-              type="button"
-              onClick={() => {
-                if (!open) {
-                  updatePosition();
-                  setOpen(true);
-                } else {
-                  setOpen(false);
-                }
-              }}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
-            >
-              <span>{lang}</span>
-              <span className="text-white/50">▾</span>
-            </button>
-
-            {/* Yetkililer */}
-            {loggedIn && role === "admin" && <Pill href="/admin">Admin</Pill>}
-            {loggedIn && <Pill href="/profil">Profil</Pill>}
-
-            <Pill href="/dersler">Dersler</Pill>
-
-            {!loggedIn ? (
-              <Pill href="/giris">Giriş</Pill>
-            ) : (
-              <Pill
-                href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  signOut({ callbackUrl: "/" });
-                }}
+          <div className="flex items-center gap-2">
+            {/* Dil */}
+            <div className="relative" ref={menuRef}>
+              <button
+                type="button"
+                onClick={() => setLangOpen((v) => !v)}
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm hover:bg-white/10"
               >
-                Çıkış
-              </Pill>
-            )}
-          </nav>
+                <span className="opacity-90 uppercase">{lang.code}</span>
+                <span className="opacity-60">▼</span>
+              </button>
 
-          <div className="md:hidden text-white/70">☰</div>
+              {langOpen && (
+                <div className="absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border border-white/10 bg-[#0b1020]/95 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
+                  {LANGS.map((l) => (
+                    <button
+                      key={l.code}
+                      onClick={() => {
+                        setLang(l);
+                        setLangOpen(false);
+                      }}
+                      className="flex w-full items-center justify-between px-4 py-3 text-sm hover:bg-white/10"
+                    >
+                      <span>{l.label}</span>
+                      <span className="opacity-60 uppercase">{l.code}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Linkler */}
+            <a className="navpill" href="/dersler">
+              Dersler
+            </a>
+
+            {/* Giriş / Profil / Admin */}
+            {!isAuthed && (
+              <a className="navpill" href="/giris">
+                Giriş
+              </a>
+            )}
+
+            {isAuthed && (
+              <>
+                <a className="navpill" href="/profil">
+                  Profil
+                </a>
+
+                {role === "admin" && (
+                  <a className="navpill" href="/admin">
+                    Admin
+                  </a>
+                )}
+
+                <button
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="navpill"
+                  type="button"
+                >
+                  Çıkış
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* dropdown */}
-      {open && (
-        <div
-          ref={menuRef}
-          className="fixed z-[9999] w-48 overflow-hidden rounded-2xl border border-white/10 bg-[#0b0d14]/95 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
-          style={{ top: pos.top, right: pos.right }}
-        >
-          {LANGS.map((l) => (
-            <button
-              key={l.code}
-              type="button"
-              onClick={() => {
-                setLang(l.code);
-                setOpen(false);
-              }}
-              className="flex w-full items-center justify-between px-4 py-3 text-left text-sm text-white/85 hover:bg-white/10 transition"
-            >
-              <span>{l.label}</span>
-              <span className="text-white/50">{l.code}</span>
-            </button>
-          ))}
-        </div>
-      )}
-    </header>
-  );
-}
-
-function Pill({ children, href = "/", onClick }) {
-  return (
-    <a
-      href={href}
-      onClick={onClick}
-      className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
-    >
-      {children}
-    </a>
+      <style jsx>{`
+        .navpill {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 9999px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.05);
+          padding: 0.5rem 1rem;
+          font-size: 0.875rem;
+        }
+        .navpill:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+      `}</style>
+    </div>
   );
 }
