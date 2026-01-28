@@ -1,261 +1,123 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { signIn } from "next-auth/react";
 
-export default function LoginPage() {
-  const [tab, setTab] = useState("login"); // login | signup
-  const [resetMode, setResetMode] = useState(false);
-
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [pass2, setPass2] = useState("");
-
+export default function GirisPage() {
+  const [tab, setTab] = useState("giris"); // giris | kayit | sifre
   const [showPass, setShowPass] = useState(false);
-  const [showPass2, setShowPass2] = useState(false);
 
-  const [err, setErr] = useState("");
-  const [ok, setOk] = useState("");
+  const title = useMemo(() => {
+    if (tab === "giris") return "Giriş Yap";
+    if (tab === "kayit") return "Kayıt Ol";
+    return "Şifre Sıfırla";
+  }, [tab]);
 
-  function clearMsgs() {
-    setErr("");
-    setOk("");
-  }
-
-  function handleLogin(e) {
-    e.preventDefault();
-    clearMsgs();
-
-    // ❗ Email/Şifre login şimdilik demo (Google gerçek)
-    // İstersen sonra gerçek backend bağlarız.
-    setErr("Email/Şifre demo. Lütfen 'Google ile Giriş Yap' kullan.");
-  }
-
-  function handleSignup(e) {
-    e.preventDefault();
-    clearMsgs();
-
-    if (!email.includes("@")) return setErr("Geçerli e-posta gir.");
-    if (pass.length < 6) return setErr("Şifre en az 6 karakter olmalı.");
-    if (pass !== pass2) return setErr("Şifreler aynı değil.");
-
-    setOk("Kayıt (demo) oluşturuldu. Google ile giriş yapabilirsin.");
-  }
-
-  function handleReset(e) {
-    e.preventDefault();
-    clearMsgs();
-    if (!email.includes("@")) return setErr("Geçerli e-posta gir.");
-    setOk("Sıfırlama linki gönderildi (demo).");
-  }
+  const subtitle = useMemo(() => {
+    if (tab === "giris") return "Hollandaca öğrenmeye başlamak için hesabına giriş yap.";
+    if (tab === "kayit") return "Yeni hesap oluştur ve öğrenmeye hemen başla.";
+    return "E-postanı gir, şifre sıfırlama bağlantısı gönderelim.";
+  }, [tab]);
 
   return (
-    <div className="min-h-screen">
-      <BackgroundFX />
-
-      <div className="mx-auto max-w-md px-4 py-10 md:py-14">
-        <div className="rounded-[26px] border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_30px_90px_rgba(0,0,0,0.55)] backdrop-blur-xl overflow-hidden">
-          {/* top bar */}
-          <div className="flex items-center justify-between px-5 py-4">
+    <div className="min-h-[70vh] flex items-center justify-center px-4">
+      <div className="w-full max-w-md rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_30px_100px_rgba(0,0,0,0.5)] overflow-hidden">
+        <div className="p-6 md:p-8">
+          <div className="flex items-center justify-between">
             <a
               href="/"
-              className="text-sm text-white/70 hover:text-white/85 transition inline-flex items-center gap-2"
+              className="text-sm text-white/70 hover:text-white inline-flex items-center gap-2"
             >
-              <span className="opacity-80">⬅</span>
-              Ana Sayfaya Dön
+              ← Ana Sayfaya Dön
             </a>
-            <div className="text-sm text-white/50">Giriş</div>
+            <span className="text-xs text-white/50">NederLearn</span>
           </div>
 
-          <div className="px-6 pb-6 md:px-8 md:pb-8">
-            <div className="text-center">
-              <h1 className="text-3xl font-semibold text-white">Giriş Yap</h1>
-              <p className="mt-2 text-sm text-white/60">
-                Hollandaca öğrenmeye başlamak için hesabına giriş yap.
-              </p>
-            </div>
+          <h1 className="mt-6 text-3xl font-extrabold tracking-tight text-center">
+            {title}
+          </h1>
+          <p className="mt-2 text-center text-white/60 text-sm">{subtitle}</p>
 
-            {/* tabs */}
-            <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-1">
-              <div className="grid grid-cols-2 gap-1">
-                <button
-                  type="button"
-                  onClick={() => {
-                    clearMsgs();
-                    setResetMode(false);
-                    setTab("login");
-                  }}
-                  className={
-                    "rounded-xl px-4 py-2 text-sm font-semibold transition " +
-                    (tab === "login" && !resetMode
-                      ? "bg-white/10 text-white"
-                      : "text-white/65 hover:text-white/85")
-                  }
-                >
-                  Giriş
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    clearMsgs();
-                    setResetMode(false);
-                    setTab("signup");
-                  }}
-                  className={
-                    "rounded-xl px-4 py-2 text-sm font-semibold transition " +
-                    (tab === "signup" && !resetMode
-                      ? "bg-white/10 text-white"
-                      : "text-white/65 hover:text-white/85")
-                  }
-                >
-                  Kayıt
-                </button>
-              </div>
-            </div>
+          {/* Tabs */}
+          <div className="mt-6 grid grid-cols-3 gap-2 rounded-2xl border border-white/10 bg-white/5 p-1">
+            <TabBtn active={tab === "giris"} onClick={() => setTab("giris")}>
+              Giriş
+            </TabBtn>
+            <TabBtn active={tab === "kayit"} onClick={() => setTab("kayit")}>
+              Kayıt
+            </TabBtn>
+            <TabBtn active={tab === "sifre"} onClick={() => setTab("sifre")}>
+              Şifre
+            </TabBtn>
+          </div>
 
-            {/* messages */}
-            {err && (
-              <div className="mt-4 rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-                {err}
-              </div>
-            )}
-            {ok && (
-              <div className="mt-4 rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-100">
-                {ok}
-              </div>
-            )}
+          <div className="mt-6 space-y-4">
+            <Field label="Email" placeholder="ornek@mail.com" type="email" />
 
-            {/* form */}
-            {!resetMode ? (
-              <form
-                className="mt-6 space-y-4"
-                onSubmit={tab === "login" ? handleLogin : handleSignup}
-              >
-                <Field label="Email">
+            {tab !== "sifre" && (
+              <div className="space-y-2">
+                <div className="text-sm text-white/70">Şifre</div>
+                <div className="relative">
                   <input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="ornek@mail.com"
-                    className={inputCls}
-                    autoComplete="email"
+                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-white/20"
+                    placeholder="En az 6 karakter"
+                    type={showPass ? "text" : "password"}
                   />
-                </Field>
-
-                <Field label="Şifre">
-                  <div className="relative">
-                    <input
-                      value={pass}
-                      onChange={(e) => setPass(e.target.value)}
-                      placeholder="En az 6 karakter"
-                      type={showPass ? "text" : "password"}
-                      className={inputCls + " pr-12"}
-                      autoComplete="current-password"
-                    />
-                    <IconBtn
-                      onClick={() => setShowPass((v) => !v)}
-                      label={showPass ? "Şifreyi gizle" : "Şifreyi göster"}
-                    >
-                      {showPass ? <EyeOff /> : <Eye />}
-                    </IconBtn>
-                  </div>
-                </Field>
-
-                {tab === "signup" && (
-                  <Field label="Şifre (tekrar)">
-                    <div className="relative">
-                      <input
-                        value={pass2}
-                        onChange={(e) => setPass2(e.target.value)}
-                        placeholder="Şifreyi tekrar yaz"
-                        type={showPass2 ? "text" : "password"}
-                        className={inputCls + " pr-12"}
-                        autoComplete="new-password"
-                      />
-                      <IconBtn
-                        onClick={() => setShowPass2((v) => !v)}
-                        label={showPass2 ? "Şifreyi gizle" : "Şifreyi göster"}
-                      >
-                        {showPass2 ? <EyeOff /> : <Eye />}
-                      </IconBtn>
-                    </div>
-                  </Field>
-                )}
-
-                <div className="flex items-center justify-between">
                   <button
                     type="button"
-                    onClick={() => {
-                      clearMsgs();
-                      setResetMode(true);
-                    }}
-                    className="text-sm text-white/60 hover:text-white/80 transition underline underline-offset-4"
+                    onClick={() => setShowPass((v) => !v)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/60 hover:text-white"
+                  >
+                    {showPass ? "Gizle" : "Göster"}
+                  </button>
+                </div>
+
+                {tab === "giris" && (
+                  <button
+                    type="button"
+                    onClick={() => setTab("sifre")}
+                    className="text-xs text-white/60 hover:text-white underline underline-offset-4"
                   >
                     Şifremi unuttum?
                   </button>
-                  <div className="text-xs text-white/40">Google önerilir</div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="mt-1 w-full rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-black shadow hover:bg-emerald-400 transition"
-                >
-                  {tab === "login" ? "Giriş Yap ✅" : "Kayıt Ol ✅"}
-                </button>
-
-                <Divider />
-
-                {/* ✅ Gerçek Google Login */}
-                <button
-                  type="button"
-                  onClick={() => signIn("google", { callbackUrl: "/" })}
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition flex items-center justify-center gap-2"
-                >
-                  <GoogleIcon />
-                  Google ile Giriş Yap
-                </button>
-
-                <p className="pt-4 text-center text-xs text-white/40">
-                  Mail onayı zorunlu değildir. Şifre sıfırlama maili Spam klasörüne düşebilir.
-                </p>
-              </form>
-            ) : (
-              <form className="mt-6 space-y-4" onSubmit={handleReset}>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="text-sm font-semibold text-white">Şifre Sıfırlama</div>
-                  <div className="mt-1 text-sm text-white/60">
-                    E-postanı yaz, sıfırlama bağlantısı gönderelim.
-                  </div>
-                </div>
-
-                <Field label="Email">
-                  <input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="ornek@mail.com"
-                    className={inputCls}
-                    autoComplete="email"
-                  />
-                </Field>
-
-                <button
-                  type="submit"
-                  className="w-full rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-black shadow hover:bg-emerald-400 transition"
-                >
-                  Sıfırlama Linki Gönder ✅
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    clearMsgs();
-                    setResetMode(false);
-                  }}
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80 hover:bg-white/10 transition"
-                >
-                  Giriş ekranına dön
-                </button>
-              </form>
+                )}
+              </div>
             )}
+
+            {/* Primary button (Email/Pass sadece UI) */}
+            <button
+              type="button"
+              className="w-full rounded-2xl bg-emerald-500 px-4 py-3 text-sm font-semibold text-black hover:opacity-90"
+              onClick={() => {
+                if (tab === "giris") alert("Bu buton sadece UI. Google ile giriş kullan.");
+                if (tab === "kayit") alert("Kayıt (email/şifre) için DB gerekir. Google ile giriş kullan.");
+                if (tab === "sifre") alert("Şifre sıfırlama (email) için mail servisi gerekir. Google ile giriş kullan.");
+              }}
+            >
+              {tab === "giris" ? "Giriş Yap ✓" : tab === "kayit" ? "Kayıt Ol ✓" : "Sıfırlama Linki Gönder"}
+            </button>
+
+            <div className="flex items-center gap-3 py-2">
+              <div className="h-px flex-1 bg-white/10" />
+              <div className="text-xs text-white/50">veya</div>
+              <div className="h-px flex-1 bg-white/10" />
+            </div>
+
+            {/* Google */}
+            <button
+              type="button"
+              onClick={() => signIn("google", { callbackUrl: "/" })}
+              className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold hover:bg-white/10"
+            >
+              <span className="inline-flex items-center justify-center gap-2">
+                <span className="text-base">G</span>
+                Google ile Giriş Yap
+              </span>
+            </button>
+
+            <p className="text-xs text-white/45 text-center leading-relaxed">
+              Mail onayı zorunlu değildir. Google ile giriş yaparak kullanım koşullarını kabul etmiş olursun.
+            </p>
           </div>
         </div>
       </div>
@@ -263,121 +125,30 @@ export default function LoginPage() {
   );
 }
 
-/* ---- UI ---- */
-
-const inputCls =
-  "mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25";
-
-function Field({ label, children }) {
-  return (
-    <div>
-      <label className="text-xs text-white/60">{label}</label>
-      {children}
-    </div>
-  );
-}
-
-function Divider() {
-  return (
-    <div className="my-4 flex items-center gap-3">
-      <div className="h-px flex-1 bg-white/10" />
-      <div className="text-xs text-white/40">veya</div>
-      <div className="h-px flex-1 bg-white/10" />
-    </div>
-  );
-}
-
-function IconBtn({ onClick, label, children }) {
+function TabBtn({ active, onClick, children }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label={label}
-      className="absolute right-2 top-1/2 -translate-y-1/2 grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5 text-white/70 hover:bg-white/10 transition"
+      className={[
+        "rounded-xl px-3 py-2 text-sm",
+        active ? "bg-white text-black font-semibold" : "text-white/70 hover:bg-white/10"
+      ].join(" ")}
     >
       {children}
     </button>
   );
 }
 
-function BackgroundFX() {
+function Field({ label, placeholder, type = "text" }) {
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div className="absolute inset-0 bg-[#05060a]" />
-      <div className="absolute -left-32 top-[-120px] h-[520px] w-[520px] rounded-full bg-blue-600/25 blur-[110px]" />
-      <div className="absolute right-[-180px] top-[40px] h-[560px] w-[560px] rounded-full bg-violet-600/25 blur-[120px]" />
-      <div className="absolute left-[30%] top-[55%] h-[560px] w-[560px] rounded-full bg-cyan-500/10 blur-[140px]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/45" />
+    <div className="space-y-2">
+      <div className="text-sm text-white/70">{label}</div>
+      <input
+        className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-white/20"
+        placeholder={placeholder}
+        type={type}
+      />
     </div>
-  );
-}
-
-/* ---- Icons ---- */
-
-function Eye() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-      />
-      <path
-        d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-      />
-    </svg>
-  );
-}
-
-function EyeOff() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M3 3l18 18"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-      <path
-        d="M10.6 10.6a3 3 0 0 0 4.24 4.24"
-        stroke="currentColor"
-        strokeWidth="1.6"
-      />
-      <path
-        d="M6.3 6.8C4 8.6 2.5 12 2.5 12s3.5 7 9.5 7c1.7 0 3.2-.5 4.5-1.2"
-        stroke="currentColor"
-        strokeWidth="1.6"
-      />
-      <path
-        d="M9.2 5.4A9.6 9.6 0 0 1 12 5c6 0 9.5 7 9.5 7s-1 2-2.8 3.9"
-        stroke="currentColor"
-        strokeWidth="1.6"
-      />
-    </svg>
-  );
-}
-
-function GoogleIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 48 48">
-      <path
-        fill="#FFC107"
-        d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"
-      />
-      <path
-        fill="#FF3D00"
-        d="M6.3 14.7l6.6 4.8C14.7 15.4 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4c-7.7 0-14.4 4.3-17.7 10.7z"
-      />
-      <path
-        fill="#4CAF50"
-        d="M24 44c5.2 0 10-2 13.6-5.1l-6.3-5.3C29.3 35.7 26.8 36 24 36c-5.3 0-9.7-3.3-11.3-8H6.2v5.2C9.5 39.7 16.2 44 24 44z"
-      />
-      <path
-        fill="#1976D2"
-        d="M43.6 20.5H42V20H24v8h11.3c-1 2.7-2.9 4.9-5.3 6.3l.1.1 6.3 5.3C39.7 36.7 44 31.7 44 24c0-1.3-.1-2.7-.4-3.5z"
-      />
-    </svg>
   );
 }
