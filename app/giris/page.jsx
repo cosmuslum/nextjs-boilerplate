@@ -1,61 +1,39 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 export default function LoginPage() {
-  const [mode, setMode] = useState("login"); // login | signup | reset
+  const [tab, setTab] = useState("login"); // login | signup
+  const [resetMode, setResetMode] = useState(false);
+
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [pass2, setPass2] = useState("");
+
   const [showPass, setShowPass] = useState(false);
   const [showPass2, setShowPass2] = useState(false);
+
   const [err, setErr] = useState("");
   const [ok, setOk] = useState("");
 
-  const title = useMemo(() => {
-    if (mode === "signup") return "Üye Ol";
-    if (mode === "reset") return "Şifre Sıfırla";
-    return "Giriş";
-  }, [mode]);
-
-  const subtitle = useMemo(() => {
-    if (mode === "signup")
-      return "Hesabını oluştur, derslere hemen başla.";
-    if (mode === "reset")
-      return "E-postanı yaz, şifre sıfırlama bağlantısı gönderelim.";
-    return "Hesabınla giriş yap.";
-  }, [mode]);
-
-  function resetMessages() {
+  function clearMsgs() {
     setErr("");
     setOk("");
   }
 
-  function goMode(next) {
-    resetMessages();
-    setMode(next);
-    setPass("");
-    setPass2("");
-    setShowPass(false);
-    setShowPass2(false);
-  }
-
-  // DEMO login logic
-  function doLogin(e) {
+  function handleLogin(e) {
     e.preventDefault();
-    resetMessages();
+    clearMsgs();
 
     // Demo hesaplar:
     // admin@nederlearn.nl / 123456
-    // user@nederlearn.nl / 123456
+    // user@nederlearn.nl  / 123456
     const okLogin =
       pass === "123456" &&
       (email === "admin@nederlearn.nl" || email === "user@nederlearn.nl");
 
     if (!okLogin) {
-      setErr(
-        "E-posta veya şifre hatalı. (Demo: admin@nederlearn.nl / 123456)"
-      );
+      setErr("E-posta veya şifre hatalı. (Demo: admin@nederlearn.nl / 123456)");
       return;
     }
 
@@ -67,10 +45,9 @@ export default function LoginPage() {
     window.location.href = "/";
   }
 
-  // DEMO signup
-  function doSignup(e) {
+  function handleSignup(e) {
     e.preventDefault();
-    resetMessages();
+    clearMsgs();
 
     if (!email.includes("@")) {
       setErr("Lütfen geçerli bir e-posta gir.");
@@ -85,23 +62,24 @@ export default function LoginPage() {
       return;
     }
 
-    // Demo: gerçek kayıt yok — sadece başarı mesajı gösteriyoruz
-    setOk("Üyelik oluşturuldu (demo). Şimdi giriş yapabilirsin.");
-    // otomatik login yerine login ekranına alalım
-    setTimeout(() => goMode("login"), 600);
+    // Demo: gerçek kayıt yok
+    setOk("Kayıt oluşturuldu (demo). Şimdi giriş yapabilirsin.");
+    setTimeout(() => {
+      setTab("login");
+      setPass("");
+      setPass2("");
+    }, 700);
   }
 
-  // DEMO reset
-  function doReset(e) {
+  function handleReset(e) {
     e.preventDefault();
-    resetMessages();
+    clearMsgs();
 
     if (!email.includes("@")) {
       setErr("Lütfen geçerli bir e-posta gir.");
       return;
     }
 
-    // Demo: sadece mesaj
     setOk("Şifre sıfırlama bağlantısı gönderildi (demo).");
   }
 
@@ -109,208 +87,224 @@ export default function LoginPage() {
     <div className="min-h-screen">
       <BackgroundFX />
 
-      <div className="mx-auto max-w-md px-4 pt-20 md:pt-24">
-        {/* top brand */}
-        <div className="mb-6 flex items-center justify-center gap-2 text-white/85">
-          <span className="text-lg">🇳🇱</span>
-          <span className="font-semibold">NederLearn</span>
-        </div>
+      <div className="mx-auto max-w-md px-4 py-10 md:py-14">
+        <div className="rounded-[26px] border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_30px_90px_rgba(0,0,0,0.55)] backdrop-blur-xl overflow-hidden">
+          {/* top bar */}
+          <div className="flex items-center justify-between px-5 py-4">
+            <a
+              href="/"
+              className="text-sm text-white/70 hover:text-white/85 transition inline-flex items-center gap-2"
+            >
+              <span className="opacity-80">⬅</span>
+              Ana Sayfaya Dön
+            </a>
 
-        <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl md:p-8">
-          {/* header */}
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-semibold text-white">{title}</h1>
-              <p className="mt-1 text-sm text-white/60">{subtitle}</p>
-            </div>
-
-            {/* mode chips */}
-            <div className="flex gap-2">
-              <Chip active={mode === "login"} onClick={() => goMode("login")}>
-                Giriş
-              </Chip>
-              <Chip active={mode === "signup"} onClick={() => goMode("signup")}>
-                Üye Ol
-              </Chip>
-            </div>
+            <div className="text-sm text-white/50">Giriş</div>
           </div>
 
-          {/* messages */}
-          {err && (
-            <div className="mt-5 rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-              {err}
+          <div className="px-6 pb-6 md:px-8 md:pb-8">
+            <div className="text-center">
+              <h1 className="text-3xl font-semibold text-white">Giriş Yap</h1>
+              <p className="mt-2 text-sm text-white/60">
+                Hollandaca öğrenmeye başlamak için hesabına giriş yap.
+              </p>
             </div>
-          )}
-          {ok && (
-            <div className="mt-5 rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-100">
-              {ok}
-            </div>
-          )}
 
-          {/* forms */}
-          {mode === "login" && (
-            <form className="mt-6 space-y-4" onSubmit={doLogin}>
-              <Field label="E-posta">
-                <input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="user@nederlearn.nl"
-                  className={inputCls}
-                  autoComplete="email"
-                />
-              </Field>
-
-              <Field label="Şifre">
-                <div className="relative">
-                  <input
-                    value={pass}
-                    onChange={(e) => setPass(e.target.value)}
-                    placeholder="123456"
-                    type={showPass ? "text" : "password"}
-                    className={inputCls + " pr-12"}
-                    autoComplete="current-password"
-                  />
-                  <IconBtn
-                    onClick={() => setShowPass((v) => !v)}
-                    label={showPass ? "Şifreyi gizle" : "Şifreyi göster"}
-                  >
-                    {showPass ? <EyeOff /> : <Eye />}
-                  </IconBtn>
-                </div>
-              </Field>
-
-              <div className="flex items-center justify-between">
+            {/* tabs */}
+            <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-1">
+              <div className="grid grid-cols-2 gap-1">
                 <button
                   type="button"
-                  onClick={() => goMode("reset")}
-                  className="text-sm text-white/60 hover:text-white/80 transition"
+                  onClick={() => {
+                    clearMsgs();
+                    setResetMode(false);
+                    setTab("login");
+                  }}
+                  className={
+                    "rounded-xl px-4 py-2 text-sm font-semibold transition " +
+                    (tab === "login" && !resetMode
+                      ? "bg-white/10 text-white"
+                      : "text-white/65 hover:text-white/85")
+                  }
                 >
-                  Şifremi unuttum
+                  Giriş
                 </button>
-                <a
-                  href="/"
-                  className="text-sm text-white/60 hover:text-white/80 transition"
-                >
-                  Ana sayfa
-                </a>
-              </div>
-
-              <button type="submit" className={primaryBtn}>
-                Giriş Yap
-              </button>
-
-              <div className="pt-1 text-xs text-white/45">
-                Demo: <span className="text-white/65">admin@nederlearn.nl</span>{" "}
-                / 123456 veya{" "}
-                <span className="text-white/65">user@nederlearn.nl</span> / 123456
-              </div>
-            </form>
-          )}
-
-          {mode === "signup" && (
-            <form className="mt-6 space-y-4" onSubmit={doSignup}>
-              <Field label="E-posta">
-                <input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="ornek@mail.com"
-                  className={inputCls}
-                  autoComplete="email"
-                />
-              </Field>
-
-              <Field label="Şifre">
-                <div className="relative">
-                  <input
-                    value={pass}
-                    onChange={(e) => setPass(e.target.value)}
-                    placeholder="En az 6 karakter"
-                    type={showPass ? "text" : "password"}
-                    className={inputCls + " pr-12"}
-                    autoComplete="new-password"
-                  />
-                  <IconBtn
-                    onClick={() => setShowPass((v) => !v)}
-                    label={showPass ? "Şifreyi gizle" : "Şifreyi göster"}
-                  >
-                    {showPass ? <EyeOff /> : <Eye />}
-                  </IconBtn>
-                </div>
-              </Field>
-
-              <Field label="Şifre (tekrar)">
-                <div className="relative">
-                  <input
-                    value={pass2}
-                    onChange={(e) => setPass2(e.target.value)}
-                    placeholder="Şifreyi tekrar yaz"
-                    type={showPass2 ? "text" : "password"}
-                    className={inputCls + " pr-12"}
-                    autoComplete="new-password"
-                  />
-                  <IconBtn
-                    onClick={() => setShowPass2((v) => !v)}
-                    label={showPass2 ? "Şifreyi gizle" : "Şifreyi göster"}
-                  >
-                    {showPass2 ? <EyeOff /> : <Eye />}
-                  </IconBtn>
-                </div>
-              </Field>
-
-              <button type="submit" className={primaryBtn}>
-                Hesap Oluştur
-              </button>
-
-              <div className="text-sm text-white/60">
-                Zaten hesabın var mı?{" "}
                 <button
                   type="button"
-                  onClick={() => goMode("login")}
-                  className="text-white/80 hover:text-white transition underline underline-offset-4"
+                  onClick={() => {
+                    clearMsgs();
+                    setResetMode(false);
+                    setTab("signup");
+                  }}
+                  className={
+                    "rounded-xl px-4 py-2 text-sm font-semibold transition " +
+                    (tab === "signup" && !resetMode
+                      ? "bg-white/10 text-white"
+                      : "text-white/65 hover:text-white/85")
+                  }
                 >
-                  Giriş yap
+                  Kayıt
                 </button>
               </div>
-            </form>
-          )}
+            </div>
 
-          {mode === "reset" && (
-            <form className="mt-6 space-y-4" onSubmit={doReset}>
-              <Field label="E-posta">
-                <input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="ornek@mail.com"
-                  className={inputCls}
-                  autoComplete="email"
-                />
-              </Field>
+            {/* messages */}
+            {err && (
+              <div className="mt-4 rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                {err}
+              </div>
+            )}
+            {ok && (
+              <div className="mt-4 rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-100">
+                {ok}
+              </div>
+            )}
 
-              <button type="submit" className={primaryBtn}>
-                Sıfırlama Bağlantısı Gönder
-              </button>
+            {/* form */}
+            {!resetMode ? (
+              <form
+                className="mt-6 space-y-4"
+                onSubmit={tab === "login" ? handleLogin : handleSignup}
+              >
+                <Field label="Email">
+                  <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="ornek@mail.com"
+                    className={inputCls}
+                    autoComplete="email"
+                  />
+                </Field>
 
-              <div className="text-sm text-white/60">
+                <Field label="Şifre">
+                  <div className="relative">
+                    <input
+                      value={pass}
+                      onChange={(e) => setPass(e.target.value)}
+                      placeholder={tab === "login" ? "123456" : "En az 6 karakter"}
+                      type={showPass ? "text" : "password"}
+                      className={inputCls + " pr-12"}
+                      autoComplete={tab === "login" ? "current-password" : "new-password"}
+                    />
+                    <IconBtn
+                      onClick={() => setShowPass((v) => !v)}
+                      label={showPass ? "Şifreyi gizle" : "Şifreyi göster"}
+                    >
+                      {showPass ? <EyeOff /> : <Eye />}
+                    </IconBtn>
+                  </div>
+                </Field>
+
+                {tab === "signup" && (
+                  <Field label="Şifre (tekrar)">
+                    <div className="relative">
+                      <input
+                        value={pass2}
+                        onChange={(e) => setPass2(e.target.value)}
+                        placeholder="Şifreyi tekrar yaz"
+                        type={showPass2 ? "text" : "password"}
+                        className={inputCls + " pr-12"}
+                        autoComplete="new-password"
+                      />
+                      <IconBtn
+                        onClick={() => setShowPass2((v) => !v)}
+                        label={showPass2 ? "Şifreyi gizle" : "Şifreyi göster"}
+                      >
+                        {showPass2 ? <EyeOff /> : <Eye />}
+                      </IconBtn>
+                    </div>
+                  </Field>
+                )}
+
+                <div className="flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      clearMsgs();
+                      setResetMode(true);
+                    }}
+                    className="text-sm text-white/60 hover:text-white/80 transition underline underline-offset-4"
+                  >
+                    Şifremi unuttum?
+                  </button>
+
+                  <div className="text-xs text-white/40">
+                    {/* küçük ipucu */}
+                    Demo: admin@nederlearn.nl / 123456
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="mt-1 w-full rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-black shadow hover:bg-emerald-400 transition"
+                >
+                  {tab === "login" ? "Giriş Yap ✅" : "Kayıt Ol ✅"}
+                </button>
+
+                {/* divider */}
+                <Divider />
+
+                {/* Google button (demo) */}
                 <button
                   type="button"
-                  onClick={() => goMode("login")}
-                  className="text-white/80 hover:text-white transition underline underline-offset-4"
+                  onClick={() =>
+                    setErr("Google girişi demo. İstersen gerçek bağlarız.")
+                  }
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition flex items-center justify-center gap-2"
+                >
+                  <GoogleIcon />
+                  Google ile Giriş Yap
+                </button>
+
+                <p className="pt-4 text-center text-xs text-white/40">
+                  Mail onayı zorunlu değildir. Şifre sıfırlama maili Spam klasörüne
+                  düşebilir.
+                </p>
+              </form>
+            ) : (
+              <form className="mt-6 space-y-4" onSubmit={handleReset}>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div className="text-sm font-semibold text-white">
+                    Şifre Sıfırlama
+                  </div>
+                  <div className="mt-1 text-sm text-white/60">
+                    E-postanı yaz, sıfırlama bağlantısı gönderelim.
+                  </div>
+                </div>
+
+                <Field label="Email">
+                  <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="ornek@mail.com"
+                    className={inputCls}
+                    autoComplete="email"
+                  />
+                </Field>
+
+                <button
+                  type="submit"
+                  className="w-full rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-black shadow hover:bg-emerald-400 transition"
+                >
+                  Sıfırlama Linki Gönder ✅
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    clearMsgs();
+                    setResetMode(false);
+                  }}
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80 hover:bg-white/10 transition"
                 >
                   Giriş ekranına dön
                 </button>
-              </div>
-            </form>
-          )}
 
-          {/* bottom help */}
-          <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-4">
-            <div className="text-xs text-white/45">
-              Güvenli giriş • Şifreler maskelenir
-            </div>
-            <div className="flex items-center gap-2">
-              <Dot />
-              <span className="text-xs text-white/45">NederLearn v1</span>
-            </div>
+                <p className="pt-3 text-center text-xs text-white/40">
+                  Demo: sadece mesaj gösterir. Gerçek e-posta sistemi istersen bağlarız.
+                </p>
+              </form>
+            )}
           </div>
         </div>
       </div>
@@ -318,13 +312,10 @@ export default function LoginPage() {
   );
 }
 
-/* ---------- UI bits ---------- */
+/* ---------- helpers / ui ---------- */
 
 const inputCls =
   "mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25";
-
-const primaryBtn =
-  "w-full rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-black hover:bg-white/90 transition";
 
 function Field({ label, children }) {
   return (
@@ -335,20 +326,13 @@ function Field({ label, children }) {
   );
 }
 
-function Chip({ active, onClick, children }) {
+function Divider() {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={
-        "rounded-full px-3 py-1 text-xs font-semibold transition " +
-        (active
-          ? "bg-white text-black"
-          : "border border-white/10 bg-white/5 text-white/75 hover:bg-white/10")
-      }
-    >
-      {children}
-    </button>
+    <div className="my-4 flex items-center gap-3">
+      <div className="h-px flex-1 bg-white/10" />
+      <div className="text-xs text-white/40">veya</div>
+      <div className="h-px flex-1 bg-white/10" />
+    </div>
   );
 }
 
@@ -369,19 +353,15 @@ function BackgroundFX() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       <div className="absolute inset-0 bg-[#05060a]" />
-      <div className="absolute -left-32 top-[-120px] h-[480px] w-[480px] rounded-full bg-blue-600/25 blur-[90px]" />
-      <div className="absolute right-[-160px] top-[40px] h-[520px] w-[520px] rounded-full bg-violet-600/25 blur-[100px]" />
-      <div className="absolute left-[30%] top-[55%] h-[520px] w-[520px] rounded-full bg-cyan-500/10 blur-[120px]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
+      <div className="absolute -left-32 top-[-120px] h-[520px] w-[520px] rounded-full bg-blue-600/25 blur-[110px]" />
+      <div className="absolute right-[-180px] top-[40px] h-[560px] w-[560px] rounded-full bg-violet-600/25 blur-[120px]" />
+      <div className="absolute left-[30%] top-[55%] h-[560px] w-[560px] rounded-full bg-cyan-500/10 blur-[140px]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/45" />
     </div>
   );
 }
 
-function Dot() {
-  return <span className="h-2 w-2 rounded-full bg-emerald-400/80" />;
-}
-
-/* ---------- tiny icons (no library) ---------- */
+/* ---------- icons (no library) ---------- */
 
 function Eye() {
   return (
@@ -423,6 +403,29 @@ function EyeOff() {
         d="M9.2 5.4A9.6 9.6 0 0 1 12 5c6 0 9.5 7 9.5 7s-1 2-2.8 3.9"
         stroke="currentColor"
         strokeWidth="1.6"
+      />
+    </svg>
+  );
+}
+
+function GoogleIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 48 48">
+      <path
+        fill="#FFC107"
+        d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"
+      />
+      <path
+        fill="#FF3D00"
+        d="M6.3 14.7l6.6 4.8C14.7 15.4 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4c-7.7 0-14.4 4.3-17.7 10.7z"
+      />
+      <path
+        fill="#4CAF50"
+        d="M24 44c5.2 0 10-2 13.6-5.1l-6.3-5.3C29.3 35.7 26.8 36 24 36c-5.3 0-9.7-3.3-11.3-8H6.2v5.2C9.5 39.7 16.2 44 24 44z"
+      />
+      <path
+        fill="#1976D2"
+        d="M43.6 20.5H42V20H24v8h11.3c-1 2.7-2.9 4.9-5.3 6.3l.1.1 6.3 5.3C39.7 36.7 44 31.7 44 24c0-1.3-.1-2.7-.4-3.5z"
       />
     </svg>
   );
