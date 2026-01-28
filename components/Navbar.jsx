@@ -7,33 +7,37 @@ const LANGS = [
   { code: "EN", label: "English" },
   { code: "AR", label: "العربية" },
   { code: "NL", label: "Nederlands" },
-  { code: "ES", label: "Español" },
+  { code: "ES", label: "Español" }
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [lang, setLang] = useState("TR");
+
   const [loggedIn, setLoggedIn] = useState(false);
+  const [role, setRole] = useState("user");
 
   const btnRef = useRef(null);
   const menuRef = useRef(null);
   const [pos, setPos] = useState({ top: 0, right: 0 });
 
-  // login state sadece localStorage'dan okunur (Giriş tıklayınca set ETMİYORUZ)
   useEffect(() => {
-    const v =
+    const li =
       typeof window !== "undefined" && localStorage.getItem("nl_logged_in");
-    setLoggedIn(v === "1");
+    const r =
+      typeof window !== "undefined" && localStorage.getItem("nl_role");
+
+    setLoggedIn(li === "1");
+    setRole(r || "user");
   }, []);
 
-  // dropdown konumu: butonun altına hizala (fixed => overflow’dan etkilenmez)
   function updatePosition() {
     const el = btnRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
     setPos({
       top: Math.round(r.bottom + 8),
-      right: Math.round(window.innerWidth - r.right),
+      right: Math.round(window.innerWidth - r.right)
     });
   }
 
@@ -69,7 +73,7 @@ export default function Navbar() {
           </div>
 
           <nav className="hidden items-center gap-2 md:flex">
-            {/* Dil dropdown (fixed + ultra z-index => kesin görünür) */}
+            {/* Dil dropdown */}
             <button
               ref={btnRef}
               type="button"
@@ -87,13 +91,12 @@ export default function Navbar() {
               <span className="text-white/50">▾</span>
             </button>
 
-            {/* Admin/Profil sadece girişte */}
-            {loggedIn && <Pill href="/admin">Admin</Pill>}
+            {/* Yetkiler */}
+            {loggedIn && role === "admin" && <Pill href="/admin">Admin</Pill>}
             {loggedIn && <Pill href="/profil">Profil</Pill>}
 
             <Pill href="/dersler">Dersler</Pill>
 
-            {/* Giriş: artık SADECE /giris'e gider */}
             {!loggedIn ? (
               <Pill href="/giris">Giriş</Pill>
             ) : (
@@ -103,7 +106,7 @@ export default function Navbar() {
                   e.preventDefault();
                   localStorage.removeItem("nl_logged_in");
                   localStorage.removeItem("nl_role");
-                  setLoggedIn(false);
+                  localStorage.removeItem("nl_email");
                   window.location.href = "/";
                 }}
               >
