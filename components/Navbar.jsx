@@ -1,127 +1,92 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useMemo, useState } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
-const LANGS = [
-  { code: "tr", label: "Türkçe" },
-  { code: "en", label: "English" },
-  { code: "ar", label: "العربية" },
-  { code: "nl", label: "Nederlands" },
-  { code: "es", label: "Español" }
+const langs = [
+  { code: "TR", label: "Türkçe" },
+  { code: "EN", label: "English" },
+  { code: "AR", label: "العربية" },
+  { code: "NL", label: "Nederlands" },
+  { code: "ES", label: "Español" }
 ];
+
+function Pill({ children, onClick, active }) {
+  return (
+    <button
+      onClick={onClick}
+      className={[
+        "rounded-full px-4 py-2 text-sm transition",
+        "border border-white/10 bg-white/5 hover:bg-white/10",
+        active ? "bg-white/15" : ""
+      ].join(" ")}
+      type="button"
+    >
+      {children}
+    </button>
+  );
+}
 
 export default function Navbar() {
   const { data: session, status } = useSession();
-  const role = session?.user?.role;
+  const [openLang, setOpenLang] = useState(false);
+  const [lang, setLang] = useState("TR");
+
   const isAuthed = status === "authenticated";
+  const role = session?.user?.role || "user";
+  const isAdmin = isAuthed && role === "admin";
 
-  const [langOpen, setLangOpen] = useState(false);
-  const [lang, setLang] = useState(LANGS[0]);
-
-  const menuRef = useRef(null);
-
-  useEffect(() => {
-    function onDoc(e) {
-      if (!menuRef.current) return;
-      if (!menuRef.current.contains(e.target)) setLangOpen(false);
-    }
-    document.addEventListener("mousedown", onDoc);
-    return () => document.removeEventListener("mousedown", onDoc);
-  }, []);
+  const currentLang = useMemo(() => langs.find((l) => l.code === lang) || langs[0], [lang]);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-6">
-      <div className="rounded-full border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
-        <div className="flex items-center justify-between px-5 py-3">
-          <a href="/" className="flex items-center gap-2">
+    <div className="sticky top-0 z-50">
+      <div className="mx-auto max-w-6xl px-4 pt-6">
+        <div className="rounded-full border border-white/10 bg-black/30 backdrop-blur-xl px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
             <span className="text-lg">🇳🇱</span>
-            <span className="font-semibold tracking-wide">NederLearn</span>
-          </a>
+            <span className="font-semibold">NederLearn</span>
+          </div>
 
           <div className="flex items-center gap-2">
-            {/* Dil */}
-            <div className="relative" ref={menuRef}>
-              <button
-                type="button"
-                onClick={() => setLangOpen((v) => !v)}
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm hover:bg-white/10"
-              >
-                <span className="opacity-90 uppercase">{lang.code}</span>
-                <span className="opacity-60">▼</span>
-              </button>
+            {/* Language */}
+            <div className="relative">
+              <Pill onClick={() => setOpenLang((v) => !v)} active={openLang}>
+                {currentLang.code} <span className="opacity-60">▾</span>
+              </Pill>
 
-              {langOpen && (
-                <div className="absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border border-white/10 bg-[#0b1020]/95 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
-                  {LANGS.map((l) => (
+              {openLang && (
+                <div className="absolute right-0 mt-2 w-52 rounded-2xl border border-white/10 bg-black/70 backdrop-blur-xl overflow-hidden">
+                  {langs.map((l) => (
                     <button
                       key={l.code}
+                      className="w-full text-left px-4 py-3 text-sm hover:bg-white/10 flex items-center justify-between"
                       onClick={() => {
-                        setLang(l);
-                        setLangOpen(false);
+                        setLang(l.code);
+                        setOpenLang(false);
                       }}
-                      className="flex w-full items-center justify-between px-4 py-3 text-sm hover:bg-white/10"
+                      type="button"
                     >
                       <span>{l.label}</span>
-                      <span className="opacity-60 uppercase">{l.code}</span>
+                      <span className="opacity-60">{l.code}</span>
                     </button>
                   ))}
                 </div>
               )}
             </div>
 
-            {/* Linkler */}
-            <a className="navpill" href="/dersler">
-              Dersler
-            </a>
+            {/* Nav */}
+            {isAdmin && <Pill onClick={() => (window.location.href = "/admin")}>Admin</Pill>}
+            {isAuthed && <Pill onClick={() => (window.location.href = "/profil")}>Profil</Pill>}
+            <Pill onClick={() => (window.location.href = "/dersler")}>Dersler</Pill>
 
-            {/* Giriş / Profil / Admin */}
-            {!isAuthed && (
-              <a className="navpill" href="/giris">
-                Giriş
-              </a>
-            )}
-
-            {isAuthed && (
-              <>
-                <a className="navpill" href="/profil">
-                  Profil
-                </a>
-
-                {role === "admin" && (
-                  <a className="navpill" href="/admin">
-                    Admin
-                  </a>
-                )}
-
-                <button
-                  onClick={() => signOut({ callbackUrl: "/" })}
-                  className="navpill"
-                  type="button"
-                >
-                  Çıkış
-                </button>
-              </>
+            {!isAuthed ? (
+              <Pill onClick={() => signIn("google")}>Giriş</Pill>
+            ) : (
+              <Pill onClick={() => signOut({ callbackUrl: "/" })}>Çıkış</Pill>
             )}
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .navpill {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 9999px;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          background: rgba(255, 255, 255, 0.05);
-          padding: 0.5rem 1rem;
-          font-size: 0.875rem;
-        }
-        .navpill:hover {
-          background: rgba(255, 255, 255, 0.1);
-        }
-      `}</style>
     </div>
   );
 }
