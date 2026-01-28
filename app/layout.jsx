@@ -3,7 +3,7 @@ import Providers from "./providers";
 
 export const metadata = {
   title: "NederLearn",
-  description: "Hollandaca öğrenmenin en kolay yolu",
+  description: "Hollandaca öğren",
 };
 
 export default function RootLayout({ children }) {
