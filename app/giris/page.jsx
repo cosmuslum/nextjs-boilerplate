@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const [tab, setTab] = useState("login"); // login | signup
@@ -25,62 +26,27 @@ export default function LoginPage() {
     e.preventDefault();
     clearMsgs();
 
-    // Demo hesaplar:
-    // admin@nederlearn.nl / 123456
-    // user@nederlearn.nl  / 123456
-    const okLogin =
-      pass === "123456" &&
-      (email === "admin@nederlearn.nl" || email === "user@nederlearn.nl");
-
-    if (!okLogin) {
-      setErr("E-posta veya şifre hatalı. (Demo: admin@nederlearn.nl / 123456)");
-      return;
-    }
-
-    const role = email === "admin@nederlearn.nl" ? "admin" : "user";
-    localStorage.setItem("nl_logged_in", "1");
-    localStorage.setItem("nl_role", role);
-    localStorage.setItem("nl_email", email);
-
-    window.location.href = "/";
+    // ❗ Email/Şifre login şimdilik demo (Google gerçek)
+    // İstersen sonra gerçek backend bağlarız.
+    setErr("Email/Şifre demo. Lütfen 'Google ile Giriş Yap' kullan.");
   }
 
   function handleSignup(e) {
     e.preventDefault();
     clearMsgs();
 
-    if (!email.includes("@")) {
-      setErr("Lütfen geçerli bir e-posta gir.");
-      return;
-    }
-    if (pass.length < 6) {
-      setErr("Şifre en az 6 karakter olmalı.");
-      return;
-    }
-    if (pass !== pass2) {
-      setErr("Şifreler aynı değil.");
-      return;
-    }
+    if (!email.includes("@")) return setErr("Geçerli e-posta gir.");
+    if (pass.length < 6) return setErr("Şifre en az 6 karakter olmalı.");
+    if (pass !== pass2) return setErr("Şifreler aynı değil.");
 
-    // Demo: gerçek kayıt yok
-    setOk("Kayıt oluşturuldu (demo). Şimdi giriş yapabilirsin.");
-    setTimeout(() => {
-      setTab("login");
-      setPass("");
-      setPass2("");
-    }, 700);
+    setOk("Kayıt (demo) oluşturuldu. Google ile giriş yapabilirsin.");
   }
 
   function handleReset(e) {
     e.preventDefault();
     clearMsgs();
-
-    if (!email.includes("@")) {
-      setErr("Lütfen geçerli bir e-posta gir.");
-      return;
-    }
-
-    setOk("Şifre sıfırlama bağlantısı gönderildi (demo).");
+    if (!email.includes("@")) return setErr("Geçerli e-posta gir.");
+    setOk("Sıfırlama linki gönderildi (demo).");
   }
 
   return (
@@ -98,7 +64,6 @@ export default function LoginPage() {
               <span className="opacity-80">⬅</span>
               Ana Sayfaya Dön
             </a>
-
             <div className="text-sm text-white/50">Giriş</div>
           </div>
 
@@ -181,10 +146,10 @@ export default function LoginPage() {
                     <input
                       value={pass}
                       onChange={(e) => setPass(e.target.value)}
-                      placeholder={tab === "login" ? "123456" : "En az 6 karakter"}
+                      placeholder="En az 6 karakter"
                       type={showPass ? "text" : "password"}
                       className={inputCls + " pr-12"}
-                      autoComplete={tab === "login" ? "current-password" : "new-password"}
+                      autoComplete="current-password"
                     />
                     <IconBtn
                       onClick={() => setShowPass((v) => !v)}
@@ -227,11 +192,7 @@ export default function LoginPage() {
                   >
                     Şifremi unuttum?
                   </button>
-
-                  <div className="text-xs text-white/40">
-                    {/* küçük ipucu */}
-                    Demo: admin@nederlearn.nl / 123456
-                  </div>
+                  <div className="text-xs text-white/40">Google önerilir</div>
                 </div>
 
                 <button
@@ -241,15 +202,12 @@ export default function LoginPage() {
                   {tab === "login" ? "Giriş Yap ✅" : "Kayıt Ol ✅"}
                 </button>
 
-                {/* divider */}
                 <Divider />
 
-                {/* Google button (demo) */}
+                {/* ✅ Gerçek Google Login */}
                 <button
                   type="button"
-                  onClick={() =>
-                    setErr("Google girişi demo. İstersen gerçek bağlarız.")
-                  }
+                  onClick={() => signIn("google", { callbackUrl: "/" })}
                   className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition flex items-center justify-center gap-2"
                 >
                   <GoogleIcon />
@@ -257,16 +215,13 @@ export default function LoginPage() {
                 </button>
 
                 <p className="pt-4 text-center text-xs text-white/40">
-                  Mail onayı zorunlu değildir. Şifre sıfırlama maili Spam klasörüne
-                  düşebilir.
+                  Mail onayı zorunlu değildir. Şifre sıfırlama maili Spam klasörüne düşebilir.
                 </p>
               </form>
             ) : (
               <form className="mt-6 space-y-4" onSubmit={handleReset}>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="text-sm font-semibold text-white">
-                    Şifre Sıfırlama
-                  </div>
+                  <div className="text-sm font-semibold text-white">Şifre Sıfırlama</div>
                   <div className="mt-1 text-sm text-white/60">
                     E-postanı yaz, sıfırlama bağlantısı gönderelim.
                   </div>
@@ -299,10 +254,6 @@ export default function LoginPage() {
                 >
                   Giriş ekranına dön
                 </button>
-
-                <p className="pt-3 text-center text-xs text-white/40">
-                  Demo: sadece mesaj gösterir. Gerçek e-posta sistemi istersen bağlarız.
-                </p>
               </form>
             )}
           </div>
@@ -312,7 +263,7 @@ export default function LoginPage() {
   );
 }
 
-/* ---------- helpers / ui ---------- */
+/* ---- UI ---- */
 
 const inputCls =
   "mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25";
@@ -361,7 +312,7 @@ function BackgroundFX() {
   );
 }
 
-/* ---------- icons (no library) ---------- */
+/* ---- Icons ---- */
 
 function Eye() {
   return (
