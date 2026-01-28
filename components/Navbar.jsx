@@ -1,35 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 const LANGS = [
   { code: "TR", label: "Türkçe" },
   { code: "EN", label: "English" },
   { code: "AR", label: "العربية" },
   { code: "NL", label: "Nederlands" },
-  { code: "ES", label: "Español" }
+  { code: "ES", label: "Español" },
 ];
 
 export default function Navbar() {
+  const { data: session } = useSession();
+  const loggedIn = !!session?.user;
+  const role = session?.user?.role || "user";
+
   const [open, setOpen] = useState(false);
   const [lang, setLang] = useState("TR");
-
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [role, setRole] = useState("user");
 
   const btnRef = useRef(null);
   const menuRef = useRef(null);
   const [pos, setPos] = useState({ top: 0, right: 0 });
-
-  useEffect(() => {
-    const li =
-      typeof window !== "undefined" && localStorage.getItem("nl_logged_in");
-    const r =
-      typeof window !== "undefined" && localStorage.getItem("nl_role");
-
-    setLoggedIn(li === "1");
-    setRole(r || "user");
-  }, []);
 
   function updatePosition() {
     const el = btnRef.current;
@@ -37,19 +29,19 @@ export default function Navbar() {
     const r = el.getBoundingClientRect();
     setPos({
       top: Math.round(r.bottom + 8),
-      right: Math.round(window.innerWidth - r.right)
+      right: Math.round(window.innerWidth - r.right),
     });
   }
 
   useEffect(() => {
-    function onResize() {
+    function onResizeOrScroll() {
       if (open) updatePosition();
     }
-    window.addEventListener("resize", onResize);
-    window.addEventListener("scroll", onResize, true);
+    window.addEventListener("resize", onResizeOrScroll);
+    window.addEventListener("scroll", onResizeOrScroll, true);
     return () => {
-      window.removeEventListener("resize", onResize);
-      window.removeEventListener("scroll", onResize, true);
+      window.removeEventListener("resize", onResizeOrScroll);
+      window.removeEventListener("scroll", onResizeOrScroll, true);
     };
   }, [open]);
 
@@ -91,7 +83,7 @@ export default function Navbar() {
               <span className="text-white/50">▾</span>
             </button>
 
-            {/* Yetkiler */}
+            {/* Yetkililer */}
             {loggedIn && role === "admin" && <Pill href="/admin">Admin</Pill>}
             {loggedIn && <Pill href="/profil">Profil</Pill>}
 
@@ -104,10 +96,7 @@ export default function Navbar() {
                 href="/"
                 onClick={(e) => {
                   e.preventDefault();
-                  localStorage.removeItem("nl_logged_in");
-                  localStorage.removeItem("nl_role");
-                  localStorage.removeItem("nl_email");
-                  window.location.href = "/";
+                  signOut({ callbackUrl: "/" });
                 }}
               >
                 Çıkış
@@ -119,6 +108,7 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* dropdown */}
       {open && (
         <div
           ref={menuRef}
