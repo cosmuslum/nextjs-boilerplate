@@ -20,7 +20,9 @@ export default function Testimonials() {
   return (
     <section className="space-y-4">
       <div>
-        <h2 className="text-xl font-semibold md:text-2xl">Memnuniyet yazıları</h2>
+        <h2 className="text-xl font-semibold md:text-2xl text-white">
+          Memnuniyet yazıları
+        </h2>
         <p className="mt-1 text-white/60">
           Gerçek kullanıcıların deneyimlerinden kısa notlar.
         </p>
@@ -35,7 +37,7 @@ export default function Testimonials() {
             <div className="flex items-center gap-3">
               <Avatar name={t.name} />
               <div>
-                <div className="text-sm font-semibold">{t.name}</div>
+                <div className="text-sm font-semibold text-white">{t.name}</div>
                 <div className="text-xs text-white/60">{t.place}</div>
               </div>
             </div>
@@ -49,7 +51,7 @@ export default function Testimonials() {
   );
 }
 
-function Avatar({ name }: { name: string }) {
+function Avatar({ name }) {
   const initials = name
     .split(" ")
     .slice(0, 2)
