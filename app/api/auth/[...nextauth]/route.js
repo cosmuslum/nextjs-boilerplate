@@ -4,31 +4,33 @@ import GoogleProvider from "next-auth/providers/google";
 export const authOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
     }),
   ],
 
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+  },
 
   callbacks: {
     async jwt({ token, account, profile }) {
-      // Google ile ilk login olunca email/role yaz
+      // İlk Google login
       if (account?.provider === "google" && profile?.email) {
         token.email = profile.email;
 
-        // ✅ Admin kuralı: sadece bu mail admin olsun
-        token.role = profile.email === "admin@nederlearn.nl" ? "admin" : "user";
-
-        // İstersen domain bazlı:
-        // token.role = profile.email.endsWith("@nederlearn.nl") ? "admin" : "user";
+        // ✅ Admin kuralı
+        token.role =
+          profile.email === "admin@nederlearn.nl" ? "admin" : "user";
       }
       return token;
     },
 
     async session({ session, token }) {
-      session.user.email = token.email;
-      session.user.role = token.role || "user";
+      if (session.user) {
+        session.user.email = token.email;
+        session.user.role = token.role ?? "user";
+      }
       return session;
     },
   },
@@ -36,6 +38,8 @@ export const authOptions = {
   pages: {
     signIn: "/giris",
   },
+
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);
