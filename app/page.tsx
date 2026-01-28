@@ -113,7 +113,9 @@ function Hero() {
       </div>
     </section>
   );
-}
+}<div style={{ height: 400, background: "red", color: "white" }}>
+  TEST ALANI — EĞER BUNU GÖRMÜYORSAN BU DOSYA ÇALIŞMIYOR
+</div>
 
 function StatCard({ value, label }: { value: string; label: string }) {
   return (
