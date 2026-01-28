@@ -13,13 +13,13 @@ export default function Home() {
       <main className="relative mx-auto max-w-6xl px-4 pb-20 pt-10 md:pt-14">
         <Hero />
 
-        <div className="mt-12" />
+        <div className="mt-12 md:mt-14" />
         <Testimonials />
 
-        <div className="mt-16" />
+        <div className="mt-14 md:mt-16" />
         <WhoFor />
 
-        <div className="mt-16" />
+        <div className="mt-14 md:mt-16" />
         <FeatureShowcase />
       </main>
 
@@ -27,8 +27,6 @@ export default function Home() {
     </div>
   );
 }
-
-/* ---------- BACKGROUND ---------- */
 
 function BackgroundFX() {
   return (
@@ -42,32 +40,38 @@ function BackgroundFX() {
   );
 }
 
-/* ---------- HERO ---------- */
-
 function Hero() {
   return (
-    <section>
-      <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 backdrop-blur-xl md:p-10">
-        <div className="flex flex-col gap-10 md:flex-row md:justify-between">
+    <section className="relative">
+      <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl md:p-10">
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+          {/* left */}
           <div className="max-w-2xl space-y-4">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
               Yeni: NederLearn yayında
             </div>
 
-            <h1 className="text-4xl font-semibold md:text-5xl">
+            <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
               Hollandaca Öğren
             </h1>
 
             <p className="text-white/70">
-              Dersler, quizler ve sesli pratik ile A0&apos;dan B1&apos;e kadar ilerle.
+              Dersler, quizler ve sesli pratik ile A0&apos;dan başlayıp
+              B1&apos;e kadar düzenli ilerle.
             </p>
 
-            <div className="flex gap-3 pt-2">
-              <a href="/dersler" className="rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-black">
+            <div className="flex flex-wrap gap-3 pt-2">
+              <a
+                href="/dersler"
+                className="rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-black shadow hover:bg-white/90"
+              >
                 Hemen Başla
               </a>
-              <a href="/dersler" className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white">
+              <a
+                href="/dersler"
+                className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/90 hover:bg-white/10"
+              >
                 Alfabe (Sesli)
               </a>
             </div>
@@ -79,13 +83,31 @@ function Hero() {
             </div>
           </div>
 
+          {/* right mini dashboard */}
           <div className="w-full md:max-w-md">
-            <div className="rounded-[22px] border border-white/10 bg-white/5 p-5">
-              <div className="grid grid-cols-2 gap-3">
+            <div className="rounded-[22px] border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+              <div className="flex items-center justify-between">
+                <div className="text-sm font-semibold text-white">NederLearn</div>
+                <div className="text-white/60">•••</div>
+              </div>
+
+              <div className="mt-4 grid grid-cols-2 gap-3">
                 <MiniCard title="Günlük hedef" value="10 dk" />
                 <MiniCard title="Seri" value="3 gün" />
                 <MiniCard title="Ortalama skor" value="84%" />
                 <MiniCard title="Son ders" value="A1 · 05" />
+              </div>
+
+              <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="text-xs text-white/60">Bugünün önerisi</div>
+                <div className="mt-1 text-sm font-semibold text-white">
+                  “Selamlaşma & günlük ifadeler”
+                </div>
+
+                <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-white/10">
+                  <div className="h-full w-[66%] rounded-full bg-white/70" />
+                </div>
+                <div className="mt-2 text-xs text-white/60">İlerleme: %66</div>
               </div>
             </div>
           </div>
@@ -95,13 +117,11 @@ function Hero() {
   );
 }
 
-/* ---------- SMALL COMPONENTS ---------- */
-
 function StatCard({ value, label }) {
   return (
-    <div className="rounded-[18px] border border-white/10 bg-white/5 px-4 py-4">
-      <div className="text-2xl font-semibold">{value}</div>
-      <div className="text-sm text-white/60">{label}</div>
+    <div className="rounded-[18px] border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-xl">
+      <div className="text-2xl font-semibold text-white">{value}</div>
+      <div className="mt-1 text-sm text-white/60">{label}</div>
     </div>
   );
 }
@@ -110,7 +130,7 @@ function MiniCard({ title, value }) {
   return (
     <div className="rounded-[18px] border border-white/10 bg-white/5 p-4">
       <div className="text-xs text-white/60">{title}</div>
-      <div className="text-lg font-semibold">{value}</div>
+      <div className="mt-1 text-lg font-semibold text-white">{value}</div>
     </div>
   );
 }
