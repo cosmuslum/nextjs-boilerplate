@@ -9,9 +9,7 @@ export default function WhoFor() {
     <section className="space-y-4">
       <div>
         <h2 className="text-xl font-semibold md:text-2xl">Kimler için uygun?</h2>
-        <p className="mt-1 text-white/60">
-          Üç temel kullanım senaryosu için tasarlandı.
-        </p>
+        <p className="mt-1 text-white/60">Üç temel kullanım senaryosu için tasarlandı.</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
