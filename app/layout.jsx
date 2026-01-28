@@ -1,15 +1,16 @@
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import { SessionProvider } from "next-auth/react";
+import Providers from "./providers";
+
+export const metadata = {
+  title: "NederLearn",
+  description: "Hollandaca öğrenmenin en kolay yolu",
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="tr">
       <body>
-        <SessionProvider>
-          <Navbar />
-          {children}
-        </SessionProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
