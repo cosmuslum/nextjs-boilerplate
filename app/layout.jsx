@@ -1,8 +1,9 @@
 import "./globals.css";
 import Providers from "./providers";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+// 🔥 DİKKAT: ../components
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export const metadata = {
   title: "NederLearn",
