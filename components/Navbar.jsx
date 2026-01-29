@@ -1,49 +1,73 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function Navbar() {
-  const { data: session, status } = useSession();
-
   return (
-    <nav style={styles.nav}>
-      <Link href="/" style={styles.logo}>🇳🇱 NederLearn</Link>
+    <header style={wrap}>
+      <div style={bar}>
+        <Link href="/" style={brand}>
+          🇳🇱 NederLearn
+        </Link>
 
-      <div style={styles.right}>
-        <Link href="/dersler">Dersler</Link>
+        <nav style={nav}>
+          <Link href="/dersler" style={pill}>
+            Dersler
+          </Link>
 
-        {status === "authenticated" ? (
-          <>
-            {session.user.role === "admin" && (
-              <Link href="/admin">Admin</Link>
-            )}
-            <button onClick={() => signOut()}>Çıkış</button>
-          </>
-        ) : (
-          <button onClick={() => signIn("google")}>Giriş</button>
-        )}
+          <Link href="/giris" style={{ ...pill, ...pillPrimary }}>
+            Giriş
+          </Link>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 }
 
-const styles = {
-  nav: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "16px 24px",
-    background: "rgba(0,0,0,0.6)",
-    backdropFilter: "blur(10px)",
-  },
-  logo: {
-    fontWeight: "bold",
-    color: "#fff",
-    textDecoration: "none",
-  },
-  right: {
-    display: "flex",
-    gap: "16px",
-    alignItems: "center",
-  },
+const wrap = {
+  position: "sticky",
+  top: 0,
+  zIndex: 50,
+  padding: "14px 16px",
+  background: "rgba(0,0,0,0.35)",
+  backdropFilter: "blur(10px)",
+};
+
+const bar = {
+  maxWidth: 1100,
+  margin: "0 auto",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: 12,
+};
+
+const brand = {
+  color: "white",
+  textDecoration: "none",
+  fontWeight: 800,
+  letterSpacing: 0.2,
+};
+
+const nav = {
+  display: "flex",
+  gap: 10,
+  alignItems: "center",
+};
+
+const pill = {
+  color: "white",
+  textDecoration: "none",
+  padding: "10px 14px",
+  borderRadius: 999,
+  border: "1px solid rgba(255,255,255,0.12)",
+  background: "rgba(255,255,255,0.06)",
+  fontSize: 14,
+};
+
+const pillPrimary = {
+  background: "rgba(255,255,255,0.92)",
+  color: "#111",
+  border: "1px solid rgba(255,255,255,0.25)",
+  fontWeight: 700,
 };
