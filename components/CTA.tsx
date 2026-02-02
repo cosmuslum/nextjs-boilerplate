@@ -7,7 +7,6 @@ export default function CTA() {
         </h2>
         <p className="text-xl mb-8 max-w-2xl mx-auto">
           Şimdi ücretsiz kaydolun ve ilk derslerinize başlayın.
-          7 gün ücretsiz deneme, sonrasında ayda sadece €9.99.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button className="bg-white text-nederland-blue px-8 py-4 rounded-xl text-lg font-bold hover:bg-gray-100">
