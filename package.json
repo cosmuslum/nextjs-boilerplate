@@ -1,6 +1,7 @@
 {
   "name": "nederlearn-pro",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "A0'dan B1'e 5 dilde Hollandaca öğrenim platformu - nederlearn.nl",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -25,5 +26,8 @@
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "eslint": "^8.56.0"
-  }
+  },
+  "author": "NederLearn Team",
+  "license": "MIT",
+  "homepage": "https://nederlearn.nl"
 }
