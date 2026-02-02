@@ -2,7 +2,6 @@ import Hero from '@/components/Hero'
 import LanguageSelector from '@/components/LanguageSelector'
 import Levels from '@/components/Levels'
 import Features from '@/components/Features'
-import Stats from '@/components/Stats'
 import CTA from '@/components/CTA'
 
 export default function Home() {
@@ -12,7 +11,6 @@ export default function Home() {
       <LanguageSelector />
       <Levels />
       <Features />
-      <Stats />
       <CTA />
     </>
   )
