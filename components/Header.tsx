@@ -1,114 +1,145 @@
 "use client"
 
 import { useState } from 'react'
-import { Menu, X, Globe } from 'lucide-react'
+import { Menu, X, Globe, User } from 'lucide-react'
 import Link from 'next/link'
-import LanguageSwitcher from './LanguageSwitcher'
-import UserMenu from './UserMenu'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [language, setLanguage] = useState('tr')
+  const [showLangMenu, setShowLangMenu] = useState(false)
 
   const navItems = [
     { label: 'Ana Sayfa', href: '/' },
     { label: 'Dersler', href: '/lessons' },
     { label: 'Kelime Kartları', href: '/flashcards' },
-    { label: 'Seviyeler', href: '/#levels' },
-    { label: 'Fiyatlar', href: '/#pricing' },
-    { label: 'Hakkımızda', href: '/about' },
+    { label: 'Seviyeler', href: '#' },
+    { label: 'Fiyatlar', href: '#' },
   ]
 
+  const languages = [
+    { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+    { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
+  ]
+
+  const currentLanguage = languages.find(lang => lang.code === language)
+
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b shadow-sm">
+    <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-nederland-red to-nederland-blue rounded-xl group-hover:from-red-600 group-hover:to-blue-700 transition-all">
-              <span className="text-white font-bold text-2xl">NL</span>
+          <Link href="/" className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-r from-red-600 to-blue-700 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">NL</span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 leading-tight">NederLearn</h1>
-              <p className="text-xs text-gray-600 leading-tight">Hollandaca Öğren</p>
+              <h1 className="text-xl font-bold text-gray-900">NederLearn</h1>
+              <p className="text-xs text-gray-600">nederlearn.nl</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-gray-700 hover:text-nederland-red font-medium transition-colors relative group"
+                className="text-gray-700 hover:text-red-600 font-medium"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nederland-red group-hover:w-full transition-all duration-300"></span>
               </Link>
             ))}
             
-            <div className="flex items-center gap-4">
-              <LanguageSwitcher />
-              <div className="h-6 w-px bg-gray-300"></div>
-              <UserMenu />
+            {/* Dil Seçici */}
+            <div className="relative">
+              <button
+                onClick={() => setShowLangMenu(!showLangMenu)}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg"
+              >
+                <Globe size={18} />
+                <span className="font-medium">{currentLanguage?.flag}</span>
+              </button>
+              
+              {showLangMenu && (
+                <div className="absolute top-full mt-1 right-0 bg-white rounded-lg shadow-xl border w-48">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        setLanguage(lang.code)
+                        setShowLangMenu(false)
+                      }}
+                      className="w-full text-left px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
+                    >
+                      <span className="text-xl">{lang.flag}</span>
+                      <span>{lang.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
+            
+            {/* GİRİŞ BUTONU - BU GÖRÜNECEK */}
+            <button className="px-5 py-2.5 bg-gradient-to-r from-red-600 to-blue-700 text-white font-semibold rounded-lg hover:from-red-700 hover:to-blue-800">
+              Giriş Yap
+            </button>
           </nav>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center gap-4 lg:hidden">
-            <LanguageSwitcher />
+          <div className="flex items-center gap-3 md:hidden">
+            {/* Mobil Dil Seçici */}
+            <div className="relative">
+              <button
+                onClick={() => setShowLangMenu(!showLangMenu)}
+                className="p-2 bg-gray-100 rounded-lg"
+              >
+                <span className="text-xl">{currentLanguage?.flag}</span>
+              </button>
+            </div>
+            
+            {/* Mobil Giriş Butonu */}
+            <button className="px-4 py-2 bg-gradient-to-r from-red-600 to-blue-700 text-white font-semibold rounded-lg">
+              <User size={20} />
+            </button>
+            
             <button
-              className="p-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2"
             >
-              {isMenuOpen ? (
-                <X size={28} className="text-gray-700" />
-              ) : (
-                <Menu size={28} className="text-gray-700" />
-              )}
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 animate-fadeIn">
-            <div className="flex flex-col gap-1">
+          <div className="md:hidden mt-4 pb-4 border-t pt-4">
+            <div className="flex flex-col gap-2">
               {navItems.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="px-4 py-3 text-gray-700 hover:text-nederland-red hover:bg-gray-50 rounded-lg font-medium transition-colors"
+                  className="px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
                 </Link>
               ))}
               
-              {/* Mobile User Menu */}
+              {/* Mobil Giriş Butonu Büyük */}
               <div className="mt-4 pt-4 border-t">
-                <UserMenu />
+                <button className="w-full py-3 bg-gradient-to-r from-red-600 to-blue-700 text-white font-semibold rounded-lg">
+                  Giriş Yap / Kayıt Ol
+                </button>
               </div>
             </div>
           </div>
         )}
       </div>
-
-      {/* Styles for animations */}
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out;
-        }
-      `}</style>
     </header>
   )
 }
