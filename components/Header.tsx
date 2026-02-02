@@ -9,11 +9,10 @@ export default function Header() {
 
   const navItems = [
     { label: 'Ana Sayfa', href: '/' },
-    { label: 'Dersler', href: '/lessons' },
-    { label: 'Seviyeler', href: '/levels' },
-    { label: 'Fiyatlar', href: '/pricing' },
-    { label: 'Hakkımızda', href: '/about' },
-    { label: 'İletişim', href: '/contact' },
+    { label: 'Dersler', href: '#' },
+    { label: 'Seviyeler', href: '#' },
+    { label: 'Fiyatlar', href: '#' },
+    { label: 'Hakkımızda', href: '#' },
   ]
 
   return (
