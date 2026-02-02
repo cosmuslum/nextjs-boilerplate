@@ -1,9 +1,9 @@
-import { Facebook, Twitter, Instagram, Youtube, Mail, Phone } from 'lucide-react'
+import { Facebook, Twitter, Instagram, Mail, Phone } from 'lucide-react'
 import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white mt-20">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo ve Açıklama */}
@@ -27,9 +27,6 @@ export default function Footer() {
               <a href="#" className="text-gray-400 hover:text-white">
                 <Instagram size={24} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <Youtube size={24} />
-              </a>
             </div>
           </div>
 
@@ -38,10 +35,10 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-6">Hızlı Linkler</h3>
             <ul className="space-y-3">
               <li><Link href="/" className="text-gray-400 hover:text-white">Ana Sayfa</Link></li>
-              <li><Link href="/lessons" className="text-gray-400 hover:text-white">Dersler</Link></li>
-              <li><Link href="/levels" className="text-gray-400 hover:text-white">Seviyeler</Link></li>
-              <li><Link href="/pricing" className="text-gray-400 hover:text-white">Fiyatlar</Link></li>
-              <li><Link href="/about" className="text-gray-400 hover:text-white">Hakkımızda</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white">Dersler</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white">Seviyeler</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white">Fiyatlar</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white">Hakkımızda</Link></li>
             </ul>
           </div>
 
@@ -88,8 +85,8 @@ export default function Footer() {
 
         {/* Alt Bilgi */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>© {new Date().getFullYear()} NederLearn.nl. Tüm hakları saklıdır.</p>
-          <p className="mt-2">KVK numarası: 12345678 | BTW numarası: NL123456789B01</p>
+          <p>© 2024 NederLearn.nl. Tüm hakları saklıdır.</p>
+          <p className="mt-2">Site: <strong>nederlearn.nl</strong></p>
         </div>
       </div>
     </footer>
