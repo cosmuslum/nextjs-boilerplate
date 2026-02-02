@@ -14,7 +14,7 @@ export default function Home() {
       <CTA />
     </>
   )
-}
+
 // En alt kısma ekle:
 <div className="text-center mt-12 mb-8">
   <h3 className="text-2xl font-bold mb-4">Hızlı Erişim</h3>
@@ -27,3 +27,4 @@ export default function Home() {
     </a>
   </div>
 </div>
+}
