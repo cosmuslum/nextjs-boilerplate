@@ -19,8 +19,7 @@ export default function Hero() {
         
         <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
           NederLearn ile Türkçe, İngilizce, İspanyolca veya Arapça konuşuyorsanız, 
-          Hollandaca öğrenmek artık çok daha kolay. A0 seviyesinden başlayıp 
-          B1 seviyesine kadar profesyonel rehberlik.
+          Hollandaca öğrenmek artık çok daha kolay.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -36,12 +35,11 @@ export default function Hero() {
           </button>
         </div>
 
-        {/* Video Modal */}
         {showVideo && (
           <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-xl p-4 max-w-4xl w-full">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold">NederLearn Tanıtım Videosu</h3>
+                <h3 className="text-xl font-bold">NederLearn Tanıtım</h3>
                 <button 
                   onClick={() => setShowVideo(false)}
                   className="text-gray-500 hover:text-gray-800"
@@ -59,7 +57,6 @@ export default function Hero() {
           </div>
         )}
 
-        {/* İstatistikler */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
           <div className="text-center">
             <div className="text-3xl font-bold text-nederland-blue">5</div>
