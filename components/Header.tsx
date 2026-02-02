@@ -8,12 +8,12 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const navItems = [
-    { label: 'Ana Sayfa', href: '/' },
-    { label: 'Dersler', href: '#' },
-    { label: 'Seviyeler', href: '#' },
-    { label: 'Fiyatlar', href: '#' },
-    { label: 'Hakkımızda', href: '#' },
-  ]
+  { label: 'Ana Sayfa', href: '/' },
+  { label: 'Dersler', href: '/lessons' },
+  { label: 'Kelime Kartları', href: '/flashcards' },
+  { label: 'Seviyeler', href: '#' },
+  { label: 'Fiyatlar', href: '#' },
+]
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b">
