@@ -12,11 +12,6 @@
   body {
     @apply text-gray-900;
   }
-  
-  /* Arapça için RTL desteği */
-  [dir="rtl"] {
-    text-align: right;
-  }
 }
 
 @layer components {
