@@ -19,7 +19,6 @@
     "postcss": "^8.4.31"
   },
   "dependencies": {
-  // ... mevcut paketler ...
   "@supabase/supabase-js": "^2.39.0",
   "next-auth": "^4.24.5",
   "@auth/supabase-adapter": "^0.3.2"
