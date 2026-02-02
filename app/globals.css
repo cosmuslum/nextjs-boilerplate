@@ -26,4 +26,13 @@
   .card {
     @apply bg-white rounded-xl shadow-lg p-6 border border-gray-200;
   }
+  
+}
+/* Flashcard 3D efekti için */
+.rotate-y-90 {
+  transform: rotateY(90deg);
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
 }
