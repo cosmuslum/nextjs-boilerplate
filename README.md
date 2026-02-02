@@ -2,23 +2,24 @@
 🌐 **Canlı Site:** [nederlearn.nl](https://nederlearn.nl)
 
 ## 🌍 5 Dil Desteği
-- 🇹🇷 Türkçe
-- 🇬🇧 English  
-- 🇪🇸 Español
-- 🇸🇦 العربية
-- 🇳🇱 Nederlands
+- 🇹🇷 Türkçe'den Hollandaca
+- 🇬🇧 English to Dutch
+- 🇪🇸 Español a Holandés
+- 🇸🇦 العربية إلى الهولندية
+- 🇳🇱 Nederlands leren
 
 ## 📚 Seviyeler
-- **A0** - Başlangıç
-- **A1** - Temel
-- **A2** - Orta Başlangıç
-- **B1** - Orta Seviye
+- **A0** - Başlangıç (25 ders)
+- **A1** - Temel (50 ders)
+- **A2** - Orta Başlangıç (75 ders)
+- **B1** - Orta Seviye (100 ders)
 
 ## 🚀 Teknoloji
-- Next.js 14 (App Router)
+- Next.js 14
 - TypeScript
 - Tailwind CSS
-- Vercel Deployment
+- Vercel Hosting
 
 ## 📞 İletişim
-Web: [nederlearn.nl](https://nederlearn.nl)
+Email: info@nederlearn.nl
+Website: [nederlearn.nl](https://nederlearn.nl)
