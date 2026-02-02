@@ -1,18 +1,24 @@
 # NederLearn - Hollandaca Öğrenim Platformu
+🌐 **Canlı Site:** [nederlearn.nl](https://nederlearn.nl)
 
-🌍 **5 Dil Desteği:** Türkçe, İngilizce, İspanyolca, Arapça, Hollandaca
-📚 **Seviyeler:** A0, A1, A2, B1
-🚀 **Modern Teknoloji:** Next.js 14, Tailwind CSS, TypeScript
+## 🌍 5 Dil Desteği
+- 🇹🇷 Türkçe
+- 🇬🇧 English  
+- 🇪🇸 Español
+- 🇸🇦 العربية
+- 🇳🇱 Nederlands
 
-## Özellikler
-- 🎯 Seviye bazlı öğrenim
-- 🔊 Sesli telaffuz egzersizleri
-- 📝 İnteraktif alıştırmalar
-- 📊 İlerleme takibi
+## 📚 Seviyeler
+- **A0** - Başlangıç
+- **A1** - Temel
+- **A2** - Orta Başlangıç
+- **B1** - Orta Seviye
 
-## Hızlı Başlangıç
-```bash
-git clone https://github.com/SİZİN_KULLANICI_ADINIZ/nederlearn-pro.git
-cd nederlearn-pro
-npm install
-npm run dev
+## 🚀 Teknoloji
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- Vercel Deployment
+
+## 📞 İletişim
+Web: [nederlearn.nl](https://nederlearn.nl)
